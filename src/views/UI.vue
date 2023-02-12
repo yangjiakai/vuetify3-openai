@@ -8,13 +8,51 @@ import CustomizationMenu from "@/components/CustomizationMenu.vue";
 import ChangeLanguage from "@/components/ChangeLanguage.vue";
 import { useLocale } from "vuetify";
 const { t } = useLocale();
-const temp = ref(false);
+const temp = ref(true);
+
+const channels = ref([
+  {
+    id: 1,
+    title: "问答",
+    icon: "mdi-forum",
+    url: "/",
+    active: true,
+  },
+  {
+    id: 2,
+    title: "语法纠正",
+    icon: "mdi-text-box-check-outline",
+    url: "/",
+    active: false,
+  },
+  {
+    id: 3,
+    title: "翻译",
+    icon: "mdi-translate",
+    url: "/",
+    active: false,
+  },
+  {
+    id: 4,
+    title: "解释代码",
+    icon: "mdi-code-less-than-or-equal",
+    url: "/",
+    active: false,
+  },
+  {
+    id: 5,
+    title: "SQL查询",
+    icon: "mdi-database-search",
+    url: "/",
+    active: false,
+  },
+]);
 </script>
 
 <template>
-  <CustomizationMenu />
+  <!-- <CustomizationMenu /> -->
 
-  <v-navigation-drawer theme="dark" rail>
+  <!-- <v-navigation-drawer theme="dark" rail>
     <v-list>
       <v-list-item
         prepend-icon="mdi-view-dashboard"
@@ -35,7 +73,7 @@ const temp = ref(false);
       ></v-list-item>
     </v-list>
   </v-navigation-drawer>
-  <v-navigation-drawer temporary v-model="temp">
+  <v-navigation-drawer v-model="temp">
     <template v-slot:prepend>
       <v-card height="60" class="d-flex align-center">
         <v-card-title class="text-primary">
@@ -46,25 +84,30 @@ const temp = ref(false);
     <perfect-scrollbar class="scrollnav">
       <v-list nav>
         <v-list-item
-          v-for="i in 30"
-          prepend-icon="mdi-view-dashboard"
-          title="Nav Item"
-          to="/"
+          v-for="channel in channels"
+          :key="channel.id"
+          :prepend-icon="channel.icon"
+          :title="channel.title"
+          :to="channel.url"
           color="primary"
+          :active="channel.active"
         ></v-list-item>
       </v-list>
     </perfect-scrollbar>
   </v-navigation-drawer>
 
-  <v-app-bar :title="t('$vuetify.common.applicationBar')" elevation="1">
+  <v-app-bar elevation="1">
+    <v-app-bar-title
+      ><img width="200" src="@/assets/logo.svg"
+    /></v-app-bar-title>
     <ChangeLanguage />
   </v-app-bar>
 
   <v-main>
-    <v-sheet height="110vh">
+    <v-sheet>
       <RouterView />
     </v-sheet>
-  </v-main>
+  </v-main> -->
 </template>
 
 <style scoped lang="scss">
