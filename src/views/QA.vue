@@ -6,7 +6,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>asdas</div>
+  <v-sheet> </v-sheet>
 </template>
 
 <style scoped lang="scss"></style>

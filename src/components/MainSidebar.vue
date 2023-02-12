@@ -13,14 +13,10 @@
           activator="parent"
           location="bottom"
           class=""
-          text="Sub-Navigation"
+          text="home"
         ></v-tooltip>
       </v-list-item>
-      <v-list-item
-        prepend-icon="mdi-image"
-        value="unsplash"
-        to="/unsplash"
-      ></v-list-item>
+      <v-list-item prepend-icon="mdi-image" value="unsplash"></v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>

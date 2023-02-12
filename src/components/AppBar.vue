@@ -7,14 +7,12 @@
 import ChangeLanguage from "@/components/ChangeLanguage.vue";
 import { useCustomizeThemeStore } from "@/stores/customizeTheme";
 const customizeTheme = useCustomizeThemeStore();
-const imga = ref<boolean>(true);
 </script>
 
 <template>
   <v-app-bar elevation="1">
     <template v-slot:prepend>
-      <!-- icon mdi- -->
-      <transition name="slide-y">
+      <transition>
         <v-icon
           v-if="customizeTheme.subSidebar"
           @click="customizeTheme.subSidebar = !customizeTheme.subSidebar"
@@ -29,8 +27,6 @@ const imga = ref<boolean>(true);
     </template>
 
     <ChangeLanguage />
-
-    <v-btn color="success" @click="imga = !imga">text</v-btn>
   </v-app-bar>
 </template>
 

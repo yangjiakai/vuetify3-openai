@@ -11,35 +11,35 @@ const { t } = useLocale();
 const channels = ref([
   {
     id: 1,
-    title: "问答",
+    title: "qa",
     icon: "mdi-forum",
     url: "/",
     active: true,
   },
   {
     id: 2,
-    title: "语法纠正",
+    title: "grammarCorrection",
     icon: "mdi-text-box-check-outline",
     url: "/",
     active: false,
   },
   {
     id: 3,
-    title: "翻译",
+    title: "translation",
     icon: "mdi-translate",
     url: "/",
     active: false,
   },
   {
     id: 4,
-    title: "解释代码",
+    title: "explainCode",
     icon: "mdi-code-less-than-or-equal",
     url: "/",
     active: false,
   },
   {
     id: 5,
-    title: "SQL查询",
+    title: "sqlTranslate",
     icon: "mdi-database-search",
     url: "/",
     active: false,
@@ -73,7 +73,7 @@ const subNav = ref(true);
           v-for="channel in channels"
           :key="channel.id"
           :prepend-icon="channel.icon"
-          :title="channel.title"
+          :title="t('$vuetify.nav.' + channel.title)"
           :to="channel.url"
           :active="channel.active"
           color="primary"

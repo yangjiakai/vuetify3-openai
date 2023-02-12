@@ -23,7 +23,7 @@ export const useCustomizeThemeStore = defineStore({
       colorName: "grey",
       colorValue: "#344767",
     },
-    subSidebar: ref(false),
+    subSidebar: ref(true),
   }),
 
   persist: {
