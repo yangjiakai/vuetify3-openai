@@ -1,0 +1,100 @@
+html {
+  font-family: $font-family;
+
+  .v-application {
+    [class*="text-"] {
+      font-family: $font-family, sans-serif !important;
+    }
+
+    font-family: $font-family,
+    sans-serif !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 500;
+    font-family: $font-family;
+  }
+
+  // tables beautify
+  .v-table {
+    table {
+      padding: 4px;
+      padding-bottom: 8px;
+
+      th {
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      td {
+        border-bottom: 0 !important;
+      }
+
+      tbody {
+        tr {
+          transition: box-shadow 0.2s, transform 0.2s;
+
+          &:not(.v-data-table__selected):hover {
+            box-shadow: 0 3px 15px -2px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+          }
+        }
+      }
+    }
+  }
+
+  .v-btn {
+    text-transform: capitalize;
+  }
+
+  .v-card {
+    border-radius: $border-radius;
+    width: 100%;
+  }
+
+
+  .elevation-1 {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+  }
+
+  .elevation-10 {
+    box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 24px 0px !important;
+  }
+
+  .shadow-sm {
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05)
+  }
+
+  .shadow {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)
+  }
+
+  .shadow-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important
+  }
+
+  .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important
+  }
+
+  .shadow-xl {
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important
+  }
+
+  .shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25) !important
+  }
+
+  .shadow-inner {
+    box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05)
+  }
+
+  .shadow-none {
+    box-shadow: 0 0 #0000
+  }
+}
