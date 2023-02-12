@@ -1,5 +1,5 @@
 <p align='center' style="margin-top:80px">
-  <img src='/src/assets/logo.svg' alt='Vitesse - Opinionated Vite Starter Template' width='50'/>
+  <img src='/src/assets/logo.svg' alt='Vitesse - Opinionated Vite Starter Template' width='250'/>
 </p>
 
 <h6 align='center'>
@@ -9,12 +9,12 @@
 <br>
 
 <p align='center'>
-<a href="https://github.com/yangjiakai/vuetify3-base/blob/master/README.md">English</a> | <b>简体中文</b>| <a href="https://github.com/yangjiakai/vuetify3-base/blob/master/README.jp.md">日本語</a>
+<a href="https://github.com/yangjiakai/vuetify3-openai/blob/master/README.md">English</a> | <b>简体中文</b>| <a href="https://github.com/yangjiakai/vuetify3-openai/blob/master/README.jp.md">日本語</a>
 </p>
 
 ## 序文
 
-这是一个使用 vuetify3 + 组合式 api,整合了常用功能和插件的开发模板,之后的 vuetify3 app 都可以基于这个模板进行开发
+这是一个使用 vuetify3 + 组合式 api,利用 openai 官方网站提供的 api 和 demo 进行二次开发 app
 
 ## 特性
 
@@ -33,6 +33,7 @@
 - ⚡️ 主题色切换
 - ⚡️ vue3-perfect-scrollbar 滚动条美化
 - ☁️ 响应式多平台自适应
+- ☁️ openAI
 
 <br>
 ## Pre-packed
@@ -49,9 +50,9 @@
 ## 现在可以试试!
 
 ```
-https://github.com/yangjiakai/vuetify3-base.git
+https://github.com/yangjiakai/vuetify3-openai.git
 
-cd vuetify3-base
+cd vuetify3-openai
 
 npm install
 
@@ -61,12 +62,12 @@ npm run dev
 
 ## api 请求
 
-> 关于 API 请求，我的示例使用了 unsplash 的 api
+> 关于 API 请求，使用了 openai 的 api
 >
-> 需要先前往 unsplash 开发者平台，申请自己的**ACCESS_KEY**
+> 需要先前往 openai 开发者平台，申请自己的**API_KEY**
 >
-> https://unsplash.com/oauth/applications
+> https://platform.openai.com/account/api-keys
 >
 > 然后在本地新建`.env.local`文件
 >
-> 添加`VITE_UNSPLASH_ACCESS_KEY = 你自己的Access Key`
+> 添加`VITE_OPENAI_API_KEY = 你自己的Api Key`

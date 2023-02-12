@@ -1,5 +1,5 @@
 <p align='center' style="margin-top:80px">
-  <img src='/src/assets/logo.svg' alt='Vitesse - Opinionated Vite Starter Template' width='50'/>
+  <img src='/src/assets/logo.svg' alt='Vitesse - Opinionated Vite Starter Template' width='250'/>
 </p>
 
 <h6 align='center'>
@@ -9,12 +9,12 @@
 <br>
 
 <p align='center'>
-<a href="https://github.com/yangjiakai/vuetify3-base/blob/main/README.md">English</a> | <a href="https://github.com/yangjiakai/vuetify3-base/blob/main/README.zh-CN.md">简体中文</a>| <b >日本語</b>
+<a href="https://github.com/yangjiakai/vuetify3-openai/blob/main/README.md">English</a> | <a href="https://github.com/yangjiakai/vuetify3-openai/blob/main/README.zh-CN.md">简体中文</a>| <b >日本語</b>
 </p>
 
 ## 序文
 
-これは、vuetify3 + composition api を使用して、一般的な機能やプラグインを統合した開発テンプレートです。このテンプレートを基に、今後の vuetify3 アプリの開発ができます。
+これは、vuetify3 + composition api を使用し、OpenAI 公式サイトから提供される API とデモを活用した二次開発アプリです。
 
 ## 特徴
 
@@ -33,15 +33,16 @@
 - ⚡️ 主題色切り替え
 - ⚡️ vue3-perfect-scrollbar スクロールバーの美化
 - ☁️ レスポンシブで多プラットフォームに適応
+- ☁️ openAI
 
 <br>
 
 ## 今すぐ試す!
 
 ```
-git clone https://github.com/yangjiakai/vuetify3-base.git
+git clone https://github.com/yangjiakai/vuetify3-openai.git
 
-cd vuetify3-base
+cd vuetify3-openai
 
 npm install
 
@@ -50,12 +51,12 @@ npm run dev
 
 ## api 请求
 
-> API リクエストに関して、私の示例では Unsplash の API を使用しました。
+> API リクエストに関して、 openai の API を使用しました。
 >
-> 自分自身の`ACCESS_KEY`を申請するために、Unsplash 開発者プラットフォームに行く必要があります。
+> 自分自身の`API_KEY`を申請するために、openai 開発者プラットフォームに行く必要があります。
 >
-> https://unsplash.com/oauth/applications
+> https://platform.openai.com/account/api-keys
 >
 > 次に、ローカルに新しい`.env.local` ファイルを作成します
 >
-> `VITE_UNSPLASH_ACCESS_KEY = 自分のAccess Key`を追加します。
+> `VITE_OPENAI_API_KEY = 自分のApi Key`を追加します。

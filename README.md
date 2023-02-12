@@ -1,5 +1,5 @@
 <p align='center' style="margin-top:80px">
-  <img src='/src/assets/logo.svg' alt='Vitesse - Opinionated Vite Starter Template' width='50'/>
+  <img src='/src/assets/logo.svg' alt='Vitesse - Opinionated Vite Starter Template' width='250'/>
 </p>
 
 <h6 align='center'>
@@ -9,12 +9,12 @@
 <br>
 
 <p align='center'>
-<b>English</b> | <a href="https://github.com/yangjiakai/vuetify3-base/blob/master/README.zh-CN.md">简体中文</a>| <a href="https://github.com/yangjiakai/vuetify3-base/blob/master/README.jp.md">日本語</a>
+<b>English</b> | <a href="https://github.com/yangjiakai/vuetify3-openai/blob/master/README.zh-CN.md">简体中文</a>| <a href="https://github.com/yangjiakai/vuetify3-openai/blob/master/README.jp.md">日本語</a>
 </p>
 
 ## Introduction
 
-This is a development template that integrates frequently used features and plugins using vuetify3 + composite APIs. Future vuetify3 apps can be developed based on this template.
+This is a secondary development app that uses vuetify3 + composition APIs and leverages the API and demo provided by the OpenAI official website.
 
 ## Features
 
@@ -33,14 +33,15 @@ This is a development template that integrates frequently used features and plug
 - ⚡️ Dark Light mode
 - ⚡️ Themecolor change
 - ⚡️ Vue3-perfect-scrollbar
+- ☁️ openAI
   <br>
 
 ## Try it now!
 
 ```
-https://github.com/yangjiakai/vuetify3-base.git
+https://github.com/yangjiakai/vuetify3-openai.git
 
-cd vuetify3-base
+cd vuetify3-openai
 
 npm install
 
@@ -49,12 +50,12 @@ npm run dev
 
 ## Api requests
 
-> regarding API requests, my example uses the unsplash API.
+> regarding API requests, my example uses the openai API.
 >
-> You need to go to the unsplash developer platform and apply for your own `ACCESS_KEY`.
+> You need to go to the unsplash openai platform and apply for your own `API_KEY`.
 >
-> https://unsplash.com/oauth/applications
+> https://platform.openai.com/account/api-keys
 >
 > Then, create a new `.env.local` file locally.
 >
-> Add `VITE_UNSPLASH_ACCESS_KEY = your own Access Key`
+> Add `VITE_OPENAI_API_KEY = your own Api Key`
