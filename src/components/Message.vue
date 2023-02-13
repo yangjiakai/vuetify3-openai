@@ -29,7 +29,7 @@ const isUserMessage = computed(() => {
     <v-card
       color="dar"
       class="px-3 py-2 mx-2 w-auto"
-      :class="isUserMessage ? 'gradient blue' : ''"
+      :class="isUserMessage ? 'gradient gray' : ''"
       :theme="isUserMessage ? 'dark' : 'light'"
     >
       <copy-label :text="message.text" />

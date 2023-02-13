@@ -22,9 +22,7 @@ const scrollToBottom = () => {
   <!-- ---------------------------------------------- -->
   <!---Header Area -->
   <!-- ---------------------------------------------- -->
-  <v-toolbar color="primary"
-    ><v-btn color="success" @click="scrollToBottom">text</v-btn>
-  </v-toolbar>
+  <v-toolbar elevation="10"> </v-toolbar>
   <!-- ---------------------------------------------- -->
   <!---Chat Area -->
   <!-- ---------------------------------------------- -->

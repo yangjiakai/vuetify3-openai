@@ -67,7 +67,9 @@ const getCompletion = async () => {
 watch(
   () => chatStore.chatHistory,
   () => {
-    emits("scroll");
+    nextTick(() => {
+      emits("scroll");
+    });
   },
   { deep: true }
 );
