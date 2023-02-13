@@ -7,6 +7,8 @@ const openai = new OpenAIApi(configuration);
 
 //
 export const createCompletion: any = (keyword: string) => {
+  console.log(keyword);
+
   return openai.createCompletion({
     model: "text-davinci-003",
     // prompt: generatePrompt(keyword),

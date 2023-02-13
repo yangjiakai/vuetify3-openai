@@ -7,11 +7,14 @@
 import InputArea from "@/components/InputArea.vue";
 import MessageArea from "@/components/MessageArea.vue";
 
-const refChatArea = ref();
+const target = ref();
 
 // scroll to bottom
 const scrollToBottom = () => {
-  refChatArea.value.scrollTop = refChatArea.value.scrollHeight;
+  const chatArea = document.getElementById("chat-area");
+  chatArea?.scrollTo({
+    top: chatArea?.scrollHeight,
+  });
 };
 </script>
 
@@ -19,11 +22,13 @@ const scrollToBottom = () => {
   <!-- ---------------------------------------------- -->
   <!---Header Area -->
   <!-- ---------------------------------------------- -->
-  <v-toolbar color="primary"> </v-toolbar>
+  <v-toolbar color="primary"
+    ><v-btn color="success" @click="scrollToBottom">text</v-btn>
+  </v-toolbar>
   <!-- ---------------------------------------------- -->
   <!---Chat Area -->
   <!-- ---------------------------------------------- -->
-  <perfect-scrollbar ref="refChatArea" class="chat-area">
+  <perfect-scrollbar ref="target" id="chat-area" class="chat-area">
     <!-- ---------------------------------------------- -->
     <!---Message Area -->
     <!-- ---------------------------------------------- -->
@@ -35,7 +40,7 @@ const scrollToBottom = () => {
     <!-- ---------------------------------------------- -->
   </perfect-scrollbar>
   <v-sheet class="input-area">
-    <InputArea />
+    <InputArea @scroll="scrollToBottom" />
   </v-sheet>
 </template>
 

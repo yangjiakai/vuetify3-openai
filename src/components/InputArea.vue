@@ -34,7 +34,9 @@ const bot = ref({
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwrAiMevuwrbU9o0Ck2paVf4ufHUDb2dU48MEDrAlrQw&s",
 });
 
-const sendMessage = async () => {
+const emits = defineEmits(["scroll"]);
+
+const sendMessage = () => {
   // 判断是否为空
   if (!userMessage.value) return;
 
@@ -48,14 +50,6 @@ const sendMessage = async () => {
   // 请求AI回答
   getCompletion();
 
-  // 清空临时Message
-  chatStore.removeLatestMessage();
-
-  // 发送Ai Message
-  chatStore.addToHistory(createMessage(bot.value, aiMessage.value));
-
-  // 滚动到底部
-
   // 清空Input
   userMessage.value = "";
 };
@@ -63,8 +57,20 @@ const sendMessage = async () => {
 const getCompletion = async () => {
   const response = await createCompletion(userMessage.value);
   aiMessage.value = response.data.choices[0].text;
+  // 清空临时Message
+  chatStore.removeLatestMessage();
+  // 发送Ai Message
+  chatStore.addToHistory(createMessage(bot.value, aiMessage.value));
   // 错误处理
 };
+
+watch(
+  () => chatStore.chatHistory,
+  () => {
+    emits("scroll");
+  },
+  { deep: true }
+);
 </script>
 
 <template>

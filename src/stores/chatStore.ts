@@ -22,7 +22,7 @@ export const useChatStore = defineStore({
     },
     // 移除最后一条临时信息
     removeLatestMessage() {
-      this.chatHistory = this.chatHistory.slice(0, -1);
+      this.chatHistory.pop();
     },
   },
 });
