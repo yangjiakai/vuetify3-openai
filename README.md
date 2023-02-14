@@ -3,7 +3,7 @@
 </p>
 
 <h6 align='center'>
-<a href="https://marvelous-sunflower-cb8d70.netlify.app/">Live Demo</a>
+<a href="https://jovial-sawine-9381e1.netlify.app">Live Demo</a>
 </h6>
 
 <br>
