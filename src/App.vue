@@ -30,7 +30,7 @@ const customizeTheme = useCustomizeThemeStore();
     <!-- ---------------------------------------------- -->
     <!---CustomizationMenu -->
     <!-- ---------------------------------------------- -->
-    <!-- <CustomizationMenu /> -->
+    <CustomizationMenu />
   </v-app>
 </template>
 
