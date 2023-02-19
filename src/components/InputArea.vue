@@ -44,7 +44,7 @@ const sendMessage = () => {
   chatStore.addToHistory(createMessage(user.value, userMessage.value));
 
   // AI等待Message
-  aiMessage.value = "让我想想,请稍等......";
+  aiMessage.value = "Please wait a moment ......";
   chatStore.addToHistory(createMessage(bot.value, aiMessage.value));
 
   // 请求AI回答
@@ -91,7 +91,7 @@ watch(
 
     <template #append-inner>
       <v-icon class="mr-1">mdi-emoticon</v-icon>
-      <v-icon>mdi-send</v-icon>
+      <v-icon @click="sendMessage">mdi-send</v-icon>
     </template>
   </v-text-field>
 </template>
