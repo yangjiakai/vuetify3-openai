@@ -3,7 +3,7 @@
 </p>
 
 <h6 align='center'>
-<a href="https://jovial-sawine-9381e1.netlify.app">在线 Demo</a>
+<a href="https://openai.vuetify3.comp">在线 Demo</a>
 </h6>
 
 <br>
