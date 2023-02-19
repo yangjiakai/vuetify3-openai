@@ -3,7 +3,7 @@
 </p>
 
 <h6 align='center'>
-<a href="https://openai.vuetify3.comp">ライブ・デモ</a>
+<a href="https://openai.vuetify3.com">ライブ・デモ</a>
 </h6>
 
 <br>
