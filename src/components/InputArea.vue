@@ -56,7 +56,7 @@ const sendMessage = () => {
 
 const getCompletion = async () => {
   const response = await createCompletion(userMessage.value);
-  aiMessage.value = response.data.choices[0].text;
+  aiMessage.value = response.data.choices[0].message.content;
   // 清空临时Message
   chatStore.removeLatestMessage();
   // 发送Ai Message

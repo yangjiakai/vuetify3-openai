@@ -8,14 +8,17 @@ const openai = new OpenAIApi(configuration);
 //
 export const createCompletion: any = (keyword: string) => {
   console.log(keyword);
-
-  return openai.createCompletion({
-    model: "text-davinci-003",
-    // prompt: generatePrompt(keyword),
-    prompt: keyword,
-    temperature: 0.6,
-    max_tokens: 400,
+  return openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: keyword }],
   });
+  // return openai.createChatCompletion({
+  //   model: "gpt-3.5-turbo",
+  //   // prompt: generatePrompt(keyword),
+  //   messages: [{ role: "user", content: "Hello world" }],
+  //   // temperature: 0.6,
+  //   // max_tokens: 400,
+  // });
 };
 
 // openai.listModels
