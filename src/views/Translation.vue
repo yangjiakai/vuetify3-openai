@@ -11,40 +11,49 @@ const langs = [
   {
     code: "en",
     name: "English",
+    label: "English",
   },
   {
     code: "zh-CN",
     name: "Chinese Simplified",
+    label: "中文(简体)",
   },
   {
     code: "zh-TW",
     name: "Chinese Traditional",
+    label: "中文(繁體)",
   },
   {
     code: "ja",
     name: "Japanese",
+    label: "日本語",
   },
   {
     code: "ko",
     name: "Korean",
+    label: "한국어",
   },
   {
     code: "fr",
     name: "French",
+    label: "Français",
   },
   {
     code: "de",
     name: "German",
+    label: "Deutsch",
   },
   {
     code: "es",
     name: "Spanish",
+    label: "Español",
   },
 ];
 
 const currentLang = ref({
   code: "en",
   name: "English",
+  label: "English",
 });
 
 const setLang = (lang: any) => {
@@ -65,9 +74,10 @@ const prompt = computed(() => {
 });
 
 const translate = async () => {
-  console.log(baseContent.value);
-  console.log("----------");
-  console.log(prompt.value);
+  if (!baseContent.value) {
+    isBaseContentEmpty.value = true;
+    return;
+  }
 
   const response = await translationApi(baseContent.value, prompt.value);
   targetContent.value = response.data.choices[0].message.content?.replace(
@@ -76,12 +86,23 @@ const translate = async () => {
   );
   // 错误处理
 };
+
+const isBaseContentEmpty = ref(false);
 </script>
 
 <template>
   <div class="">
     <v-toolbar color="primary"> </v-toolbar>
     <v-sheet max-width="1600" class="mx-auto mt-5">
+      <v-alert
+        v-model="isBaseContentEmpty"
+        color="red"
+        theme="dark"
+        icon="mdi-alert"
+        border
+      >
+        翻译内容不能为空
+      </v-alert>
       <v-row no-gutters>
         <v-col cols="12" md="6">
           <v-card>
@@ -90,12 +111,12 @@ const translate = async () => {
               <v-menu location="bottom end" scroll-y>
                 <template v-slot:activator="{ props }">
                   <v-btn append-icon="mdi-menu-down" v-bind="props">
-                    <span class="text-body-2">{{ currentLang.name }}</span>
+                    <span class="text-body-2">{{ currentLang.label }}</span>
                   </v-btn>
                 </template>
                 <v-card>
                   <div v-for="lang in langs">
-                    <v-btn block @click="setLang(lang)">{{ lang.name }}</v-btn>
+                    <v-btn block @click="setLang(lang)">{{ lang.label }}</v-btn>
                   </div>
                 </v-card>
               </v-menu>
@@ -110,6 +131,7 @@ const translate = async () => {
                 rows="20"
                 auto-grow
                 color="grey"
+                @focus="isBaseContentEmpty = false"
               ></v-textarea>
             </div>
             <v-card-actions>
