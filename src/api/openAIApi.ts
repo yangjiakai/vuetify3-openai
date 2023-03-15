@@ -12,13 +12,16 @@ export const createCompletion: any = (keyword: string) => {
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: keyword }],
   });
-  // return openai.createChatCompletion({
-  //   model: "gpt-3.5-turbo",
-  //   // prompt: generatePrompt(keyword),
-  //   messages: [{ role: "user", content: "Hello world" }],
-  //   // temperature: 0.6,
-  //   // max_tokens: 400,
-  // });
+};
+
+export const translationApi: any = (content: string, prompt: string) => {
+  return openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [
+      { role: "user", content: prompt },
+      { role: "user", content: content },
+    ],
+  });
 };
 
 // openai.listModels

@@ -28,6 +28,15 @@ const router = createRouter({
       component: () =>
         import(/* webpackChunkName: "app-qa" */ "@/views/QA.vue"),
     },
+    // translation
+    {
+      path: "/translation",
+      name: "translation",
+      component: () =>
+        import(
+          /* webpackChunkName: "app-translation" */ "@/views/Translation.vue"
+        ),
+    },
   ],
 });
 

@@ -27,7 +27,7 @@ const channels = ref([
     id: 3,
     title: "translation",
     icon: "mdi-translate",
-    url: "/",
+    url: "/translation",
     active: false,
   },
   {
