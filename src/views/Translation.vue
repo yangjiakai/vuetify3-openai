@@ -7,7 +7,6 @@
 import { translationApi } from "@/api/openAIApi";
 import CopyBtn from "@/components/CopyBtn.vue";
 
-// 翻译目标语言的列表
 const langs = [
   {
     code: "en",
@@ -64,28 +63,25 @@ const setLang = (lang: any) => {
 const baseContent = ref("");
 const targetContent = ref("");
 
-const copy = () => {
-  console.log("copy");
-};
-
 const prompt = computed(() => {
-  {
-    return `I want you to act as an ${currentLang.value.name} translator, spelling corrector and improver. I will speak to you in any language and you will detect the language, translate it and answer in the corrected and improved version of my text, in ${currentLang.value.name}. I want you to replace my simplified A0-level words and sentences with more beautiful and elegant, upper level ${currentLang.value.name} words and sentences. Keep the meaning same, but make them more literary. I want you to only reply the correction, the improvements and nothing else, do not write explanations. My first sentence is “istanbulu cok seviyom burada olmak cok guzel”`;
-  }
+  return `Translate into ${currentLang.value.name}`;
+  return `I want you to act as an ${currentLang.value.name} translator, spelling corrector and improver. I will speak to you in any language and you will detect the language, translate it and answer in the corrected and improved version of my text, in ${currentLang.value.name}. I want you to replace my simplified A0-level words and sentences with more beautiful and elegant, upper level ${currentLang.value.name} words and sentences. Keep the meaning same, but make them more literary. I want you to only reply the correction, the improvements and nothing else, do not write explanations.”`;
 });
 
+const isLoading = ref(false);
+
 const translate = async () => {
-  if (!baseContent.value) {
+  if (baseContent.value === "") {
     isBaseContentEmpty.value = true;
     return;
   }
-
+  isLoading.value = true;
+  // Call the translation API with the base content and the prompt.
   const response = await translationApi(baseContent.value, prompt.value);
-  targetContent.value = response.data.choices[0].message.content?.replace(
-    /\\n/g,
-    ""
-  );
-  // 错误处理
+
+  // Replace any \n characters with a space.
+  targetContent.value = response.data.choices[0].message.content;
+  isLoading.value = false;
 };
 
 const isBaseContentEmpty = ref(false);
@@ -111,7 +107,13 @@ const isBaseContentEmpty = ref(false);
               <span class="text-body-2">检测语言</span>
 
               <v-spacer></v-spacer>
-              <v-btn color="blue-grey" @click="translate">翻译</v-btn>
+              <v-btn
+                :loading="isLoading"
+                :disabled="isLoading"
+                color="blue-grey"
+                @click="translate"
+                >翻译</v-btn
+              >
             </v-card-title>
             <div>
               <v-textarea

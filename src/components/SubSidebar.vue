@@ -6,6 +6,7 @@
 <script setup lang="ts">
 import { useCustomizeThemeStore } from "@/stores/customizeTheme";
 import { useLocale } from "vuetify";
+const route = useRoute();
 const customizeTheme = useCustomizeThemeStore();
 const { t } = useLocale();
 const channels = ref([
@@ -14,39 +15,32 @@ const channels = ref([
     title: "qa",
     icon: "mdi-forum",
     url: "/",
-    active: true,
   },
   {
     id: 2,
     title: "grammarCorrection",
     icon: "mdi-text-box-check-outline",
     url: "/",
-    active: false,
   },
   {
     id: 3,
     title: "translation",
     icon: "mdi-translate",
     url: "/translation",
-    active: false,
   },
   {
     id: 4,
     title: "explainCode",
     icon: "mdi-code-less-than-or-equal",
     url: "/",
-    active: false,
   },
   {
     id: 5,
     title: "sqlTranslate",
     icon: "mdi-database-search",
     url: "/",
-    active: false,
   },
 ]);
-
-const subNav = ref(true);
 </script>
 
 <template>
@@ -75,7 +69,7 @@ const subNav = ref(true);
           :prepend-icon="channel.icon"
           :title="t('$vuetify.nav.' + channel.title)"
           :to="channel.url"
-          :active="channel.active"
+          :active="route.path === channel.url"
           color="primary"
         ></v-list-item>
       </v-list>
