@@ -111,7 +111,7 @@ const isBaseContentEmpty = ref(false);
               <span class="text-body-2">检测语言</span>
 
               <v-spacer></v-spacer>
-              <v-btn color="blue" @click="translate">翻译</v-btn>
+              <v-btn color="blue-grey" @click="translate">翻译</v-btn>
             </v-card-title>
             <div>
               <v-textarea
@@ -125,6 +125,20 @@ const isBaseContentEmpty = ref(false);
               ></v-textarea>
             </div>
             <v-card-actions>
+              <v-tooltip location="bottom" text="语音输入">
+                <template #activator="{ props }">
+                  <v-btn color="blue-grey" v-bind="props" icon
+                    ><v-icon>mdi-microphone-outline</v-icon>
+                  </v-btn>
+                </template>
+              </v-tooltip>
+              <v-tooltip location="bottom" text="朗读">
+                <template #activator="{ props }">
+                  <v-btn color="blue-grey" v-bind="props" icon
+                    ><v-icon>mdi-volume-high</v-icon>
+                  </v-btn>
+                </template>
+              </v-tooltip>
               <v-spacer></v-spacer>
               <CopyBtn :text="baseContent" />
             </v-card-actions>
@@ -148,9 +162,6 @@ const isBaseContentEmpty = ref(false);
                 </v-card>
               </v-menu>
               <v-spacer></v-spacer>
-              <v-btn variant="text" icon color="blue"
-                ><v-icon>mdi-microphone-outline</v-icon></v-btn
-              >
             </v-card-title>
             <div>
               <v-textarea
@@ -163,6 +174,20 @@ const isBaseContentEmpty = ref(false);
               ></v-textarea>
             </div>
             <v-card-actions>
+              <v-tooltip location="bottom" text="语音输入">
+                <template #activator="{ props }">
+                  <v-btn color="blue-grey" v-bind="props" icon
+                    ><v-icon>mdi-microphone-outline</v-icon>
+                  </v-btn>
+                </template>
+              </v-tooltip>
+              <v-tooltip location="bottom" text="朗读">
+                <template #activator="{ props }">
+                  <v-btn color="blue-grey" v-bind="props" icon
+                    ><v-icon>mdi-volume-high</v-icon>
+                  </v-btn>
+                </template>
+              </v-tooltip>
               <v-spacer></v-spacer>
               <CopyBtn :text="targetContent" />
             </v-card-actions> </v-card
