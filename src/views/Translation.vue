@@ -89,7 +89,13 @@ const isBaseContentEmpty = ref(false);
 
 <template>
   <div class="">
-    <v-toolbar color="primary"> </v-toolbar>
+    <v-sheet color="white pa-10">
+      <h1>Tranlation</h1>
+      <p class="text-blue-grey">
+        Input anything and translate it into target language
+      </p>
+    </v-sheet>
+
     <v-sheet max-width="1600" color="transparent" class="mx-auto mt-5 pa-2">
       <v-alert
         v-model="isBaseContentEmpty"
