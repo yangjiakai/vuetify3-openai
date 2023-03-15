@@ -5,6 +5,7 @@
 -->
 <script setup lang="ts">
 import { translationApi } from "@/api/openAIApi";
+import CopyBtn from "@/components/CopyBtn.vue";
 
 // 翻译目标语言的列表
 const langs = [
@@ -93,7 +94,7 @@ const isBaseContentEmpty = ref(false);
 <template>
   <div class="">
     <v-toolbar color="primary"> </v-toolbar>
-    <v-sheet max-width="1600" class="mx-auto mt-5">
+    <v-sheet max-width="1600" color="transparent" class="mx-auto mt-5 pa-2">
       <v-alert
         v-model="isBaseContentEmpty"
         color="red"
@@ -103,23 +104,12 @@ const isBaseContentEmpty = ref(false);
       >
         翻译内容不能为空
       </v-alert>
-      <v-row no-gutters>
+      <v-row justify="center" dense>
         <v-col cols="12" md="6">
           <v-card>
-            <v-card-title class="d-flex align-center">
-              <span class="text-body-2">目标语言：</span>
-              <v-menu location="bottom end" scroll-y>
-                <template v-slot:activator="{ props }">
-                  <v-btn append-icon="mdi-menu-down" v-bind="props">
-                    <span class="text-body-2">{{ currentLang.label }}</span>
-                  </v-btn>
-                </template>
-                <v-card>
-                  <div v-for="lang in langs">
-                    <v-btn block @click="setLang(lang)">{{ lang.label }}</v-btn>
-                  </div>
-                </v-card>
-              </v-menu>
+            <v-card-title style="height: 60px" class="d-flex align-center">
+              <span class="text-body-2">检测语言</span>
+
               <v-spacer></v-spacer>
               <v-btn color="blue" @click="translate">翻译</v-btn>
             </v-card-title>
@@ -136,17 +126,31 @@ const isBaseContentEmpty = ref(false);
             </div>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue-grey" icon
-                ><v-icon>mdi-clipboard</v-icon>
-              </v-btn>
+              <CopyBtn :text="baseContent" />
             </v-card-actions>
           </v-card>
         </v-col>
+
         <v-col cols="12" md="6">
-          <v-card class="ml-2">
-            <v-card-title class="d-flex">
+          <v-card>
+            <v-card-title style="height: 60px" class="d-flex align-center">
+              <span class="text-body-2">目标语言：</span>
+              <v-menu location="bottom end" scroll-y>
+                <template v-slot:activator="{ props }">
+                  <v-btn append-icon="mdi-menu-down" v-bind="props">
+                    <span class="text-body-2">{{ currentLang.label }}</span>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <div v-for="lang in langs">
+                    <v-btn block @click="setLang(lang)">{{ lang.label }}</v-btn>
+                  </div>
+                </v-card>
+              </v-menu>
               <v-spacer></v-spacer>
-              <v-btn color="blue-grey">Copy</v-btn>
+              <v-btn variant="text" icon color="blue"
+                ><v-icon>mdi-microphone-outline</v-icon></v-btn
+              >
             </v-card-title>
             <div>
               <v-textarea
@@ -160,12 +164,9 @@ const isBaseContentEmpty = ref(false);
             </div>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue-grey" icon
-                ><v-icon>mdi-clipboard</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card></v-col
-        >
+              <CopyBtn :text="targetContent" />
+            </v-card-actions> </v-card
+        ></v-col>
       </v-row>
     </v-sheet>
   </div>
