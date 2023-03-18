@@ -14,13 +14,13 @@ const channels = ref([
     id: 1,
     title: "qa",
     icon: "mdi-forum",
-    url: "/",
+    url: "/qa",
   },
   {
     id: 2,
     title: "grammarCorrection",
     icon: "mdi-text-box-check-outline",
-    url: "/",
+    url: "/grammarCorrection",
   },
   {
     id: 3,
@@ -32,13 +32,13 @@ const channels = ref([
     id: 4,
     title: "explainCode",
     icon: "mdi-code-less-than-or-equal",
-    url: "/",
+    url: "/explainCode",
   },
   {
     id: 5,
     title: "sqlTranslate",
     icon: "mdi-database-search",
-    url: "/",
+    url: "/sqlTranslate",
   },
 ]);
 </script>

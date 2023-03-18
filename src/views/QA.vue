@@ -6,7 +6,9 @@
 <script setup lang="ts">
 import InputArea from "@/components/InputArea.vue";
 import MessageArea from "@/components/MessageArea.vue";
+import { useChatStore } from "@/stores/chatStore";
 
+const chatStore = useChatStore();
 const target = ref();
 
 // scroll to bottom
@@ -22,7 +24,9 @@ const scrollToBottom = () => {
   <!-- ---------------------------------------------- -->
   <!---Header Area -->
   <!-- ---------------------------------------------- -->
-  <v-toolbar elevation="10"> </v-toolbar>
+  <v-toolbar elevation="10">
+    <v-btn color="primary" @click="chatStore.clearHistory">清空记录</v-btn>
+  </v-toolbar>
   <!-- ---------------------------------------------- -->
   <!---Chat Area -->
   <!-- ---------------------------------------------- -->

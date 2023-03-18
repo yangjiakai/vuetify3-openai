@@ -7,6 +7,7 @@
 import type { User, Message } from "@/types/chatTypes";
 import { useChatStore } from "@/stores/chatStore";
 import { createCompletion } from "@/api/openAIApi";
+
 const chatStore = useChatStore();
 const userMessage = ref("");
 const aiMessage = ref("");
@@ -24,7 +25,8 @@ const createMessage = (user: User, text: string) => {
 const user = ref({
   id: 1,
   name: "YOU",
-  avatar: "https://avatars.githubusercontent.com/u/35951244?v=4",
+  avatar:
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvG_dOM4nJ0Jx_Eu0cOfqweC7cuDsjw9u5um-ClOM&s",
 });
 
 const bot = ref({
