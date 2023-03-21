@@ -8,7 +8,6 @@ import { useCustomizeThemeStore } from "@/stores/customizeTheme";
 import { useLocale } from "vuetify";
 const route = useRoute();
 const customizeTheme = useCustomizeThemeStore();
-const { t } = useLocale();
 const channels = ref([
   {
     id: 1,
@@ -67,7 +66,7 @@ const channels = ref([
           v-for="channel in channels"
           :key="channel.id"
           :prepend-icon="channel.icon"
-          :title="t('$vuetify.nav.' + channel.title)"
+          :title="$t('nav.' + channel.title)"
           :to="channel.url"
           :active="route.path === channel.url"
           color="primary"

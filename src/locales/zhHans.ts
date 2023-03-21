@@ -1,4 +1,5 @@
 export default {
+  $vuetify: {},
   common: {
     add: "新增",
     subNav: "二级菜单",

@@ -1,4 +1,5 @@
 export default {
+  $vuetify: {},
   common: {
     add: "Add",
     subNav: "Sub Nav",

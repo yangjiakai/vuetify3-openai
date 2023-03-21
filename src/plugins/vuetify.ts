@@ -1,12 +1,14 @@
 import { createVuetify } from "vuetify";
 import type { ThemeDefinition } from "vuetify";
-import locales from "@/locales";
+
 // import '@mdi/font/css/materialdesignicons.css'
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 import "vuetify/styles";
 import "@mdi/font/css/materialdesignicons.css";
-
+import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
+import { useI18n } from "vue-i18n";
+import i18n from "@/plugins/i18n";
 const Lighttheme: ThemeDefinition = {
   dark: false,
   variables: {},
@@ -39,8 +41,6 @@ const Darktheme: ThemeDefinition = {
   },
 };
 
-console.log(locales.messages);
-
 export default createVuetify({
   components,
   directives,
@@ -63,8 +63,6 @@ export default createVuetify({
     },
   },
   locale: {
-    locale: locales.locale,
-    fallback: locales.fallbackLocale,
-    messages: locales.messages,
+    adapter: createVueI18nAdapter({ i18n, useI18n }),
   },
 });
