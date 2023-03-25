@@ -69,7 +69,8 @@ const channels = ref([
           :title="$t('nav.' + channel.title)"
           :to="channel.url"
           :active="route.path === channel.url"
-          color="primary"
+          active-class="active-nav"
+          active-color="!important"
         ></v-list-item>
       </v-list>
     </perfect-scrollbar>
@@ -79,5 +80,12 @@ const channels = ref([
 <style scoped lang="scss">
 .scrollnav {
   height: calc(100vh - 64px);
+}
+
+.active-nav {
+  border-left: 5px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to bottom, #586ff5, #d53a9d);
+  color: #705cf6;
 }
 </style>
