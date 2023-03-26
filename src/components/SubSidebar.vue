@@ -5,7 +5,10 @@
 -->
 <script setup lang="ts">
 import { useCustomizeThemeStore } from "@/stores/customizeTheme";
-import { useLocale } from "vuetify";
+import ApiKeyDialog from "./ApiKeyDialog.vue";
+
+const keyDialog = ref(false);
+
 const route = useRoute();
 const customizeTheme = useCustomizeThemeStore();
 const channels = ref([
@@ -59,6 +62,11 @@ const channels = ref([
     <!-- ---------------------------------------------- -->
     <!---Control Area -->
     <!-- ---------------------------------------------- -->
+    <v-divider></v-divider>
+    <div class="pa-5">
+      <ApiKeyDialog />
+    </div>
+
     <!-- ---------------------------------------------- -->
     <!---Nav List -->
     <!-- ---------------------------------------------- -->
