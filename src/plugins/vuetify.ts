@@ -13,7 +13,7 @@ const Lighttheme: ThemeDefinition = {
   dark: false,
   variables: {},
   colors: {
-    primary: "#344767",
+    primary: "#705cf6",
     secondary: "#fcfbff",
     accent: "#6386e1",
     content: "#333333",
@@ -28,7 +28,7 @@ const Lighttheme: ThemeDefinition = {
 const Darktheme: ThemeDefinition = {
   dark: true,
   colors: {
-    primary: "#4EB4F4",
+    primary: "#705cf6",
     secondary: "#219BE8",
     // surface:toolbar/navigation-drawer/background,
     surface: "#202225",
