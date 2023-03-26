@@ -6,7 +6,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <v-navigation-drawer theme="dark" rail>
+  <v-navigation-drawer color="#111827" theme="dark" rail>
     <v-list>
       <v-list-item prepend-icon="mdi-view-dashboard" value="dashboard">
         <v-tooltip

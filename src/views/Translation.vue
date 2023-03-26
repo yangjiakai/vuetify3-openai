@@ -91,7 +91,7 @@ const isBaseContentEmpty = ref(false);
   <div class="">
     <v-sheet color="white pa-10">
       <h1>Tranlation</h1>
-      <p class="text-blue-grey">
+      <p class="text-primary">
         Input anything and translate it into target language
       </p>
     </v-sheet>
@@ -116,7 +116,7 @@ const isBaseContentEmpty = ref(false);
               <v-btn
                 :loading="isLoading"
                 :disabled="isLoading"
-                color="blue-grey"
+                color="primary"
                 @click="translate"
                 >翻译</v-btn
               >
@@ -135,14 +135,14 @@ const isBaseContentEmpty = ref(false);
             <v-card-actions>
               <v-tooltip location="bottom" text="语音输入">
                 <template #activator="{ props }">
-                  <v-btn color="blue-grey" v-bind="props" icon
+                  <v-btn color="primary" v-bind="props" icon
                     ><v-icon>mdi-microphone-outline</v-icon>
                   </v-btn>
                 </template>
               </v-tooltip>
               <v-tooltip location="bottom" text="朗读">
                 <template #activator="{ props }">
-                  <v-btn color="blue-grey" v-bind="props" icon
+                  <v-btn color="primary" v-bind="props" icon
                     ><v-icon>mdi-volume-high</v-icon>
                   </v-btn>
                 </template>
@@ -184,14 +184,14 @@ const isBaseContentEmpty = ref(false);
             <v-card-actions>
               <v-tooltip location="bottom" text="语音输入">
                 <template #activator="{ props }">
-                  <v-btn color="blue-grey" v-bind="props" icon
+                  <v-btn color="primary" v-bind="props" icon
                     ><v-icon>mdi-microphone-outline</v-icon>
                   </v-btn>
                 </template>
               </v-tooltip>
               <v-tooltip location="bottom" text="朗读">
                 <template #activator="{ props }">
-                  <v-btn color="blue-grey" v-bind="props" icon
+                  <v-btn color="primary" v-bind="props" icon
                     ><v-icon>mdi-volume-high</v-icon>
                   </v-btn>
                 </template>

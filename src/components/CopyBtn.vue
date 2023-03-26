@@ -43,7 +43,7 @@ const copyText = () => {
 
     <v-tooltip location="bottom" text="Copy">
       <template #activator="{ props }">
-        <v-btn color="blue-grey" v-bind="props" icon @click="copyText()"
+        <v-btn color="primary" v-bind="props" icon @click="copyText()"
           ><v-icon>mdi-content-copy</v-icon>
         </v-btn>
       </template>
