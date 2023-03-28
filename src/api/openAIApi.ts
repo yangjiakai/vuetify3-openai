@@ -23,6 +23,7 @@ export const createCompletion: any = (keyword: string) => {
 export const translationApi: any = (content: string, prompt: string) => {
   const openai = getOpenAI();
   return openai.createChatCompletion({
+    stream: true,
     model: "gpt-3.5-turbo",
     messages: [
       { role: "user", content: prompt },

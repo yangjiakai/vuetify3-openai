@@ -5,8 +5,9 @@
 -->
 <script setup lang="ts">
 import { translationApi } from "@/api/openAIApi";
+import { useChatStore } from "@/stores/chatStore";
 import CopyBtn from "@/components/CopyBtn.vue";
-
+const chatStore = useChatStore();
 const langs = [
   {
     code: "en",
@@ -70,17 +71,85 @@ const prompt = computed(() => {
 
 const isLoading = ref(false);
 
+// const completion = await fetch("https://api.openai.com/v1/chat/completions", {
+//   headers: {
+//     "Content-Type": "application/json",
+//     Authorization: `Bearer ${chatStore.apiKey}`,
+//   },
+//   method: "POST",
+//   body: JSON.stringify({
+//     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//     messages: [
+//       { role: "user", content: prompt.value },
+//       { role: "user", content: baseContent.value },
+//     ],
+//     model: "gpt-3.5-turbo",
+//     stream: true, // ここで stream を有効にする
+//   }),
+// });
+
 const translate = async () => {
   if (baseContent.value === "") {
     isBaseContentEmpty.value = true;
     return;
   }
   isLoading.value = true;
-  // Call the translation API with the base content and the prompt.
-  const response = await translationApi(baseContent.value, prompt.value);
 
-  // Replace any \n characters with a space.
-  targetContent.value = response.data.choices[0].message.content;
+  const completion = await fetch("https://api.openai.com/v1/chat/completions", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${chatStore.apiKey}`,
+    },
+    method: "POST",
+    body: JSON.stringify({
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      messages: [
+        { role: "user", content: prompt.value },
+        { role: "user", content: baseContent.value },
+      ],
+      model: "gpt-3.5-turbo",
+      stream: true, // ここで stream を有効にする
+    }),
+  });
+
+  // ReadableStream として使用する
+  const reader = completion.body?.getReader();
+
+  if (completion.status !== 200 || !reader) {
+    return "error";
+  }
+  const decoder = new TextDecoder("utf-8");
+  try {
+    // この read で再起的にメッセージを待機して取得します
+    const read = async (): Promise<any> => {
+      const { done, value } = await reader.read();
+      if (done) return reader.releaseLock();
+      const chunk = decoder.decode(value, { stream: true });
+      const jsons = chunk
+        .split("data:")
+        .map((data) => {
+          const trimData = data.trim();
+          if (trimData === "") return undefined;
+          if (trimData === "[DONE]") return undefined;
+          return JSON.parse(data.trim());
+        })
+        .filter((data) => data);
+      const streamMessage = jsons
+        .map((jn) =>
+          jn.choices.map((choice: any) => choice.delta.content).join("")
+        )
+        .join("");
+      const response = streamMessage;
+      targetContent.value = targetContent.value + response;
+      return read();
+    };
+    await read();
+  } catch (e) {
+    console.error(e);
+  }
+
+  // ReadableStream を最後は解放する
+  reader.releaseLock();
   isLoading.value = false;
 };
 
