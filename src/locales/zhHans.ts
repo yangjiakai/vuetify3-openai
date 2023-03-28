@@ -11,5 +11,6 @@ export default {
     translation: "翻译",
     explainCode: "解释代码",
     sqlTranslate: "SQL翻译",
+    modelList: "ModelList",
   },
 };

@@ -37,6 +37,12 @@ const router = createRouter({
           /* webpackChunkName: "app-translation" */ "@/views/Translation.vue"
         ),
     },
+    {
+      path: "/modelList",
+      name: "modelList",
+      component: () =>
+        import(/* webpackChunkName: "app-modelList" */ "@/views/ModelList.vue"),
+    },
   ],
 });
 

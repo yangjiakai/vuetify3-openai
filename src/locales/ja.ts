@@ -11,5 +11,6 @@ export default {
     translation: "翻訳",
     explainCode: "コードの説明",
     sqlTranslate: "Sql翻訳",
+    modelList: "ModelList",
   },
 };

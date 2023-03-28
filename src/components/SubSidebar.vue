@@ -20,9 +20,9 @@ const channels = ref([
   },
   {
     id: 2,
-    title: "grammarCorrection",
+    title: "modelList",
     icon: "mdi-text-box-check-outline",
-    url: "/grammarCorrection",
+    url: "/modelList",
   },
   {
     id: 3,
@@ -90,7 +90,7 @@ const channels = ref([
 
 <style scoped lang="scss">
 .scrollnav {
-  height: calc(100vh - 64px);
+  height: calc(100vh - 300px);
 }
 
 .active-nav {

@@ -1,14 +1,19 @@
 import { Configuration, OpenAIApi } from "openai";
 import { useChatStore } from "@/stores/chatStore";
+
 const chatStore = useChatStore();
 
-export const createCompletion: any = (keyword: string) => {
+// OpenAIApi 库动态地使用用户输入的 API 密钥
+// 每次请求 API 时创建一个新的 OpenAIApi 实例。虽然这样会产生一些开销，但在大多数情况下，这种开销不会对性能产生显著影响。
+const getOpenAI = () => {
   const configuration = new Configuration({
     apiKey: chatStore.apiKey,
   });
+  return new OpenAIApi(configuration);
+};
 
-  const openai = new OpenAIApi(configuration);
-
+export const createCompletion: any = (keyword: string) => {
+  const openai = getOpenAI();
   return openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: keyword }],
@@ -16,12 +21,7 @@ export const createCompletion: any = (keyword: string) => {
 };
 
 export const translationApi: any = (content: string, prompt: string) => {
-  const configuration = new Configuration({
-    apiKey: chatStore.apiKey,
-  });
-
-  const openai = new OpenAIApi(configuration);
-
+  const openai = getOpenAI();
   return openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
@@ -29,6 +29,11 @@ export const translationApi: any = (content: string, prompt: string) => {
       { role: "user", content: content },
     ],
   });
+};
+
+export const listModelsApi: any = () => {
+  const openai = getOpenAI();
+  return openai.listModels();
 };
 
 // openai.listModels

@@ -11,5 +11,6 @@ export default {
     translation: "Translation",
     explainCode: "Explain Code",
     sqlTranslate: "Sql Translate",
+    modelList: "ModelList",
   },
 };
