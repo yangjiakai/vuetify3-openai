@@ -8,6 +8,15 @@ import AutoImport from "unplugin-auto-import/vite";
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "./",
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://us-central1-texttospeech.googleapis.com/v1beta1",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
   plugins: [
     vue(),
     // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin

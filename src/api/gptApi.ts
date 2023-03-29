@@ -1,7 +1,9 @@
+import { useChatStore } from "@/stores/chatStore";
+const chatStore = useChatStore();
+
 const gptInstance = axios.create({
   baseURL: "https://api.openai.com",
   timeout: 100000,
-  withCredentials: true,
 });
 
 gptInstance.interceptors.request.use(
@@ -14,10 +16,28 @@ gptInstance.interceptors.request.use(
   }
 );
 
-export const getModelsApi = (token: string) => {
+export const getModelsApi = () => {
   return gptInstance.get("/v1/models", {
     headers: {
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + chatStore.apiKey,
+    },
+  });
+};
+
+// Get account balance information.
+export const getBalanceApi = () => {
+  return gptInstance.get("/dashboard/billing/credit_grants", {
+    headers: {
+      Authorization: "Bearer " + chatStore.apiKey,
+    },
+  });
+};
+
+// speech-to-text
+export const createTranscriptionApi = (formData: any) => {
+  return gptInstance.post("/v1/audio/transcriptions", formData, {
+    headers: {
+      Authorization: "Bearer " + chatStore.apiKey,
     },
   });
 };

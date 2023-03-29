@@ -5,6 +5,7 @@
 -->
 <script setup lang="ts">
 import { translationApi } from "@/api/openAIApi";
+import { createTranscriptionApi } from "@/api/gptApi";
 import { useChatStore } from "@/stores/chatStore";
 import CopyBtn from "@/components/CopyBtn.vue";
 const chatStore = useChatStore();
@@ -102,17 +103,15 @@ const translate = async () => {
     },
     method: "POST",
     body: JSON.stringify({
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       messages: [
         { role: "user", content: prompt.value },
         { role: "user", content: baseContent.value },
       ],
       model: "gpt-3.5-turbo",
-      stream: true, // ここで stream を有効にする
+      stream: true,
     }),
   });
 
-  // ReadableStream として使用する
   const reader = completion.body?.getReader();
 
   if (completion.status !== 200 || !reader) {
@@ -148,12 +147,129 @@ const translate = async () => {
     console.error(e);
   }
 
-  // ReadableStream を最後は解放する
   reader.releaseLock();
   isLoading.value = false;
 };
 
 const isBaseContentEmpty = ref(false);
+
+const recorder = ref<any>();
+const isRecording = ref(false);
+const audioUrl = ref(null);
+
+const startRecording = async () => {
+  // 获取用户媒体权限，视频的话参数{audio: true, video: true}
+  navigator.mediaDevices
+    .getUserMedia({ audio: true })
+    .then((stream) => {
+      // 创建媒体流
+      recorder.value = new MediaRecorder(stream);
+      const audioChunks = <any>[];
+      // 录音开始
+      recorder.value.start();
+      isRecording.value = true;
+      // 录音数据
+      recorder.value.ondataavailable = (e: any) => {
+        audioChunks.push(e.data);
+        console.log("录音数据");
+        console.log(e);
+      };
+      // 录音结束
+      recorder.value.onstop = async (e: any) => {
+        const audioBlob = new Blob(audioChunks);
+        const blob = new Blob(audioChunks, { type: "audio/wav" });
+        const file = new File([blob], "recording.wav", {
+          type: "audio/wav",
+        });
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("model", "whisper-1");
+
+        const res = await createTranscriptionApi(formData);
+
+        console.log(res);
+        baseContent.value = res.data.text;
+        console.log("录音结束");
+        console.log(e);
+      };
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const stopRecording = () => {
+  if (recorder.value) {
+    recorder.value.stop();
+    isRecording.value = false;
+  }
+};
+
+const record = () => {
+  if (isRecording.value) {
+    stopRecording();
+  } else {
+    startRecording();
+  }
+};
+
+const textToSpeech = async () => {
+  const googleInstance = axios.create({
+    baseURL: "https://us-central1-texttospeech.googleapis.com",
+    timeout: 100000,
+  });
+
+  const res = await googleInstance.post(
+    "/v1/chat/completions/text:synthesize",
+    {
+      audioConfig: {
+        audioEncoding: "LINEAR16",
+        effectsProfileId: ["small-bluetooth-speaker-class-device"],
+        pitch: 0,
+        speakingRate: 1,
+      },
+      input: {
+        text: "Google Cloud Text-to-Speech enables developers to synthesize natural-sounding speech with 100+ voices, available in multiple languages and variants. It applies DeepMind’s groundbreaking research in WaveNet and Google’s powerful neural networks to deliver the highest fidelity possible. As an easy-to-use API, you can create lifelike interactions with your users, across many applications and devices.",
+      },
+      voice: {
+        languageCode: "en-US",
+        name: "en-US-Neural2-J",
+      },
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": "AIzaSyBSXdkeyAvIZX5n_bj4KsqSjJf1W-_TfCntvk",
+      },
+    }
+  );
+  console.log(res);
+
+  // const res = await fetch(
+  //   `https://us-central1-texttospeech.googleapis.com/v1beta1/text:synthesize`,
+  //   {
+  //     method: "POST",
+  //     headers: {
+  //       "x-goog-api-key": "AIzaSyBSXdkeyAvIZX5n_bj4KsqSjJf1W-_TfCntvk",
+  //     },
+  //     body: JSON.stringify({
+  //       audioConfig: {
+  //         audioEncoding: "LINEAR16",
+  //         effectsProfileId: ["small-bluetooth-speaker-class-device"],
+  //         pitch: 0,
+  //         speakingRate: 1,
+  //       },
+  //       input: {
+  //         text: "Google Cloud Text-to-Speech enables developers to synthesize natural-sounding speech with 100+ voices, available in multiple languages and variants. It applies DeepMind’s groundbreaking research in WaveNet and Google’s powerful neural networks to deliver the highest fidelity possible. As an easy-to-use API, you can create lifelike interactions with your users, across many applications and devices.",
+  //       },
+  //       voice: {
+  //         languageCode: "en-US",
+  //         name: "en-US-Neural2-J",
+  //       },
+  //     }),
+  //   }
+  // );
+};
 </script>
 
 <template>
@@ -204,8 +320,9 @@ const isBaseContentEmpty = ref(false);
             <v-card-actions>
               <v-tooltip location="bottom" text="语音输入">
                 <template #activator="{ props }">
-                  <v-btn color="primary" v-bind="props" icon
-                    ><v-icon>mdi-microphone-outline</v-icon>
+                  <v-btn @click="record" color="primary" v-bind="props" icon>
+                    <v-icon v-if="isRecording">mdi-microphone</v-icon>
+                    <v-icon v-else>mdi-microphone-outline</v-icon>
                   </v-btn>
                 </template>
               </v-tooltip>
@@ -251,16 +368,13 @@ const isBaseContentEmpty = ref(false);
               ></v-textarea>
             </div>
             <v-card-actions>
-              <v-tooltip location="bottom" text="语音输入">
-                <template #activator="{ props }">
-                  <v-btn color="primary" v-bind="props" icon
-                    ><v-icon>mdi-microphone-outline</v-icon>
-                  </v-btn>
-                </template>
-              </v-tooltip>
               <v-tooltip location="bottom" text="朗读">
                 <template #activator="{ props }">
-                  <v-btn color="primary" v-bind="props" icon
+                  <v-btn
+                    @click="textToSpeech"
+                    color="primary"
+                    v-bind="props"
+                    icon
                     ><v-icon>mdi-volume-high</v-icon>
                   </v-btn>
                 </template>
