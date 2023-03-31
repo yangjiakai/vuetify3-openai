@@ -10,7 +10,8 @@ import {
   getBalanceApi,
   createTranscriptionApi,
 } from "@/api/gptApi";
-
+import { db } from "@/firebase";
+import { doc, getDoc, getDocs, collection } from "firebase/firestore";
 const chatStore = useChatStore();
 
 const models = ref<any>([]);
@@ -76,6 +77,22 @@ const stopRecording = () => {
   }
 };
 onMounted(() => {});
+
+const getTodos = async () => {
+  const docSnap = await getDocs(collection(db, "todos"));
+  console.log(docSnap.docs.map((doc) => doc.data()));
+};
+
+const getTodo = async () => {
+  const docRef = doc(db, "todos", "todo1");
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+};
 </script>
 
 <template>
@@ -87,7 +104,10 @@ onMounted(() => {});
         >获取BalanceInfo</v-btn
       >
       <v-btn color="blue" class="mr-2" @click="startRecording">开始录音</v-btn>
-      <v-btn color="success" @click="stopRecording">结束录音</v-btn>
+      <v-btn color="success" class="mr-2" @click="stopRecording"
+        >结束录音</v-btn
+      >
+      <v-btn color="success" class="mr-2" @click="getTodos">获取文档</v-btn>
     </v-card>
     <v-row align="center">
       <v-col cols="12" md="3">
@@ -114,6 +134,12 @@ onMounted(() => {});
             <p>{{ balanceInfo.total_granted }}</p>
             <p>{{ balanceInfo.total_used }}</p>
             <!-- {{ balanceInfo }} -->
+          </perfect-scrollbar>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="3">
+        <v-card max-width="400" height="500" class="mx-auto">
+          <perfect-scrollbar v-if="balanceInfo" class="models-container">
           </perfect-scrollbar>
         </v-card>
       </v-col>

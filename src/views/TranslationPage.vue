@@ -10,3 +10,4 @@
 </template>
 
 <style scoped lang="scss"></style>
+检测语言

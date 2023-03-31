@@ -7,6 +7,11 @@ const router = createRouter({
       path: "/",
       redirect: "/qa",
     },
+    {
+      path: "/login",
+      component: () =>
+        import(/* webpackChunkName: "app-login" */ "@/views/Login.vue"),
+    },
     // this page is a sample page for api calling
     {
       path: "/unsplash",
