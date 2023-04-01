@@ -1,0 +1,27 @@
+{
+  "uid": "5CTqUn5qlfR2fynkBk38mOTuHsF3",
+  "email": "yjkbako@gmail.com",
+  "emailVerified": true,
+  "displayName": "JK YANG (猫森)",
+  "isAnonymous": false,
+  "photoURL": "https://lh3.googleusercontent.com/a/AGNmyxZcE23yf7BAdb2S3fAGHBfQaUOkfjYtgsKHrDXLbx0=s96-c",
+  "providerData": [
+    {
+      "providerId": "google.com",
+      "uid": "100126582295873409579",
+      "displayName": "JK YANG (猫森)",
+      "email": "yjkbako@gmail.com",
+      "phoneNumber": null,
+      "photoURL": "https://lh3.googleusercontent.com/a/AGNmyxZcE23yf7BAdb2S3fAGHBfQaUOkfjYtgsKHrDXLbx0=s96-c"
+    }
+  ],
+  "stsTokenManager": {
+    "refreshToken": "APJWN8csuzb7kGKdE3-djBt3b-odIq42hyf6jQHf7OBjDvakEeT-PyZcxHlw2T3FkcdoMUOKxY-L1uw5SeSDOSoL56FDur996K324r3LczX5BrF9djvRo1BOSqKv-wQ0EOEABLEyABQ2sxCmH_rgIZEjF-19hyEcApFnS-RbdmfBrvqzdkDL8n7aoLkMXSDqbh7BHeT-zrVVANcFzTa5gnht1Gf4XEnnRIbZPMj_0xAYzjFoohWt1ChihTwYrpz6cXaQWryjrkOrr8D56kne5hIekCVwR4JmiNthrN6iIjWwVQsBsE3SizrAkms_Sl84IGbpQXgH4Kw1FeAVahi76RGr4C4D0CeXzcluy0ZvmbGe8AI8pgEdHwSArtNiMwyx0IZtD33fR8PuDnFA6NRsFfDJEK0XCoBtYw",
+    "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OWVkMTU1OTdhYjM1Zjc4MjljZTc0NDMwN2I3OTNiN2ViZWIyZjAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiSksgWUFORyAo54yr5qOuKSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BR05teXhaY0UyM3lmN0JBZGIyUzNmQUdIQmZRYVVPa2ZqWXRnc0tIckRYTGJ4MD1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9iYWtvLXRvZG8iLCJhdWQiOiJiYWtvLXRvZG8iLCJhdXRoX3RpbWUiOjE2ODAyODM1MjgsInVzZXJfaWQiOiI1Q1RxVW41cWxmUjJmeW5rQmszOG1PVHVIc0YzIiwic3ViIjoiNUNUcVVuNXFsZlIyZnlua0JrMzhtT1R1SHNGMyIsImlhdCI6MTY4MDI4MzUyOCwiZXhwIjoxNjgwMjg3MTI4LCJlbWFpbCI6Inlqa2Jha29AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMDAxMjY1ODIyOTU4NzM0MDk1NzkiXSwiZW1haWwiOlsieWprYmFrb0BnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.Zuad-j8E7YmxAoLxwAPSG4SOOubw-g3LIhNCWk3hY4SRmkVBKvdOqWypDaHx2g9-8J2yG0umt7SWZ0qd9urxRDJPCFPQrAGJ3fOwMNvTvqyKUAQcaJLiRh-6M6q12k7TqZ9Bq_CkY3KzzxbglgNIeCX-tNPMoLg6D59kVkRS7hHKxLkIGye2uUOC644tJj3kV0QR7eeIt4FfYH3_NB7dx-S0tngx_tFKnnDuoxj-sGRPEudeqZpMln0ESK-Pa_iCX3oGkuoyQOmtEANRlhI1I-ikXyGBagF2Cj3Zi9O2yXMPjk3x36LcTOQYU9NCSsCIRBfVQxbWrpCmXTuOPyV2mQ",
+    "expirationTime": 1680287129380
+  },
+  "createdAt": "1680263591223",
+  "lastLoginAt": "1680283528648",
+  "apiKey": "AIzaSyDrMcACdbGye5R93Gu9zplsAHLARdKvXYw",
+  "appName": "[DEFAULT]"
+}

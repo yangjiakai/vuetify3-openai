@@ -5,8 +5,8 @@
 -->
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { auth } from "../firebase";
-import { doc, getDoc, getDocs, collection } from "firebase/firestore";
+import { auth, db } from "../firebase";
+import { doc, getDoc, setDoc, getDocs, collection } from "firebase/firestore";
 
 import {
   getAuth,
@@ -15,6 +15,7 @@ import {
   GithubAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  type User,
 } from "firebase/auth";
 const router = useRouter();
 const email = ref("");
@@ -35,29 +36,64 @@ const register = () => {
     });
 };
 
-const signInWithGoolgle = () => {
+const signInWithGoolgle = async () => {
+  // TODO Loading开始
+  // 进行Google授权登录
   const provider = new GoogleAuthProvider();
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential?.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      console.log(user);
+  const userCredential = await signInWithPopup(auth, provider);
+  // 登录成功可获取Google用户信息
+  const { user } = userCredential;
+  // 从userCollection中获取该用户信息
+  const userDoc = await getDoc(doc(db, "users", user.uid));
+  // 如果userCollection不存在该用户,就创建一个
+  if (!userDoc.exists()) {
+    const profile = await addUserToUsersCollectionGoogle(user);
+    // 如果用户创建失败,就报错
+    if (!profile.created) {
+      console.log("something went wrong");
+      return;
+    }
+  }
+};
 
-      // ...
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });
+interface GoogleUser {
+  uid: string;
+  email: string;
+  emailVerified: boolean;
+  displayName: string;
+  isAnonymous: boolean;
+  photoURL: string;
+  providerData: any[];
+  stsTokenManager: Object;
+  createdAt: Date;
+  lastLoginAt: Date;
+  apiKey: string;
+  appName: string;
+}
+
+const addUserToUsersCollectionGoogle = async (user: User) => {
+  const userDocRef = doc(db, "users", user.uid);
+  const { uid, email, displayName, photoURL } = user;
+  const userDocData = {
+    uid,
+    email,
+    displayName,
+    photoURL,
+    created: new Date(),
+    disabled: false,
+    verified: true,
+    roles: [],
+  };
+
+  try {
+    await setDoc(userDocRef, userDocData);
+    return { created: true };
+  } catch (error) {
+    // TODO 错误处理
+    return {
+      created: false,
+    };
+  }
 };
 
 const isLoggedIn = ref(false);
@@ -81,7 +117,7 @@ onMounted(() => {
 const logout = () => {
   auth.signOut().then(
     () => {
-      router.push("/");
+      // router.push("/");
     },
     (error) => {
       console.log(error);
