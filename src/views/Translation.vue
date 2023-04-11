@@ -276,6 +276,7 @@ const textToSpeech = async () => {
   <div class="">
     <v-sheet color="white pa-10">
       <h1>Tranlation</h1>
+      <v-divider></v-divider>
       <p class="text-primary">
         Input anything and translate it into target language
       </p>

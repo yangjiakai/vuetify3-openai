@@ -22,12 +22,7 @@ const email = ref("");
 const password = ref("");
 const register = () => {
   createUserWithEmailAndPassword(auth, email.value, password.value)
-    .then((userCredential) => {
-      // Signed in
-      console.log("Success");
-      // const user = userCredential.user;
-      // ...
-    })
+    .then((userCredential) => {})
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -40,6 +35,24 @@ const signInWithGoolgle = async () => {
   // TODO Loading开始
   // 进行Google授权登录
   const provider = new GoogleAuthProvider();
+  const userCredential = await signInWithPopup(auth, provider);
+  // 登录成功可获取Google用户信息
+  const { user } = userCredential;
+  // 从userCollection中获取该用户信息
+  const userDoc = await getDoc(doc(db, "users", user.uid));
+  // 如果userCollection不存在该用户,就创建一个
+  if (!userDoc.exists()) {
+    const profile = await addUserToUsersCollectionGoogle(user);
+    // 如果用户创建失败,就报错
+    if (!profile.created) {
+      console.log("something went wrong");
+      return;
+    }
+  }
+};
+
+const signInWithGithub = async () => {
+  const provider = new GithubAuthProvider();
   const userCredential = await signInWithPopup(auth, provider);
   // 登录成功可获取Google用户信息
   const { user } = userCredential;
@@ -69,6 +82,17 @@ interface GoogleUser {
   lastLoginAt: Date;
   apiKey: string;
   appName: string;
+}
+
+interface UserDocData {
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL: string;
+  created: Date;
+  disabled: boolean;
+  verified: boolean;
+  roles: string[];
 }
 
 const addUserToUsersCollectionGoogle = async (user: User) => {
