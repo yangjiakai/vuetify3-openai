@@ -1,26 +1,39 @@
+/**
+ * plugins/vuetify.js
+ *
+ * Framework documentation: https://vuetifyjs.com`
+ */
+
+// Styles
+import "@mdi/font/css/materialdesignicons.css";
+import "vuetify/styles";
+// Composables
 import { createVuetify } from "vuetify";
 import type { ThemeDefinition } from "vuetify";
-
-// import '@mdi/font/css/materialdesignicons.css'
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
-import "vuetify/styles";
-import "@mdi/font/css/materialdesignicons.css";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 import { useI18n } from "vue-i18n";
 import i18n from "@/plugins/i18n";
+import * as labs from "vuetify/labs/components";
+
+// https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
+
 const Lighttheme: ThemeDefinition = {
   dark: false,
-  variables: {},
+  variables: {
+    "high-emphasis-opacity": 1,
+  },
   colors: {
-    primary: "#705cf6",
-    secondary: "#fcfbff",
-    accent: "#6386e1",
-    content: "#333333",
-    background: "#F8F9FA",
+    background: "#f2f5f8",
+    surface: "#ffffff",
+    primary: "#344767",
+    secondary: "#334155",
+    accent: "#705CF6",
     error: "#ef476f",
     info: "#2196F3",
     success: "#06d6a0",
+    "on-success": "#ffffff",
     warning: "#ffd166",
   },
 };
@@ -28,21 +41,23 @@ const Lighttheme: ThemeDefinition = {
 const Darktheme: ThemeDefinition = {
   dark: true,
   colors: {
-    primary: "#705cf6",
-    secondary: "#219BE8",
-    // surface:toolbar/navigation-drawer/background,
-    surface: "#202225",
-    title: "#e7e3FC",
-    content: "#E7E3FC",
-    accent: "#6386e1",
-    error: "#e47171",
-    info: "#24a6c5",
-    background: "#36393F",
+    background: "#111b27",
+    surface: "#1E293B",
+    primary: "#705CF6",
+    secondary: "#598EF3",
+    accent: "#705CF6",
+    error: "#FF5252",
+    info: "#2196F3",
+    success: "#4CAF50",
+    warning: "#FFC107",
   },
 };
 
 export default createVuetify({
-  components,
+  components: {
+    ...components,
+    ...labs,
+  },
   directives,
   theme: {
     themes: {
@@ -53,13 +68,26 @@ export default createVuetify({
   defaults: {
     VBtn: {
       rounded: "md",
-      flat: true,
       fontWeight: "400",
       letterSpacing: "0",
     },
-    VCard: {
-      flat: true,
+    VCard: {},
+    VSheet: {
       elevation: 1,
+    },
+    VTable: {
+      elevation: 1,
+    },
+
+    VDataTable: {
+      fixedHeader: true,
+      noDataText: "Results not found",
+    },
+    VTextField: {
+      variant: "solo",
+    },
+    VSelect: {
+      variant: "solo",
     },
   },
   locale: {

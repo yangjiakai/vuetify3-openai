@@ -1,72 +1,55 @@
-import { fileURLToPath, URL } from "node:url";
-
-import { defineConfig } from "vite";
+/// <reference types="vitest" />
+// Plugins
 import vue from "@vitejs/plugin-vue";
 import vuetify from "vite-plugin-vuetify";
+
 import AutoImport from "unplugin-auto-import/vite";
+
+// Utilities
+import { defineConfig } from "vite";
+import { fileURLToPath, URL } from "node:url";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./",
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://us-central1-texttospeech.googleapis.com/v1beta1",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
-  },
   plugins: [
     vue(),
     // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
     vuetify({
       autoImport: true,
+      styles: { configFile: "src/styles/variables.scss" },
     }),
     AutoImport({
-      dts: "src/auto-import.d.ts",
-      include: [
-        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-        /\.vue$/,
-        /\.vue\?vue/, // .vue
-        /\.md$/, // .md
-      ],
-      imports: [
-        // presets
-        "vue",
-        "vue-router",
-        "pinia",
-        // custom
-        {
-          "@vueuse/core": [
-            // named imports
-            "useMouse", // import { useMouse } from '@vueuse/core',
-            // alias
-            ["useFetch", "useMyFetch"], // import { useFetch as useMyFetch } from '@vueuse/core',
-          ],
-          axios: [
-            // default imports
-            ["default", "axios"], // import { default as axios } from 'axios',
-          ],
-          "[package-name]": [
-            "[import-names]",
-            // alias
-            ["[from]", "[alias]"],
-          ],
-        },
-      ],
-      eslintrc: {
-        enabled: false, // Default `false`
-        filepath: "./.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
-        globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
-      },
+      imports: ["vue", "vue-router", "pinia"],
     }),
   ],
-
+  define: { "process.env": {} },
+  test: {
+    globals: true,
+    environment: "happy-dom",
+  },
   resolve: {
     alias: {
+      "~": fileURLToPath(new URL("./", import.meta.url)),
       "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@data": fileURLToPath(new URL("./src/data", import.meta.url)),
     },
     extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
   },
+  server: {
+    port: 4399,
+    proxy: {
+      "/sdApi": {
+        target: "http://me.yunrobot.cn:7860",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/sdApi/, ""),
+      },
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      scss: { charset: false },
+      css: { charset: false },
+    },
+  },
+  cacheDir: ".vite_cache", // 将缓存目录设置为项目根目录下的 .vite_cache 文件夹
 });

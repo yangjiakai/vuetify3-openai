@@ -4,7 +4,22 @@ import MainSidebar from "@/components/MainSidebar.vue";
 import SubSidebar from "@/components/SubSidebar.vue";
 import AppBar from "@/components/AppBar.vue";
 import CustomizationMenu from "@/components/CustomizationMenu.vue";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
+import { useAuthStore } from "@/stores/authStore";
+const authStore = useAuthStore();
 const customizeTheme = useCustomizeThemeStore();
+
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
+    alert("7777");
+    if (user) {
+      authStore.setLoggedIn(true);
+    } else {
+      authStore.setLoggedIn(false);
+    }
+  });
+});
 </script>
 
 <template>
