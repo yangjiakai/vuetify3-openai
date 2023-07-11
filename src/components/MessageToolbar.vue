@@ -4,13 +4,11 @@
 * @Description: 
 -->
 <script setup lang="ts">
-import MessageToolbar from "@/components/MessageToolbar.vue";
+import { Icon } from "@iconify/vue";
 </script>
 
 <template>
-  <div class="">
-    <MessageToolbar />
-  </div>
+  <div class=""></div>
 </template>
 
 <style scoped lang="scss"></style>
