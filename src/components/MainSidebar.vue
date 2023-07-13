@@ -21,6 +21,11 @@
         to="/login"
         value="unsplash"
       ></v-list-item>
+      <v-list-item
+        prepend-icon="mdi-image"
+        to="/chat"
+        value="unsplash"
+      ></v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>

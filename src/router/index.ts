@@ -40,7 +40,19 @@ const router = createRouter({
         ),
       meta: { requiresAuth: true },
     },
-
+    // chat
+    {
+      path: "/chat",
+      redirect: '/chat/1' // 默认跳转到第一个chat
+    },
+    // chat :id
+    {
+      path: "/chat/:id",
+      name: "chat-id",
+      component: () =>
+        import(/* webpackChunkName: "app-chat-id" */ "@/views/Chat.vue"),
+      meta: { requiresAuth: true },
+    },
   ],
 });
 
