@@ -8,7 +8,7 @@
 <template>
   <v-navigation-drawer color="#111827" theme="dark" rail>
     <v-list nav>
-      <v-list-item prepend-icon="mdi-view-dashboard" value="dashboard">
+      <v-list-item prepend-icon="mdi-view-dashboard" value="qa" to="/qa">
         <v-tooltip
           activator="parent"
           location="bottom"
@@ -22,9 +22,9 @@
         value="unsplash"
       ></v-list-item>
       <v-list-item
-        prepend-icon="mdi-image"
+        prepend-icon="mdi-chat"
         to="/chat"
-        value="unsplash"
+        value="chat"
       ></v-list-item>
     </v-list>
   </v-navigation-drawer>

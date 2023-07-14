@@ -16,6 +16,7 @@ export const useChatHistoryStore = defineStore({
                 id: 1,
                 title: "New Chat",
                 isMenuEdit: false,
+                idMenuDeleteConfirm: false,
                 messages: []
             },
         ],
@@ -56,6 +57,7 @@ export const useChatHistoryStore = defineStore({
                 id: id,
                 title: title || `New Chat`,
                 isMenuEdit: false,
+                idMenuDeleteConfirm: false,
             }
 
             this.chatList.unshift(newChat);
@@ -77,11 +79,26 @@ export const useChatHistoryStore = defineStore({
         },
 
         // 更新聊天菜单标题编辑状态
-        updateMenu(id: number) {
+        updateMenuIsMenuEdit(id: number, flag: boolean) {
             const editMenu = this.chatList.find((chat) => chat.id === id);
-            ;
             if (editMenu) {
-                editMenu.isMenuEdit = !editMenu.isMenuEdit;
+                editMenu.isMenuEdit = flag;
+            }
+        },
+
+        // 更新聊天菜单标题
+        updateMenuTitle(id: number, title: string) {
+            const editMenu = this.chatList.find((chat) => chat.id === id);
+            if (editMenu) {
+                editMenu.title = title;
+                editMenu.isMenuEdit = false;
+            }
+        },
+
+        updateMenuDeleteConfirm(id: number, flag: boolean) {
+            const editMenu = this.chatList.find((chat) => chat.id === id);
+            if (editMenu) {
+                editMenu.idMenuDeleteConfirm = flag;
             }
         },
 

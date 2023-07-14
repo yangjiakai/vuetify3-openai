@@ -4,13 +4,13 @@
 * @Description: 
 -->
 <script setup lang="ts">
-import MessageToolbar from "@/components/MessageToolbar.vue";
+import FeatureCard from "@/components/FeatureCard.vue";
 </script>
 
 <template>
-  <div class="">
-    <MessageToolbar />
-  </div>
+  <v-container>
+    <FeatureCard title="Test1"> </FeatureCard>
+  </v-container>
 </template>
 
 <style scoped lang="scss"></style>

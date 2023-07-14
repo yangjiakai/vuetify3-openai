@@ -5,46 +5,10 @@
 -->
 <script setup lang="ts">
 import { useCustomizeThemeStore } from "@/stores/customizeTheme";
-import ApiKeyDialog from "./ApiKeyDialog.vue";
 import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 const chatHistoryStore = useChatHistoryStore();
 const router = useRouter();
-const keyDialog = ref(false);
-
-const route = useRoute();
 const customizeTheme = useCustomizeThemeStore();
-const channels = ref([
-  {
-    id: 1,
-    title: "qa",
-    icon: "mdi-forum",
-    url: "/qa",
-  },
-  {
-    id: 2,
-    title: "modelList",
-    icon: "mdi-text-box-check-outline",
-    url: "/modelList",
-  },
-  {
-    id: 3,
-    title: "translation",
-    icon: "mdi-translate",
-    url: "/translation",
-  },
-  {
-    id: 4,
-    title: "explainCode",
-    icon: "mdi-code-less-than-or-equal",
-    url: "/explainCode",
-  },
-  {
-    id: 5,
-    title: "sqlTranslate",
-    icon: "mdi-database-search",
-    url: "/sqlTranslate",
-  },
-]);
 
 const chatMenus = computed(() => {
   return chatHistoryStore.chatList.map((chat) => {
@@ -53,38 +17,58 @@ const chatMenus = computed(() => {
       title: chat.title,
       icon: "mdi-chat",
       isMenuEdit: chat.isMenuEdit,
+      idMenuDeleteConfirm: chat.idMenuDeleteConfirm,
       url: "/chat/" + chat.id,
     };
   });
 });
+
+const editTile = ref(chatHistoryStore.getChatActive.title);
 
 const navigateTo = (id) => {
   chatHistoryStore.activeChatMenuId = id;
   router.push(`/chat/${id}`);
 };
 
+const refEditInput = ref();
 const handleEdit = (id) => {
-  chatHistoryStore.updateMenu(id);
+  chatHistoryStore.updateMenuIsMenuEdit(id, true);
+  nextTick(() => {
+    refEditInput.value[0]?.focus();
+  });
 };
 
+// 确认更新菜单标题
+const editConfirm = (id) => {
+  console.log("editConfirm");
+
+  chatHistoryStore.updateMenuTitle(id, editTile.value);
+};
+
+// 取消更新菜单标题
+const editCancel = (id) => {
+  chatHistoryStore.updateMenuIsMenuEdit(id, false);
+};
+
+// 切换确认删除视图
 const handleDelete = (id) => {
+  chatHistoryStore.updateMenuDeleteConfirm(id, true);
+};
+
+// 确认删除当前菜单
+const deleteConfirm = (id) => {
   chatHistoryStore.deleteMenu(id);
 };
 
-const editConfirm = (id) => {
-  chatHistoryStore.updateMenu(id);
+// 取消更新菜单标题
+const deleteCancel = (id) => {
+  chatHistoryStore.updateMenuDeleteConfirm(id, false);
 };
-
-const editCancel = (id) => {
-  chatHistoryStore.updateMenu(id);
-};
-
-const editTile = ref(chatHistoryStore.getChatActive.title);
 
 watch(
-  () => chatHistoryStore.activeChatMenuId,
+  () => chatHistoryStore.getChatActive(),
   (newVal) => {
-    editTile.value = newVal;
+    editTile.value = newVal?.title;
   }
 );
 </script>
@@ -120,18 +104,31 @@ watch(
           :active="chatMenu.id === chatHistoryStore.activeChatMenuId"
           @click="navigateTo(chatMenu.id)"
           active-class="active-nav"
-          active-color="!important"
           density="compact"
           rounded="xl"
+          @blur="editCancel(chatMenu.id)"
         >
           <v-list-item-title v-if="chatMenu.isMenuEdit">
-            <input type="text" style="width: 100px" v-modol="editTile" />
+            <v-text-field
+              ref="refEditInput"
+              v-model="editTile"
+              class="mr-2"
+              hide-details
+              autofocus
+              density="compact"
+              @keyup.enter="editConfirm(chatMenu.id)"
+            ></v-text-field>
           </v-list-item-title>
+          <v-list-item-title v-else-if="chatMenu.idMenuDeleteConfirm">
+            {{ `删除"${chatMenu.title}"?` }}</v-list-item-title
+          >
           <v-list-item-title v-else> {{ chatMenu.title }}</v-list-item-title>
           <template v-slot:append>
+            <!-- 普通状态 -->
             <div
               v-if="
                 chatMenu.id === chatHistoryStore.activeChatMenuId &&
+                !chatMenu.idMenuDeleteConfirm &&
                 !chatMenu.isMenuEdit
               "
             >
@@ -148,7 +145,7 @@ watch(
               <v-btn
                 color="grey-lighten-1"
                 variant="text"
-                @click="handleDelete(menu.id)"
+                @click="handleDelete(chatMenu.id)"
                 size="20"
               >
                 <template v-slot:prepend>
@@ -156,16 +153,18 @@ watch(
                 </template>
               </v-btn>
             </div>
+            <!-- 编辑确认状态 -->
             <div
               v-else-if="
                 chatMenu.id === chatHistoryStore.activeChatMenuId &&
+                !chatMenu.idMenuDeleteConfirm &&
                 chatMenu.isMenuEdit
               "
             >
               <v-btn
                 color="grey-lighten-1"
                 variant="text"
-                @click="editConfirm(menu.id)"
+                @click="editConfirm(chatMenu.id)"
                 size="20"
               >
                 <template v-slot:prepend>
@@ -176,6 +175,34 @@ watch(
                 color="grey-lighten-1"
                 variant="text"
                 @click="editCancel(chatMenu.id)"
+                size="20"
+              >
+                <template v-slot:prepend>
+                  <v-icon size="18">mdi-close</v-icon>
+                </template>
+              </v-btn>
+            </div>
+            <!--删除确认状态 -->
+            <div
+              v-else-if="
+                chatMenu.id === chatHistoryStore.activeChatMenuId &&
+                chatMenu.idMenuDeleteConfirm
+              "
+            >
+              <v-btn
+                color="grey-lighten-1"
+                variant="text"
+                @click="deleteConfirm(chatMenu.id)"
+                size="20"
+              >
+                <template v-slot:prepend>
+                  <v-icon size="18">mdi-check</v-icon>
+                </template>
+              </v-btn>
+              <v-btn
+                color="grey-lighten-1"
+                variant="text"
+                @click="deleteCancel(chatMenu.id)"
                 size="20"
               >
                 <template v-slot:prepend>
