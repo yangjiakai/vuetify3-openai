@@ -31,6 +31,8 @@ const navigateTo = (id) => {
 };
 
 const refEditInput = ref();
+
+// 切换编辑菜单视图
 const handleEdit = (id) => {
   chatHistoryStore.updateMenuIsMenuEdit(id, true);
   nextTick(() => {
@@ -94,124 +96,125 @@ watch(
           </template>
           New Chat</v-btn
         >
-
-        <v-list-item
-          v-for="chatMenu in chatMenus"
-          class="pl-5"
-          :key="chatMenu.id"
-          :prepend-icon="chatMenu.icon"
-          :to="chatMenu.url"
-          :active="chatMenu.id === chatHistoryStore.activeChatMenuId"
-          @click="navigateTo(chatMenu.id)"
-          active-class="active-nav"
-          density="compact"
-          rounded="xl"
-          @blur="editCancel(chatMenu.id)"
-        >
-          <v-list-item-title v-if="chatMenu.isMenuEdit">
-            <v-text-field
-              ref="refEditInput"
-              v-model="editTile"
-              class="mr-2"
-              hide-details
-              autofocus
-              density="compact"
-              @keyup.enter="editConfirm(chatMenu.id)"
-            ></v-text-field>
-          </v-list-item-title>
-          <v-list-item-title v-else-if="chatMenu.idMenuDeleteConfirm">
-            {{ `删除"${chatMenu.title}"?` }}</v-list-item-title
+        <transition-group name="slide-x" tag="div">
+          <v-list-item
+            v-for="chatMenu in chatMenus"
+            class="pl-5"
+            :key="chatMenu.id"
+            :prepend-icon="chatMenu.icon"
+            :to="chatMenu.url"
+            :active="chatMenu.id === chatHistoryStore.activeChatMenuId"
+            @click="navigateTo(chatMenu.id)"
+            active-class="active-nav"
+            density="compact"
+            rounded="xl"
+            @blur="editCancel(chatMenu.id)"
           >
-          <v-list-item-title v-else> {{ chatMenu.title }}</v-list-item-title>
-          <template v-slot:append>
-            <!-- 普通状态 -->
-            <div
-              v-if="
-                chatMenu.id === chatHistoryStore.activeChatMenuId &&
-                !chatMenu.idMenuDeleteConfirm &&
-                !chatMenu.isMenuEdit
-              "
+            <v-list-item-title v-if="chatMenu.isMenuEdit">
+              <v-text-field
+                ref="refEditInput"
+                v-model="editTile"
+                class="mr-2"
+                hide-details
+                autofocus
+                density="compact"
+                @keyup.enter="editConfirm(chatMenu.id)"
+              ></v-text-field>
+            </v-list-item-title>
+            <v-list-item-title v-else-if="chatMenu.idMenuDeleteConfirm">
+              {{ `删除 "${chatMenu.title}"?` }}</v-list-item-title
             >
-              <v-btn
-                color="grey-lighten-1"
-                variant="text"
-                @click="handleEdit(chatMenu.id)"
-                size="20"
+            <v-list-item-title v-else> {{ chatMenu.title }}</v-list-item-title>
+            <template v-slot:append>
+              <!-- 普通状态 -->
+              <div
+                v-if="
+                  chatMenu.id === chatHistoryStore.activeChatMenuId &&
+                  !chatMenu.idMenuDeleteConfirm &&
+                  !chatMenu.isMenuEdit
+                "
               >
-                <template v-slot:prepend>
-                  <v-icon size="18">mdi-file-edit-outline</v-icon>
-                </template>
-              </v-btn>
-              <v-btn
-                color="grey-lighten-1"
-                variant="text"
-                @click="handleDelete(chatMenu.id)"
-                size="20"
+                <v-btn
+                  color="grey-lighten-1"
+                  variant="text"
+                  @click="handleEdit(chatMenu.id)"
+                  size="20"
+                >
+                  <template v-slot:prepend>
+                    <v-icon size="18">mdi-file-edit-outline</v-icon>
+                  </template>
+                </v-btn>
+                <v-btn
+                  color="grey-lighten-1"
+                  variant="text"
+                  @click="handleDelete(chatMenu.id)"
+                  size="20"
+                >
+                  <template v-slot:prepend>
+                    <v-icon size="18">mdi-delete-outline</v-icon>
+                  </template>
+                </v-btn>
+              </div>
+              <!-- 编辑确认状态 -->
+              <div
+                v-else-if="
+                  chatMenu.id === chatHistoryStore.activeChatMenuId &&
+                  !chatMenu.idMenuDeleteConfirm &&
+                  chatMenu.isMenuEdit
+                "
               >
-                <template v-slot:prepend>
-                  <v-icon size="18">mdi-delete-outline</v-icon>
-                </template>
-              </v-btn>
-            </div>
-            <!-- 编辑确认状态 -->
-            <div
-              v-else-if="
-                chatMenu.id === chatHistoryStore.activeChatMenuId &&
-                !chatMenu.idMenuDeleteConfirm &&
-                chatMenu.isMenuEdit
-              "
-            >
-              <v-btn
-                color="grey-lighten-1"
-                variant="text"
-                @click="editConfirm(chatMenu.id)"
-                size="20"
+                <v-btn
+                  color="grey-lighten-1"
+                  variant="text"
+                  @click="editConfirm(chatMenu.id)"
+                  size="20"
+                >
+                  <template v-slot:prepend>
+                    <v-icon size="18">mdi-check</v-icon>
+                  </template>
+                </v-btn>
+                <v-btn
+                  color="grey-lighten-1"
+                  variant="text"
+                  @click="editCancel(chatMenu.id)"
+                  size="20"
+                >
+                  <template v-slot:prepend>
+                    <v-icon size="18">mdi-close</v-icon>
+                  </template>
+                </v-btn>
+              </div>
+              <!--删除确认状态 -->
+              <div
+                v-else-if="
+                  chatMenu.id === chatHistoryStore.activeChatMenuId &&
+                  chatMenu.idMenuDeleteConfirm
+                "
               >
-                <template v-slot:prepend>
-                  <v-icon size="18">mdi-check</v-icon>
-                </template>
-              </v-btn>
-              <v-btn
-                color="grey-lighten-1"
-                variant="text"
-                @click="editCancel(chatMenu.id)"
-                size="20"
-              >
-                <template v-slot:prepend>
-                  <v-icon size="18">mdi-close</v-icon>
-                </template>
-              </v-btn>
-            </div>
-            <!--删除确认状态 -->
-            <div
-              v-else-if="
-                chatMenu.id === chatHistoryStore.activeChatMenuId &&
-                chatMenu.idMenuDeleteConfirm
-              "
-            >
-              <v-btn
-                color="grey-lighten-1"
-                variant="text"
-                @click="deleteConfirm(chatMenu.id)"
-                size="20"
-              >
-                <template v-slot:prepend>
-                  <v-icon size="18">mdi-check</v-icon>
-                </template>
-              </v-btn>
-              <v-btn
-                color="grey-lighten-1"
-                variant="text"
-                @click="deleteCancel(chatMenu.id)"
-                size="20"
-              >
-                <template v-slot:prepend>
-                  <v-icon size="18">mdi-close</v-icon>
-                </template>
-              </v-btn>
-            </div>
-          </template>
-        </v-list-item>
+                <v-btn
+                  color="grey-lighten-1"
+                  variant="text"
+                  @click="deleteConfirm(chatMenu.id)"
+                  size="20"
+                >
+                  <template v-slot:prepend>
+                    <v-icon size="18">mdi-check</v-icon>
+                  </template>
+                </v-btn>
+                <v-btn
+                  color="grey-lighten-1"
+                  variant="text"
+                  @click="deleteCancel(chatMenu.id)"
+                  size="20"
+                >
+                  <template v-slot:prepend>
+                    <v-icon size="18">mdi-close</v-icon>
+                  </template>
+                </v-btn>
+              </div>
+            </template>
+          </v-list-item>
+        </transition-group>
       </v-list>
     </perfect-scrollbar>
   </v-navigation-drawer>
