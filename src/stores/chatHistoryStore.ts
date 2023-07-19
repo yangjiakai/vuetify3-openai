@@ -17,7 +17,20 @@ export const useChatHistoryStore = defineStore({
                 title: "New Chat",
                 isMenuEdit: false,
                 idMenuDeleteConfirm: false,
-                messages: []
+                messages: [
+                    {
+                        role: "system",
+                        content: "欢迎使用聊天机器人",
+                    },
+                    {
+                        role: "assistant",
+                        content: "你好，我是聊天机器人",
+                    },
+                    {
+                        role: "user",
+                        content: "你好，我是用户",
+                    },
+                ]
             },
         ],
     }),
@@ -41,14 +54,7 @@ export const useChatHistoryStore = defineStore({
             return [];
         },
 
-        // 获取指定id的聊天的历史记录
-        getHistoryById: (state) => (id: number) => {
-            const chat = state.chatList.find((item) => item.id === id);
-            if (chat) {
-                return chat.messages;
-            }
-            return [];
-        }
+
     },
     actions: {
         // 添加聊天菜单
@@ -58,6 +64,26 @@ export const useChatHistoryStore = defineStore({
                 title: title || `New Chat`,
                 isMenuEdit: false,
                 idMenuDeleteConfirm: false,
+                messages: [
+                    {
+                        role: "system",
+                        content: `欢迎使用聊天机器人${id}`,
+                    },
+                    {
+                        role: "assistant",
+                        content: "你好，我是聊天机器人",
+                    },
+                    {
+                        role: "user",
+                        content: "你好，我是用户",
+                    },
+                ],
+                configs: {
+                    model: "gpt-3.5-turbo",
+                    propmpt: "",
+                    role: "",
+                    proxy: ""
+                }
             }
 
             this.chatList.unshift(newChat);
@@ -110,10 +136,21 @@ export const useChatHistoryStore = defineStore({
 
         // 新增历史消息
         addHistory(id: any, message: Message) {
-            const currentChat = this.ChatList.find((item) => item.id === id);
+            const currentChat = this.chatList.find((item) => item.id === id);
+
             if (currentChat) {
                 currentChat.messages.push(message);
             }
+        },
+
+        // 获取指定id的聊天的历史记录
+        getChatHistory(id: number) {
+            const chat = this.chatList.find((item) => item.id === id);
+
+            if (chat) {
+                return chat.messages;
+            }
+            return [];
         }
     },
 });

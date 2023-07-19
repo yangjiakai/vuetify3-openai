@@ -3,6 +3,7 @@ import { useCustomizeThemeStore } from "@/stores/customizeTheme";
 import MainSidebar from "@/components/MainSidebar.vue";
 import SubSidebar from "@/components/SubSidebar.vue";
 import AppBar from "@/components/AppBar.vue";
+import Snackbar from "@/components/Snackbar.vue";
 
 const customizeTheme = useCustomizeThemeStore();
 </script>
@@ -31,6 +32,10 @@ const customizeTheme = useCustomizeThemeStore();
     <!---CustomizationMenu -->
     <!-- ---------------------------------------------- -->
     <!-- <CustomizationMenu /> -->
+    <!-- ---------------------------------------------- -->
+    <!---Snackbar -->
+    <!-- ---------------------------------------------- -->
+    <Snackbar />
   </v-app>
 </template>
 

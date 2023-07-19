@@ -103,13 +103,15 @@ watch(
             :key="chatMenu.id"
             :prepend-icon="chatMenu.icon"
             :to="chatMenu.url"
-            :active="chatMenu.id === chatHistoryStore.activeChatMenuId"
             @click="navigateTo(chatMenu.id)"
             active-class="active-nav"
             density="compact"
             rounded="xl"
             @blur="editCancel(chatMenu.id)"
           >
+            <template v-slot:prepend>
+              <v-icon size="16"></v-icon>
+            </template>
             <v-list-item-title v-if="chatMenu.isMenuEdit">
               <v-text-field
                 ref="refEditInput"
