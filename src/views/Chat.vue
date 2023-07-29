@@ -143,7 +143,7 @@ const displayMessages = computed(() => {
 
   <div class="chat-container">
     <v-toolbar color="white">
-      <div class="w-100 d-flex justify-center text-deep-purple">
+      <div class="w-100 d-flex justify-center text-deep-purple chat-title">
         <div><span class="font-weight-bold">模型:</span> gpt-3.5</div>
         <div class="ml-2"><span class="font-weight-bold">身份:</span> 默认</div>
       </div>
@@ -196,7 +196,7 @@ const displayMessages = computed(() => {
         </v-textarea>
 
         <v-btn class="mb-1" color="primary" variant="elevated" icon>
-          <v-icon @click="sendMessage">mdi-send</v-icon>
+          <v-icon size="24" @click="sendMessage">mdi-send</v-icon>
         </v-btn>
       </v-sheet>
     </div>
@@ -204,6 +204,9 @@ const displayMessages = computed(() => {
 </template>
 
 <style scoped lang="scss">
+.chat-title {
+}
+
 .chat-container {
   background-color: rgba(250, 250, 250, 1);
   background-repeat: repeat;
@@ -233,7 +236,7 @@ const displayMessages = computed(() => {
 }
 
 .message-container {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 64px);
   background-color: rgba(250, 250, 250, 1);
 }
 
