@@ -64,20 +64,7 @@ export const useChatHistoryStore = defineStore({
                 title: title || `New Chat`,
                 isMenuEdit: false,
                 idMenuDeleteConfirm: false,
-                messages: [
-                    {
-                        role: "system",
-                        content: `欢迎使用聊天机器人${id}`,
-                    },
-                    {
-                        role: "assistant",
-                        content: "你好，我是聊天机器人",
-                    },
-                    {
-                        role: "user",
-                        content: "你好，我是用户",
-                    },
-                ],
+                messages: [],
                 configs: {
                     model: "gpt-3.5-turbo",
                     propmpt: "",

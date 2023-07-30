@@ -10,6 +10,7 @@ import { useSnackbarStore } from "@/stores/snackbarStore";
 import MessageCard from "@/components/MessageCard.vue";
 import SubSidebar from "@/components/SubSidebar.vue";
 import { Vue3Lottie } from "vue3-lottie";
+import { scrollToBottom } from "@/utils/common";
 interface Message {
   content: string;
   role: "user" | "assistant" | "system";
@@ -77,6 +78,8 @@ const sendMessage = () => {
     role: "user",
   });
 
+  inputRow.value = 1;
+
   userMessage.value = "";
   createCompletion();
 };
@@ -136,18 +139,28 @@ const displayMessages = computed(() => {
   messagesCopy[messagesCopy.length - 1] = updatedLastMessage;
   return messagesCopy;
 });
+
+watch(
+  () => messages.value,
+  (val) => {
+    if (val) {
+      scrollToBottom(document.querySelector(".message-container"));
+    }
+  },
+  {
+    deep: true,
+  }
+);
 </script>
 
 <template>
   <SubSidebar />
 
   <div class="chat-container">
-    <v-toolbar color="white">
-      <div class="w-100 d-flex justify-center text-deep-purple chat-title">
-        <div><span class="font-weight-bold">模型:</span> gpt-3.5</div>
-        <div class="ml-2"><span class="font-weight-bold">身份:</span> 默认</div>
-      </div>
-    </v-toolbar>
+    <div class="chat-title d-flex justify-center align-center text-deep-purple">
+      <div><span class="font-weight-bold">模型:</span> gpt-3.5</div>
+      <div class="ml-2"><span class="font-weight-bold">身份:</span> 默认</div>
+    </div>
     <div class="message-area">
       <perfect-scrollbar v-if="messages.length > 1" class="message-container">
         <template v-for="message in displayMessages" :key="message.id">
@@ -196,7 +209,7 @@ const displayMessages = computed(() => {
         </v-textarea>
 
         <v-btn class="mb-1" color="primary" variant="elevated" icon>
-          <v-icon size="24" @click="sendMessage">mdi-send</v-icon>
+          <v-icon @click="sendMessage">mdi-send</v-icon>
         </v-btn>
       </v-sheet>
     </div>
@@ -205,10 +218,13 @@ const displayMessages = computed(() => {
 
 <style scoped lang="scss">
 .chat-title {
+  height: 64px;
+
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
 }
 
 .chat-container {
-  background-color: rgba(250, 250, 250, 1);
+  background-color: rgba(255, 255, 255, 1);
   background-repeat: repeat;
   height: 100%;
   display: flex;
@@ -222,10 +238,12 @@ const displayMessages = computed(() => {
 
   .input-area {
     position: absolute;
+    background-color: rgba(255, 255, 255, 1);
     width: 100%;
     bottom: 0;
     padding: 1rem;
     align-items: center;
+    border-top: 1px dotted rgba(0, 0, 0, 0.1);
 
     .input-panel {
       border-radius: 5px;
@@ -236,19 +254,12 @@ const displayMessages = computed(() => {
 }
 
 .message-container {
+  padding-bottom: 100px;
   height: calc(100vh - 64px);
-  background-color: rgba(250, 250, 250, 1);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .no-message-container {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  h1 {
-    font-size: 2rem;
-    font-weight: 500;
-  }
+  height: calc(100vh - 64px);
 }
 </style>

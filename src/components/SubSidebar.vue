@@ -94,7 +94,7 @@ watch(
           <template v-slot:prepend>
             <v-icon>mdi-plus-circle</v-icon>
           </template>
-          New Chat</v-btn
+          新建会话</v-btn
         >
         <transition-group name="slide-x" tag="div">
           <v-list-item

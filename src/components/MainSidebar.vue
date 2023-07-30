@@ -5,46 +5,79 @@
 -->
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/authStore";
+import ContactUsCard from "@/components/ContactUsCard.vue";
 const authStore = useAuthStore();
 const router = useRouter();
 const handleLogout = () => {
   authStore.removeToken();
   router.push("/login");
 };
+
+const handleContactUsShow = () => {
+  contactUsDialogShow.value = true;
+  console.log("handleContactUsShow");
+};
+
+const contactUsDialogShow = ref(false);
+
+const menus = [
+  {
+    title: "QA",
+    icon: "mdi-view-dashboard",
+    url: "/qa",
+  },
+  {
+    title: "Unsplash",
+    icon: "mdi-image",
+    url: "/login",
+  },
+  {
+    title: "Chat",
+    icon: "mdi-chat",
+    url: "/chat",
+  },
+];
 </script>
 
 <template>
-  <v-navigation-drawer color="#111827" theme="dark" rail>
-    <div></div>
+  <v-navigation-drawer color="#111827" class="text-white" rail>
     <v-list nav>
-      <v-list-item prepend-icon="mdi-view-dashboard" value="qa" to="/qa">
+      <v-list-item
+        v-for="item in menus"
+        :key="item.title"
+        :prepend-icon="item.icon"
+        :value="item.title"
+        :to="item.url"
+      >
         <v-tooltip
           activator="parent"
-          location="bottom"
-          class=""
-          text="home"
+          location="right"
+          class="text-white"
+          :text="item.title"
         ></v-tooltip>
       </v-list-item>
-      <v-list-item
-        prepend-icon="mdi-image"
-        to="/login"
-        value="unsplash"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-chat"
-        to="/chat"
-        value="chat"
-      ></v-list-item>
     </v-list>
     <template v-slot:append>
       <v-list>
-        <v-list-item
-          prepend-icon="mdi-chat"
-          @click="handleLogout"
-        ></v-list-item>
+        <v-list-item @click="handleContactUsShow">
+          <v-slot prepend>
+            <v-icon>mdi-wechat</v-icon>
+            <v-tooltip activator="parent" location="right" text="联系我们">
+            </v-tooltip>
+          </v-slot>
+        </v-list-item>
+
+        <v-list-item @click="handleLogout">
+          <v-slot prepend>
+            <v-icon>mdi-logout</v-icon>
+          </v-slot>
+        </v-list-item>
       </v-list>
     </template>
   </v-navigation-drawer>
+  <v-dialog v-model="contactUsDialogShow">
+    <ContactUsCard />
+  </v-dialog>
 </template>
 
 <style scoped lang="scss"></style>
