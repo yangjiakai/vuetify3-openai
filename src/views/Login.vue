@@ -60,8 +60,8 @@ const emailRules = ref([
 const usernameRules = ref([(v: string) => !!v || "UserNmae is required"]);
 
 const phoneRules = ref([
-  (v: string) => !!v || "电话号码必填",
-  (v: string) => /^1[3-9]\d{9}$/.test(v) || "请输入正确的电话号码",
+  (v: string) => !!v || "手机号码必填",
+  (v: string) => /^1[3-9]\d{9}$/.test(v) || "请输入正确的手机号码",
 ]);
 
 const passwordRules = ref([
@@ -91,9 +91,9 @@ const resetErrors = () => {
       elevation="3"
     >
       <v-card-title primary-title class="my-4 text-h4">
-        <span class="flex-fill"> 登录帐号 </span>
+        <span class="flex-fill text-center"> 帐号登录 </span>
       </v-card-title>
-      <v-card-subtitle>Let's build amazing products</v-card-subtitle>
+      <!-- <v-card-subtitle>Let's build amazing products</v-card-subtitle> -->
       <!-- sign in form -->
 
       <v-card-text>
@@ -109,7 +109,7 @@ const resetErrors = () => {
             v-model="phone"
             required
             :error="error"
-            label="电子邮件"
+            label="手机号码"
             variant="underlined"
             color="primary"
             bg-color="#fff"

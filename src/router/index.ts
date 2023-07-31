@@ -22,6 +22,25 @@ export const routes = [
           import(/* webpackChunkName: "app-chat-id" */ "@/views/Chat.vue"),
         meta: { requiresAuth: true },
       },
+
+      // creator :id
+      {
+        path: "/creator",
+        name: "creator",
+        component: () => import("@/views/CreatorPage.vue"),
+        meta: { requiresAuth: true },
+      },
+
+      // consultant:id
+      {
+        path: "/consultant",
+        name: "consultant",
+        component: () => import("@/views/ConsultantPage.vue"),
+        meta: { requiresAuth: true },
+      },
+
+
+
       // this page is sample page for layout
       {
         path: "/ui",

@@ -22,18 +22,18 @@ const contactUsDialogShow = ref(false);
 
 const menus = [
   {
-    title: "QA",
-    icon: "mdi-view-dashboard",
-    url: "/qa",
+    title: "创作中心",
+    icon: "mdi-notebook",
+    url: "/creator",
   },
   {
-    title: "Unsplash",
-    icon: "mdi-image",
-    url: "/login",
+    title: "咨询顾问",
+    icon: "mdi-chat-question",
+    url: "/consultant",
   },
   {
-    title: "Chat",
-    icon: "mdi-chat",
+    title: "GPT",
+    icon: "mdi-chat-processing-outline",
     url: "/chat",
   },
 ];
