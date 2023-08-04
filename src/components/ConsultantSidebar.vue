@@ -92,7 +92,14 @@ const navigateTo = (id) => {
           rounded="xl"
         >
           <template v-slot:prepend>
-            <v-icon size="16"></v-icon>
+            <v-avatar size="avatarSize" color="white">
+              <img
+                width="26"
+                height="26"
+                src="https://img.icons8.com/fluency/48/user-female-circle.png"
+                alt="user-female-circle"
+              />
+            </v-avatar>
           </template>
 
           <v-list-item-title> {{ chatMenu.title }}</v-list-item-title>

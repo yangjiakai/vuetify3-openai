@@ -22,6 +22,11 @@ const contactUsDialogShow = ref(false);
 
 const menus = [
   {
+    title: "GPT",
+    icon: "mdi-chat-processing-outline",
+    url: "/chat",
+  },
+  {
     title: "创作中心",
     icon: "mdi-notebook",
     url: "/creator",
@@ -32,9 +37,9 @@ const menus = [
     url: "/consultant",
   },
   {
-    title: "GPT",
-    icon: "mdi-chat-processing-outline",
-    url: "/chat",
+    title: "口语交流",
+    icon: "mdi-account-voice",
+    url: "/spoken",
   },
 ];
 </script>

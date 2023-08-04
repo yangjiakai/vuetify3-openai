@@ -5,28 +5,29 @@
 -->
 <script setup lang="ts">
 import { useCustomizeThemeStore } from "@/stores/customizeTheme";
-import { useChatHistoryStore } from "@/stores/chatHistoryStore";
-const chatHistoryStore = useChatHistoryStore();
+import { useSpokenStore } from "@/stores/spokenStore";
+
+const spokenStore = useSpokenStore();
 const router = useRouter();
 const customizeTheme = useCustomizeThemeStore();
 
 const chatMenus = computed(() => {
-  return chatHistoryStore.chatList.map((chat) => {
+  return spokenStore.characterList.map((chat) => {
     return {
       id: chat.id,
       title: chat.title,
       icon: "mdi-chat",
       isMenuEdit: chat.isMenuEdit,
       idMenuDeleteConfirm: chat.idMenuDeleteConfirm,
-      url: "/chat/" + chat.id,
+      url: "/spoken/" + chat.id,
     };
   });
 });
 
-const editTile = ref(chatHistoryStore.getChatActive.title);
+const editTile = ref(spokenStore.getChatActive.title);
 
 const navigateTo = (id) => {
-  chatHistoryStore.activeChatMenuId = id;
+  spokenStore.activeChatMenuId = id;
   router.push(`/chat/${id}`);
 };
 
@@ -34,7 +35,7 @@ const refEditInput = ref();
 
 // 切换编辑菜单视图
 const handleEdit = (id) => {
-  chatHistoryStore.updateMenuIsMenuEdit(id, true);
+  spokenStore.updateMenuIsMenuEdit(id, true);
   nextTick(() => {
     refEditInput.value[0]?.focus();
   });
@@ -44,31 +45,31 @@ const handleEdit = (id) => {
 const editConfirm = (id) => {
   console.log("editConfirm");
 
-  chatHistoryStore.updateMenuTitle(id, editTile.value);
+  spokenStore.updateMenuTitle(id, editTile.value);
 };
 
 // 取消更新菜单标题
 const editCancel = (id) => {
-  chatHistoryStore.updateMenuIsMenuEdit(id, false);
+  spokenStore.updateMenuIsMenuEdit(id, false);
 };
 
 // 切换确认删除视图
 const handleDelete = (id) => {
-  chatHistoryStore.updateMenuDeleteConfirm(id, true);
+  spokenStore.updateMenuDeleteConfirm(id, true);
 };
 
 // 确认删除当前菜单
 const deleteConfirm = (id) => {
-  chatHistoryStore.deleteMenu(id);
+  spokenStore.deleteMenu(id);
 };
 
 // 取消更新菜单标题
 const deleteCancel = (id) => {
-  chatHistoryStore.updateMenuDeleteConfirm(id, false);
+  spokenStore.updateMenuDeleteConfirm(id, false);
 };
 
 watch(
-  () => chatHistoryStore.getChatActive(),
+  () => spokenStore.getChatActive(),
   (newVal) => {
     editTile.value = newVal?.title;
   }
@@ -89,12 +90,12 @@ watch(
           size="large"
           class="mb-3 text-white"
           rounded="md"
-          @click="chatHistoryStore.addChat(Date.now())"
+          @click="spokenStore.showAddCharacterDialog()"
         >
           <template v-slot:prepend>
             <v-icon>mdi-plus-circle</v-icon>
           </template>
-          新建会话</v-btn
+          新建角色</v-btn
         >
         <transition-group name="slide-x" tag="div">
           <v-list-item
@@ -113,8 +114,8 @@ watch(
                 <img
                   width="26"
                   height="26"
-                  src="https://img.icons8.com/fluency/48/speech-bubble-with-dots--v1.png"
-                  alt="speech-bubble-with-dots--v1"
+                  src="https://img.icons8.com/fluency/48/user-female-circle.png"
+                  alt="user-female-circle"
                 />
               </v-avatar>
             </template>
@@ -137,7 +138,7 @@ watch(
               <!-- 普通状态 -->
               <div
                 v-if="
-                  chatMenu.id === chatHistoryStore.activeChatMenuId &&
+                  chatMenu.id === spokenStore.activeChatMenuId &&
                   !chatMenu.idMenuDeleteConfirm &&
                   !chatMenu.isMenuEdit
                 "
@@ -166,7 +167,7 @@ watch(
               <!-- 编辑确认状态 -->
               <div
                 v-else-if="
-                  chatMenu.id === chatHistoryStore.activeChatMenuId &&
+                  chatMenu.id === spokenStore.activeChatMenuId &&
                   !chatMenu.idMenuDeleteConfirm &&
                   chatMenu.isMenuEdit
                 "
@@ -195,7 +196,7 @@ watch(
               <!--删除确认状态 -->
               <div
                 v-else-if="
-                  chatMenu.id === chatHistoryStore.activeChatMenuId &&
+                  chatMenu.id === spokenStore.activeChatMenuId &&
                   chatMenu.idMenuDeleteConfirm
                 "
               >

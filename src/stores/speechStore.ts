@@ -8,6 +8,14 @@ import {
     SpeechSynthesizer,
 } from "microsoft-cognitiveservices-speech-sdk";
 
+interface VoiceConfig {
+    voiceEmotion: string,
+    voiceRate: number,
+    language: string,
+    VoiceName: string,
+}
+
+
 export const useSpeechStore = defineStore({
     id: 'speech',
     state: () => ({
@@ -23,6 +31,9 @@ export const useSpeechStore = defineStore({
         speechSynthesisVoiceName: "zh-CN-XiaoxiaoNeural",
         voiceEmotion: "",
         voiceRate: 1,
+
+        // 语音合成器
+        synthesizer: null
     }),
 
     persist: {
@@ -32,13 +43,14 @@ export const useSpeechStore = defineStore({
 
     actions: {
         // 文本转语音
-        async ssmlToSpeak(text: string) {
+        async ssmlToSpeech(text: string, voiceConfig?: VoiceConfig) {
+            console.log("voiceConfig", voiceConfig);
 
             // 语音服务配置
             const speechConfig = SpeechConfig.fromSubscription(this.subscriptionKey, this.region);
-            speechConfig.speechRecognitionLanguage = this.speechRecognitionLanguage;
-            speechConfig.speechSynthesisLanguage = this.speechSynthesisLanguage;
-            speechConfig.speechSynthesisVoiceName = this.speechSynthesisVoiceName;
+
+            speechConfig.speechSynthesisLanguage = voiceConfig?.language || this.speechSynthesisLanguage;
+            speechConfig.speechSynthesisVoiceName = voiceConfig?.VoiceName || this.speechSynthesisVoiceName;
             speechConfig.speechSynthesisOutputFormat = SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3;
 
             // 配置监听语音的播放开始和结束
@@ -53,28 +65,28 @@ export const useSpeechStore = defineStore({
             const audioConfig = AudioConfig.fromSpeakerOutput(player);
 
             // 创建语音合成器
-            const synthesizer = new SpeechSynthesizer(speechConfig, audioConfig);
+            this.synthesizer = new SpeechSynthesizer(speechConfig, audioConfig);
 
             // 构建语音合成的ssml
-            const ssml = this.buildSSML(text);
+            const ssml = this.buildSSML(text, voiceConfig);
 
             // 开始语音合成
             try {
-                const result = await this.synthesizeSpeech(synthesizer, ssml);
+                const result = await this.synthesizeSpeech(this.synthesizer, ssml);
                 console.log("Text-to-speech synthesis result:", result);
             } catch (error) {
                 console.error("Error during text-to-speech synthesis:", error);
             } finally {
-                synthesizer.close();
+                this.synthesizer.close();
             }
         },
 
-        buildSSML(text: string) {
+        buildSSML(text: string, voiceConfig?: VoiceConfig) {
             return `
               <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${this.speechSynthesisLanguage}">
-                <voice name="${this.speechSynthesisVoiceName}">
-                  <mstts:express-as type="${this.voiceEmotion}">
-                    <prosody rate="${this.voiceRate}">
+                <voice name="${voiceConfig?.VoiceName || this.speechSynthesisVoiceName}">
+                  <mstts:express-as type="${voiceConfig?.voiceEmotion || this.voiceEmotion}">
+                    <prosody rate="${voiceConfig?.voiceRate || this.voiceRate}">
                       ${text}
                     </prosody>
                   </mstts:express-as>
@@ -99,7 +111,14 @@ export const useSpeechStore = defineStore({
                     }
                 );
             });
-        }
+        },
 
+        async getVoices() {
+            const speechConfig = SpeechConfig.fromSubscription(this.subscriptionKey, this.region);
+            const synthesizer = new SpeechSynthesizer(speechConfig);
+            const result = await synthesizer.getVoicesAsync();
+            console.log("result", result);
+            return result.voices;
+        }
     },
 })

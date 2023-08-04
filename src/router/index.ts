@@ -3,18 +3,16 @@ import { useAuthStore } from "@/stores/authStore";
 
 export const routes = [
   {
-    path: '/',
+    path: "/",
     name: "Home",
     redirect: "/chat",
-    component: () =>
-      import("@/layout/Layout.vue"),
+    component: () => import("@/layout/Layout.vue"),
     children: [
-      // chat
+      // GPT
       {
         path: "/chat",
-        redirect: '/chat/1' // 默认跳转到第一个chat
+        redirect: "/chat/1", // 默认跳转到第一个chat
       },
-      // chat :id
       {
         path: "/chat/:id",
         name: "chat-id",
@@ -23,7 +21,7 @@ export const routes = [
         meta: { requiresAuth: true },
       },
 
-      // creator :id
+      // 创作中心
       {
         path: "/creator",
         name: "creator",
@@ -31,7 +29,7 @@ export const routes = [
         meta: { requiresAuth: true },
       },
 
-      // consultant:id
+      // 咨询顾问
       {
         path: "/consultant",
         name: "consultant",
@@ -39,14 +37,30 @@ export const routes = [
         meta: { requiresAuth: true },
       },
 
+      // 口语交流
+      {
+        path: "/spoken",
+        name: "spoken",
+        component: () => import("@/views/spoken/SpokenPage.vue"),
+        children: [
+          {
 
+            path: "",
+            redirect: "/spoken/1",
+          },
+          {
+            path: ":id",
+            component: () => import("@/views/spoken/SpokenChat.vue"),
+          },
+        ],
+        meta: { requiresAut: true },
+      },
 
       // this page is sample page for layout
       {
         path: "/ui",
         name: "ui",
-        component: () =>
-          import("@/views/UI.vue"),
+        component: () => import("@/views/UI.vue"),
         meta: { requiresAuth: true },
       },
       {
@@ -62,55 +76,51 @@ export const routes = [
         name: "translation",
         component: () =>
           import(
-        /* webpackChunkName: "app-translation" */ "@/views/Translation.vue"
+            /* webpackChunkName: "app-translation" */ "@/views/Translation.vue"
           ),
         meta: { requiresAuth: true },
       },
-
     ],
     meta: { requiresAuth: true },
   },
 
-
-
   // login
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/Login.vue'),
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/Login.vue"),
   },
 
   // register
   {
-    path: '/register',
-    name: 'Register',
-    component: () => import('@/views/Register.vue'),
+    path: "/register",
+    name: "Register",
+    component: () => import("@/views/Register.vue"),
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: routes
+  routes: routes,
 });
 
 // 在跳转前进行检查
 router.beforeEach((to, from, next) => {
   const store = useAuthStore();
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
     // 如果没有登录，将用户重定向到登录页面
     if (!store.token) {
       next({
-        path: '/login',
-      })
+        path: "/login",
+      });
     } else {
       // 如果已经登录，正常进行导航
-      next()
+      next();
     }
   } else {
     // 如果不需要验证，正常进行导航
-    next()
+    next();
   }
-})
-
+});
 
 export default router;
