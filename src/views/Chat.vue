@@ -23,7 +23,7 @@ const messages = ref<Message[]>([]);
 const promptMessage = computed(() => {
   return [
     {
-      content: "",
+      content: "你是一个口语对话机器人",
       role: "system",
     },
   ];

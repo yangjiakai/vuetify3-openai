@@ -1,9 +1,7 @@
 import { defineStore } from "pinia";
 import router from "@/router";
-interface Message {
-    content: string;
-    role: "user" | "assistant" | "system";
-}
+import { type Message } from "@/types/spokenTypes";
+import { readStream } from "@/utils/aiUtils";
 
 export const useSpokenStore = defineStore({
     id: "spoken",
@@ -19,12 +17,20 @@ export const useSpokenStore = defineStore({
                 idMenuDeleteConfirm: false,
                 messages: [
                     {
-                        role: "system",
-                        content: "你是一个口语对话机器人",
+                        id: 1,
+                        isReading: false,
+                        body: {
+                            role: "system",
+                            content: "你是一个口语对话机器人",
+                        }
                     },
                     {
-                        role: "assistant",
-                        content: "你好,云扬",
+                        id: 2,
+                        isReading: false,
+                        body: {
+                            role: "assistant",
+                            content: "你好,云扬",
+                        }
                     },
                 ],
                 character: {
@@ -38,7 +44,7 @@ export const useSpokenStore = defineStore({
 
     persist: {
         enabled: true,
-        strategies: [{ storage: localStorage, paths: ["characterList"] }],
+        strategies: [{ storage: localStorage, paths: [] }],
     },
 
     getters: {
@@ -144,6 +150,31 @@ export const useSpokenStore = defineStore({
         // 打开添加角色对话框
         showAddCharacterDialog() {
             this.addCharacterDialog = true;
+        },
+
+        // 开始阅读信息
+        startReading(messageId: number) {
+            const chat = this.characterList.find((item) => item.id === this.activeChatMenuId);
+            if (chat) {
+                chat.messages.find((message) => message.id === messageId).isReading = true;
+            }
+        },
+
+        // 结束阅读信息
+        endReading(messageId: number) {
+            const chat = this.characterList.find((item) => item.id === this.activeChatMenuId);
+            if (chat) {
+                chat.messages.find((message) => message.id === messageId).isReading = false;
+            }
+        },
+
+        async readStream(reader) {
+            const activeChat = this.getChatActive();
+            readStream(reader, (message) => {
+                if (activeChat && activeChat.messages.length > 0) {
+                    activeChat.messages[activeChat.messages.length - 1].body.content += message;
+                }
+            });
         }
     },
 });

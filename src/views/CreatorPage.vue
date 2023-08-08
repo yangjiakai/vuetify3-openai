@@ -9,18 +9,10 @@ const speechStore = useSpeechStore();
 
 const speak = () => {
   console.log("speak");
-  speechStore.ssmlToSpeech("我真的解决不了这个问题,我该怎么办");
 };
 
 const speak2 = () => {
   console.log("speak2");
-  const config = {
-    voiceEmotion: "",
-    voiceRate: 1.4,
-    language: "zh-CN",
-    VoiceName: "zh-CN-XiaoxiaoNeural",
-  };
-  speechStore.ssmlToSpeech("我真的解决不了这个问题,我该怎么办", config);
 };
 
 const dialog = ref(false);

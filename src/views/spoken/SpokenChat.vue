@@ -4,17 +4,13 @@
 * @Description: 
 -->
 <script setup lang="ts">
-import { read, countAndCompleteCodeBlocks } from "@/utils/aiUtils";
+import { countAndCompleteCodeBlocks } from "@/utils/aiUtils";
 import { useSnackbarStore } from "@/stores/snackbarStore";
 import { useSpokenStore } from "@/stores/spokenStore";
-import MessageCard from "@/components/MessageCard.vue";
-
+import SpokenMessageCard from "./SpokenMessageCard.vue";
+import { type Message } from "@/types/spokenTypes";
 import { Vue3Lottie } from "vue3-lottie";
 import { scrollToBottom } from "@/utils/common";
-interface Message {
-  content: string;
-  role: "user" | "assistant" | "system";
-}
 
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
@@ -36,11 +32,18 @@ onMounted(() => {
 });
 
 const requestMessages = computed(() => {
-  if (messages.value.length <= 10) {
-    return [...promptMessage.value, ...messages.value];
+  const pureMessages = messages.value.map((message) => {
+    return {
+      content: message.body.content,
+      role: message.body.role,
+    };
+  });
+
+  if (pureMessages.length <= 10) {
+    return [...promptMessage.value, ...pureMessages];
   } else {
     // 截取最新的10条信息
-    const slicedMessages = messages.value.slice(-8);
+    const slicedMessages = pureMessages.slice(-8);
     return [...promptMessage.value, ...slicedMessages];
   }
 });
@@ -74,8 +77,12 @@ const sendMessage = () => {
   if (userMessage.value.trim() === "") return;
 
   spokenStore.addHistory(currentId.value, {
-    content: userMessage.value,
-    role: "user",
+    id: Date.now(),
+    isReading: false,
+    body: {
+      content: userMessage.value,
+      role: "user",
+    },
   });
 
   inputRow.value = 1;
@@ -117,13 +124,17 @@ const createCompletion = async () => {
     }
 
     // Add the bot message
-    messages.value.push({
-      content: "",
-      role: "assistant",
+    spokenStore.addHistory(currentId.value, {
+      id: Date.now(),
+      isReading: false,
+      body: {
+        content: "",
+        role: "assistant",
+      },
     });
 
     // Read the stream
-    read(reader, messages);
+    spokenStore.readStream(reader);
   } catch (error) {
     snackbarStore.showErrorMessage(error.message);
   }
@@ -134,7 +145,7 @@ const displayMessages = computed(() => {
   const lastMessage = messagesCopy[messagesCopy.length - 1];
   const updatedLastMessage = {
     ...lastMessage,
-    content: countAndCompleteCodeBlocks(lastMessage.content),
+    content: countAndCompleteCodeBlocks(lastMessage.body.content),
   };
   messagesCopy[messagesCopy.length - 1] = updatedLastMessage;
   return messagesCopy;
@@ -162,7 +173,7 @@ watch(
     <div class="message-area">
       <perfect-scrollbar v-if="messages.length > 1" class="message-container">
         <template v-for="message in displayMessages" :key="message.id">
-          <MessageCard :content="message.content" :role="message.role" />
+          <SpokenMessageCard :message="message" :role="message.body.role" />
         </template>
       </perfect-scrollbar>
 
@@ -174,6 +185,7 @@ watch(
         />
       </div>
     </div>
+
     <div class="input-area">
       <v-sheet
         color="transparent"

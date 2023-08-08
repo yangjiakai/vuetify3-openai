@@ -7,8 +7,11 @@ import {
     ResultReason,
     SpeechSynthesizer,
 } from "microsoft-cognitiveservices-speech-sdk";
+import { useSpokenStore } from "@/stores/spokenStore";
+
 
 interface VoiceConfig {
+    messageId: number,
     voiceEmotion: string,
     voiceRate: number,
     language: string,
@@ -43,7 +46,8 @@ export const useSpeechStore = defineStore({
 
     actions: {
         // 文本转语音
-        async ssmlToSpeech(text: string, voiceConfig?: VoiceConfig) {
+        async ssmlToSpeech(text: string, voiceConfig: VoiceConfig) {
+            const spokenStore = useSpokenStore();
             console.log("voiceConfig", voiceConfig);
 
             // 语音服务配置
@@ -56,9 +60,11 @@ export const useSpeechStore = defineStore({
             // 配置监听语音的播放开始和结束
             const player = new SpeakerAudioDestination();
             player.onAudioStart = () => {
+                spokenStore.startReading(voiceConfig.messageId);
                 console.log("开始播放");
             };
             player.onAudioEnd = () => {
+                spokenStore.endReading(voiceConfig.messageId);
                 console.log("播放结束");
             };
 
