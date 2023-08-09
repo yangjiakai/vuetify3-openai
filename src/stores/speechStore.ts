@@ -6,6 +6,9 @@ import {
     SpeechSynthesisOutputFormat,
     ResultReason,
     SpeechSynthesizer,
+    SpeechRecognizer,
+    NoMatchDetails,
+    CancellationReason,
 } from "microsoft-cognitiveservices-speech-sdk";
 import { useSpokenStore } from "@/stores/spokenStore";
 
@@ -36,7 +39,9 @@ export const useSpeechStore = defineStore({
         voiceRate: 1,
 
         // 语音合成器
-        synthesizer: null
+        synthesizer: null,
+        // 语音识别器
+        recognizer: null,
     }),
 
     persist: {
@@ -45,6 +50,70 @@ export const useSpeechStore = defineStore({
     },
 
     actions: {
+
+        // 语音转文字
+        async speechToText(voiceConfig: any): Promise<string> {
+            return new Promise((resolve, reject) => {
+                // 语音服务配置
+                const speechConfig = SpeechConfig.fromSubscription(this.subscriptionKey, this.region);
+                speechConfig.speechRecognitionLanguage = voiceConfig?.language || this.speechRecognitionLanguage;
+
+
+                const audioConfig = AudioConfig.fromDefaultMicrophoneInput()
+                this.recognizer = new SpeechRecognizer(speechConfig, audioConfig);
+
+
+                let recognizedText = "";
+
+                // 当语音部分被识别时
+                this.recognizer.recognizing = (s, e) => {
+                    console.log(`RECOGNIZING: Text=${e.result.text}`);
+                };
+
+                // 当一个语音段落被完全识别时
+                this.recognizer.recognized = (s, e) => {
+                    if (e.result.reason === ResultReason.RecognizedSpeech) {
+                        recognizedText += e.result.text;
+                        console.log(`RECOGNIZED: Text=${e.result.text}`);
+                    } else if (e.result.reason === ResultReason.NoMatch) {
+                        const noMatchDetail = NoMatchDetails.fromResult(e.result);
+                        console.log(`NoMatchReason: ${noMatchDetail.reason}`);
+                    }
+                };
+
+                // 会话停止时
+                this.recognizer.sessionStopped = (s, e) => {
+                    console.log('\n    Session stopped event.');
+                    this.recognizer.stopContinuousRecognitionAsync(() => {
+                        resolve(recognizedText); // 返回识别的文本
+                    });
+                };
+
+                // 错误处理
+                this.recognizer.canceled = (s, e) => {
+                    console.error(`CANCELED: Reason=${e.reason}`);
+
+                    if (e.reason === CancellationReason.Error) {
+                        console.error(`CANCELED: ErrorCode=${e.errorCode}`);
+                        console.error(`CANCELED: ErrorDetails=${e.errorDetails}`);
+                    }
+
+                    this.recognizer.stopContinuousRecognitionAsync();
+                    reject(e.errorDetails);
+                };
+
+                // 开始识别
+                this.recognizer.startContinuousRecognitionAsync();
+            });
+        },
+
+        // 停止语音识别
+        stopSpeechToText() {
+            if (this.recognizer) {
+                this.recognizer.stopContinuousRecognitionAsync();
+            }
+        },
+
         // 文本转语音
         async ssmlToSpeech(text: string, voiceConfig: VoiceConfig) {
             const spokenStore = useSpokenStore();

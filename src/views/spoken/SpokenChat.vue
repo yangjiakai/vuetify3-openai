@@ -11,8 +11,10 @@ import SpokenMessageCard from "./SpokenMessageCard.vue";
 import { type Message } from "@/types/spokenTypes";
 import { Vue3Lottie } from "vue3-lottie";
 import { scrollToBottom } from "@/utils/common";
+import { useSpeechStore } from "@/stores/speechStore";
 
 const route = useRoute();
+const speeachStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
 const spokenStore = useSpokenStore();
 const messages = ref<Message[]>([]);
@@ -162,6 +164,58 @@ watch(
     deep: true,
   }
 );
+
+const recorder = ref<MediaRecorder | null>(null);
+const startRecording = async () => {
+  try {
+    const text = await speeachStore.speechToText({
+      language: "zh-CN",
+    });
+    console.log("Recognized Text:", text);
+  } catch (error) {
+    console.error("Speech to text failed:", error);
+  }
+
+  // 获取用户媒体权限，视频的话参数{audio: true, video: true}
+  navigator.mediaDevices
+    .getUserMedia({ audio: true })
+    .then((stream) => {
+      // 创建媒体流
+
+      recorder.value = new MediaRecorder(stream);
+      const audioChunks = <any>[];
+      // 录音开始
+      recorder.value.start();
+
+      // 更改录音状态
+
+      // 录音数据
+      recorder.value.ondataavailable = (e: any) => {
+        audioChunks.push(e.data);
+      };
+      // 录音结束
+      recorder.value.onstop = async (e: any) => {
+        const blob = new Blob(audioChunks, { type: "audio/wav" });
+        recorder.value = null;
+        console.log("blob", blob);
+
+        // const file = new File([blob], "recording.wav", {
+        //   type: "audio/wav",
+        // });
+        speeachStore.stopSpeechToText();
+      };
+    })
+    .catch((error) => {
+      snackbarStore.showErrorMessage(error.message);
+    });
+};
+
+const stopRecording = () => {
+  if (recorder.value) {
+    recorder.value.stop();
+  }
+  speeachStore.stopSpeechToText();
+};
 </script>
 
 <template>
@@ -192,35 +246,8 @@ watch(
         elevation="0"
         class="input-panel d-flex align-end pa-1"
       >
-        <v-btn class="mb-1" variant="elevated" icon @click="">
-          <v-icon size="30" class="text-primary">mdi-cog-outline</v-icon>
-          <v-tooltip
-            activator="parent"
-            location="top"
-            text="ChatGPT Config"
-          ></v-tooltip>
-        </v-btn>
-
-        <v-textarea
-          class="mx-2"
-          color="primary"
-          type="text"
-          clearable
-          variant="solo"
-          ref="input"
-          v-model="userMessage"
-          placeholder="Ask Anything"
-          hide-details
-          @keydown="handleKeydown"
-          :rows="inputRow"
-          @focus="inputRow = 3"
-          @blur="inputRow = 1"
-        >
-        </v-textarea>
-
-        <v-btn class="mb-1" color="primary" variant="elevated" icon>
-          <v-icon @click="sendMessage">mdi-send</v-icon>
-        </v-btn>
+        <v-btn color="success" @click="startRecording">开始</v-btn>
+        <v-btn color="error" @click="stopRecording">结束</v-btn>
       </v-sheet>
     </div>
   </div>
