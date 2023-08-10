@@ -5,7 +5,9 @@
 -->
 <script setup lang="ts">
 import { useSpeechStore } from "@/stores/speechStore";
+import { useDisplay } from "vuetify";
 const speechStore = useSpeechStore();
+const { mdAndUp } = useDisplay();
 
 const getAvatar = (voice) => {
   return voice.privGender === 2
@@ -82,15 +84,25 @@ const getTestText = (lang) => {
 };
 
 const selectCharacter = (voice) => {
-  characterList.value.forEach((character) => {
-    character.isSelected = false;
+  characterList.value.forEach((voice) => {
+    voice.isSelected = false;
   });
+
   voice.isSelected = true;
 };
+
+const currentStyle = ref("");
+const currentStyleList = computed(() => {
+  const voice = characterList.value.find((voice) => voice.isSelected);
+  if (voice?.styleList) {
+    currentStyle.value = voice.styleList[0];
+  }
+  return voice?.styleList || [];
+});
 </script>
 
 <template>
-  <v-card class="mx-auto pa-2" width="400">
+  <v-card class="mx-auto pa-2" :width="mdAndUp ? '500' : '100%'">
     <v-card>
       <v-card-title> 角色 </v-card-title>
     </v-card>
@@ -112,7 +124,7 @@ const selectCharacter = (voice) => {
           </v-avatar>
         </template>
 
-        <v-list-item-title class="font-weight-bold text-primary">
+        <v-list-item-title class="font-weight-bold text-grey-darken-3">
           {{ voice.localName }}
         </v-list-item-title>
         <v-list-item-subtitle>
@@ -149,6 +161,7 @@ const selectCharacter = (voice) => {
           </v-col>
           <v-col cols="12" sm="10">
             <v-slider
+              color="primary"
               v-model="speechStore.voiceRate"
               thumb-label="always"
               :min="0.1"
@@ -167,14 +180,22 @@ const selectCharacter = (voice) => {
           <v-col cols="12" sm="10">
             <v-select
               variant="outlined"
+              v-model="currentStyle"
               hide-details
               density="compact"
-              :items="[]"
+              :items="currentStyleList"
+              :disabled="currentStyleList.length === 0"
             ></v-select>
           </v-col>
         </v-row>
       </v-card-text>
     </v-card>
+
+    <v-card-actions>
+      <v-btn color="gray">Cancel</v-btn>
+      <v-spacer></v-spacer>
+      <v-btn color="primary">Create Chat</v-btn>
+    </v-card-actions>
     <!-- <v-row>
       <v-col cols="4" v-for="voice in voices">
         <v-card>

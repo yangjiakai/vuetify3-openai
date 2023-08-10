@@ -87,7 +87,6 @@ watch(
         <v-btn
           color="#705CF6"
           block
-          size="large"
           class="mb-3 text-white"
           rounded="md"
           @click="spokenStore.showAddCharacterDialog()"
