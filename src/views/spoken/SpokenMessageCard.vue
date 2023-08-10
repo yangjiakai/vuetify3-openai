@@ -31,7 +31,7 @@ const readMessage = () => {
     voiceEmotion: "",
     voiceRate: 1.1,
     language: "zh-CN",
-    VoiceName: "zh-CN-XiaoxiaoNeural",
+    voiceName: "zh-CN-XiaoxiaoNeural",
   };
 
   const text = formatForTTS(content.value);
@@ -129,6 +129,8 @@ const handleCollect = () => {
                 <template v-slot:prepend>
                   <v-icon class="tool-icon" size="18">mdi-volume-high</v-icon>
                 </template>
+                <v-tooltip activator="parent" location="bottom" text="朗读">
+                </v-tooltip>
               </v-btn>
               <v-btn
                 class="mr-3"
@@ -157,6 +159,8 @@ const handleCollect = () => {
                     size="18"
                     >mdi-translate</v-icon
                   >
+                  <v-tooltip activator="parent" location="bottom" text="翻译">
+                  </v-tooltip>
                 </template>
               </v-btn>
               <v-btn
@@ -170,8 +174,12 @@ const handleCollect = () => {
                     :color="isCollected ? '#705CF6' : ''"
                     class="tool-icon"
                     size="18"
-                    >mdi-heart-outline</v-icon
+                    >{{
+                      isCollected ? "mdi-heart" : "mdi-heart-outline"
+                    }}</v-icon
                   >
+                  <v-tooltip activator="parent" location="bottom" text="收藏">
+                  </v-tooltip>
                 </template>
               </v-btn>
             </div>
@@ -185,10 +193,63 @@ const handleCollect = () => {
         <v-avatar class="ml-4" rounded="lg" variant="elevated">
           <img src="@/assets/images/avatars/avatar_user.jpg" alt="alt" />
         </v-avatar>
-        <v-card class="gradient gray rounded-xl rounded-be-0" theme="dark">
-          <v-card-text>
+        <v-card class="gradient gray rounded-xl rounded-be-0">
+          <v-card-text class="ml-1 mt-1">
             <b> {{ props.message.body.content }}</b></v-card-text
           >
+          <div
+            v-if="translatedContent"
+            class="mx-5 mb-5 text-body-2 text-blue-grey-lighten-3"
+          >
+            {{ translatedContent }}
+          </div>
+          <div class="toolbox px-5 pb-5">
+            <v-btn
+              class="mr-3"
+              color="grey-lighten-1"
+              variant="text"
+              @click="readMessage"
+              size="20"
+              v-if="!props.message.isReading"
+            >
+              <template v-slot:prepend>
+                <v-icon class="tool-icon" size="18">mdi-volume-high</v-icon>
+              </template>
+              <v-tooltip activator="parent" location="bottom" text="朗读">
+              </v-tooltip>
+            </v-btn>
+            <v-btn
+              class="mr-3"
+              color="grey-lighten-1"
+              variant="text"
+              @click="readMessage"
+              size="20"
+              v-else
+            >
+              <template v-slot:prepend>
+                <Icon color="#705CF6" icon="svg-spinners:bars-scale-fade" />
+              </template>
+            </v-btn>
+
+            <v-btn
+              class="mr-3"
+              color="grey-lighten-1"
+              variant="text"
+              @click="translation"
+              size="20"
+            >
+              <template v-slot:prepend>
+                <v-icon
+                  :color="isTanslating ? '#705CF6' : ''"
+                  class="tool-icon"
+                  size="18"
+                  >mdi-translate</v-icon
+                >
+                <v-tooltip activator="parent" location="bottom" text="翻译">
+                </v-tooltip>
+              </template>
+            </v-btn>
+          </div>
         </v-card>
       </div>
     </div>

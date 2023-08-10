@@ -18,7 +18,7 @@ interface VoiceConfig {
     voiceEmotion: string,
     voiceRate: number,
     language: string,
-    VoiceName: string,
+    voiceName: string,
 }
 
 
@@ -42,11 +42,19 @@ export const useSpeechStore = defineStore({
         synthesizer: null,
         // 语音识别器
         recognizer: null,
+        allVoices: [],
     }),
 
     persist: {
         enabled: true,
         strategies: [{ storage: localStorage, paths: ["token"] }],
+    },
+
+    getters: {
+        getLocalName: (state) => () => {
+            return state.speechSynthesisVoiceName;
+        }
+
     },
 
     actions: {
@@ -115,7 +123,8 @@ export const useSpeechStore = defineStore({
         },
 
         // 文本转语音
-        async ssmlToSpeech(text: string, voiceConfig: VoiceConfig) {
+        async ssmlToSpeech(text: string, voiceConfig: VoiceConfig, speakMode?: string) {
+
             const spokenStore = useSpokenStore();
             console.log("voiceConfig", voiceConfig);
 
@@ -123,18 +132,23 @@ export const useSpeechStore = defineStore({
             const speechConfig = SpeechConfig.fromSubscription(this.subscriptionKey, this.region);
 
             speechConfig.speechSynthesisLanguage = voiceConfig?.language || this.speechSynthesisLanguage;
-            speechConfig.speechSynthesisVoiceName = voiceConfig?.VoiceName || this.speechSynthesisVoiceName;
+            speechConfig.speechSynthesisVoiceName = voiceConfig?.voiceName || this.speechSynthesisVoiceName;
             speechConfig.speechSynthesisOutputFormat = SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3;
 
             // 配置监听语音的播放开始和结束
             const player = new SpeakerAudioDestination();
             player.onAudioStart = () => {
-                spokenStore.startReading(voiceConfig.messageId);
-                console.log("开始播放");
+                if (speakMode !== "test") {
+                    spokenStore.startReading(voiceConfig.messageId);
+                    console.log("开始播放");
+                }
+
             };
             player.onAudioEnd = () => {
-                spokenStore.endReading(voiceConfig.messageId);
-                console.log("播放结束");
+                if (speakMode !== "test") {
+                    spokenStore.endReading(voiceConfig.messageId);
+                    console.log("播放结束");
+                }
             };
 
             const audioConfig = AudioConfig.fromSpeakerOutput(player);
@@ -159,7 +173,7 @@ export const useSpeechStore = defineStore({
         buildSSML(text: string, voiceConfig?: VoiceConfig) {
             return `
               <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${this.speechSynthesisLanguage}">
-                <voice name="${voiceConfig?.VoiceName || this.speechSynthesisVoiceName}">
+                <voice name="${voiceConfig?.voiceName || this.speechSynthesisVoiceName}">
                   <mstts:express-as type="${voiceConfig?.voiceEmotion || this.voiceEmotion}">
                     <prosody rate="${voiceConfig?.voiceRate || this.voiceRate}">
                       ${text}
@@ -192,8 +206,7 @@ export const useSpeechStore = defineStore({
             const speechConfig = SpeechConfig.fromSubscription(this.subscriptionKey, this.region);
             const synthesizer = new SpeechSynthesizer(speechConfig);
             const result = await synthesizer.getVoicesAsync();
-            console.log("result", result);
-            return result.voices;
+            this.allVoices = result.voices;
         }
     },
 })

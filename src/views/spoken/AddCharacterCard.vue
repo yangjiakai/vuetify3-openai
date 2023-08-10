@@ -6,18 +6,6 @@
 <script setup lang="ts">
 import { useSpeechStore } from "@/stores/speechStore";
 const speechStore = useSpeechStore();
-const voices = ref<any>([]);
-const getVoices = async () => {
-  const languages = ["ja-JP", "en-US", "zh-CN", "zh-HK"];
-  const allVoices = await speechStore.getVoices();
-  voices.value = allVoices?.filter((voice) => languages.includes(voice.locale));
-
-  console.log("voices", voices.value);
-};
-
-onMounted(() => {
-  getVoices();
-});
 
 const getAvatar = (voice) => {
   return voice.privGender === 2
@@ -25,20 +13,99 @@ const getAvatar = (voice) => {
     : "https://img.icons8.com/bubbles/50/bartender-female.png";
 };
 
-const getGender = () => {};
+//   Voice结构
+//   privGender: 1,
+//   privLocalName: "Adri",
+//   privLocale: "af-ZA",
+//   privLocaleName: "Afrikaans (South Africa)",
+//   privName: "Microsoft Server Speech Text to Speech Voice (af-ZA, AdriNeural)",
+//   privShortName: "af-ZA-AdriNeural",
+//   privStyleList: [],
+//   privVoicePath: "",
+//   privVoiceType: 1,
+
+const characterList = ref<any>([]);
+
+const getChracterList = () => {
+  const languages = ["ja-JP", "en-US", "zh-CN", "zh-HK"];
+
+  const activeVoices = speechStore.allVoices?.filter((voice: any) =>
+    languages.includes(voice.locale)
+  );
+
+  characterList.value = activeVoices.map((voice: any) => {
+    return {
+      gender: voice.privGender,
+      locale: voice.privLocale,
+      localName: voice.privLocalName,
+      fullName: voice.privLocaleName,
+      modelName: voice.privShortName,
+      styleList: voice.privStyleList,
+      isSelected: false,
+    };
+  });
+};
+
+onMounted(() => {
+  getChracterList();
+});
+
+const speakTest = (voice) => {
+  const config = {
+    messageId: 0,
+    voiceEmotion: "",
+    voiceRate: 1,
+    language: voice.locale,
+    voiceName: voice.modelName,
+  };
+  const text = getTestText(voice.locale);
+
+  speechStore.ssmlToSpeech(text, config, "test");
+};
+
+const getTestText = (lang) => {
+  let text = "我们来聊天吧";
+  if (lang === "en-US") {
+    text = "Let's chat";
+  } else if (lang === "ja-JP") {
+    text = "話しましょう";
+  } else if (lang === "ko-KR") {
+    text = "대화하자";
+  } else if (lang === "zh-CN") {
+    text = "我们来聊天吧";
+  } else if (lang === "zh-HK") {
+    text = "我們來聊天吧";
+  } else if (lang === "zh-TW") {
+    text = "我們來聊天吧";
+  }
+  return text;
+};
+
+const selectCharacter = (voice) => {
+  characterList.value.forEach((character) => {
+    character.isSelected = false;
+  });
+  voice.isSelected = true;
+};
 </script>
 
 <template>
   <v-card class="mx-auto pa-2" width="400">
     <v-card>
       <v-card-title> 角色 </v-card-title>
-      <v-divider></v-divider>
     </v-card>
-    <v-list height="400" class="pa-1" lines="three" density="compact">
+    <v-divider></v-divider>
+    <v-list height="400" class="pa-1" lines="three" densit y="compact">
       <!-- ---------------------------------------------- -->
       <!-- Profile Area -->
       <!-- ---------------------------------------------- -->
-      <v-list-item elevation="1" class="my-1" v-for="voice in voices">
+      <v-list-item
+        @click="selectCharacter(voice)"
+        elevation="1"
+        class="my-1"
+        :active="voice.isSelected"
+        v-for="voice in characterList"
+      >
         <template v-slot:prepend>
           <v-avatar size="50">
             <v-img :src="getAvatar(voice)"></v-img>
@@ -46,14 +113,26 @@ const getGender = () => {};
         </template>
 
         <v-list-item-title class="font-weight-bold text-primary">
-          {{ voice.privLocalName }}
+          {{ voice.localName }}
         </v-list-item-title>
         <v-list-item-subtitle>
           {{ voice.locale }}
         </v-list-item-subtitle>
 
         <template v-slot:append>
-          <v-btn color="info" @click="getGender">选定</v-btn>
+          <span class="text-body-2 text-grey"> 试听 </span>
+
+          <v-btn
+            class="ml-1"
+            color="grey-lighten-1"
+            variant="text"
+            @click="speakTest(voice)"
+            size="20"
+          >
+            <template v-slot:prepend>
+              <v-icon size="20" color="#6746F5">mdi-play-circle-outline</v-icon>
+            </template>
+          </v-btn>
         </template>
       </v-list-item>
     </v-list>
@@ -66,7 +145,7 @@ const getGender = () => {};
         <!-- Rate -->
         <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-medium">Rate</v-label>
+            <v-label class="font-weight-medium">语速</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-slider
@@ -83,7 +162,7 @@ const getGender = () => {};
         <!-- Emotion -->
         <v-row class="align-center mb-3">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-medium">Emotion</v-label>
+            <v-label class="font-weight-medium">风格</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-select

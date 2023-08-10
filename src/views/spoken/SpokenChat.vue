@@ -120,8 +120,6 @@ const createCompletion = async () => {
 
     const res = await completion.json();
 
-    console.log("completion", completion.json());
-
     // Add the bot message
     const msgId = Date.now();
     spokenStore.addHistory(currentId.value, {
@@ -144,7 +142,7 @@ const readMessage = (id, text) => {
     voiceEmotion: "",
     voiceRate: 1.1,
     language: "zh-CN",
-    VoiceName: "zh-CN-XiaoxiaoNeural",
+    voiceName: "zh-CN-XiaoxiaoNeural",
   };
 
   const formmatedText = formatForTTS(text);
@@ -306,9 +304,10 @@ const stopRecording = () => {
   flex-direction: column;
   position: relative;
 
-  .messsage-area {
+  .message-container {
     flex: 1;
-    height: 100%;
+
+    padding-bottom: 170px;
   }
 
   .input-area {

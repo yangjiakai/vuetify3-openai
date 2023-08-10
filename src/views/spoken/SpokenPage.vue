@@ -8,10 +8,20 @@ import SpokenSidebar from "./SpokenSidebar.vue";
 import AddCharacterCard from "./AddCharacterCard.vue";
 
 import { useSpokenStore } from "@/stores/spokenStore";
+import { useSpeechStore } from "@/stores/speechStore";
 const spokenStore = useSpokenStore();
+const speechStore = useSpeechStore();
 
 watchEffect(() => {
   console.log("spokenStore.addCharacterDialog", spokenStore.addCharacterDialog);
+});
+
+const getVoices = async () => {
+  await speechStore.getVoices();
+};
+
+onMounted(() => {
+  getVoices();
 });
 </script>
 

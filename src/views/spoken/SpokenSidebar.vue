@@ -95,7 +95,7 @@ watch(
           <template v-slot:prepend>
             <v-icon>mdi-plus-circle</v-icon>
           </template>
-          新建角色</v-btn
+          添加好友</v-btn
         >
         <transition-group name="slide-x" tag="div">
           <v-list-item
