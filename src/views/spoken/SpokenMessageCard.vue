@@ -12,12 +12,14 @@ import "md-editor-v3/lib/style.css";
 import { formatForTTS } from "@/utils/aiUtils";
 import { Icon } from "@iconify/vue";
 import { readStream } from "@/utils/aiUtils";
+
 const speechStore = useSpeechStore();
 interface Props {
   message: Message;
   isLoading?: boolean;
   role?: "user" | "assistant" | "system";
   dateTime?: string;
+  voiceConfig: any;
 }
 const snackbarStore = useSnackbarStore();
 const props = defineProps<Props>();
@@ -28,10 +30,10 @@ const content = computed(() => {
 const readMessage = () => {
   const config = {
     messageId: props.message.id || 0,
-    voiceEmotion: "",
-    voiceRate: 1.1,
-    language: "zh-CN",
-    voiceName: "zh-CN-XiaoxiaoNeural",
+    voiceEmotion: props.voiceConfig.voiceStyle || "",
+    voiceRate: props.voiceConfig.voiceRate,
+    language: props.voiceConfig.language,
+    voiceName: props.voiceConfig.voiceName,
   };
 
   const text = formatForTTS(content.value);
@@ -56,7 +58,11 @@ const translation = async () => {
         method: "POST",
         body: JSON.stringify({
           messages: [
-            { role: "system", content: "你是一名翻译官,将内容翻译成英文" },
+            {
+              role: "system",
+              content:
+                "你是一名翻译官,将内容翻译成中文,如果源文本就是中文的话,不必翻译",
+            },
             { role: "user", content: content.value },
           ],
           model: "gpt-3.5-turbo",

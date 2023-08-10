@@ -5,8 +5,11 @@
 -->
 <script setup lang="ts">
 import { useSpeechStore } from "@/stores/speechStore";
+import { useSpokenStore } from "@/stores/spokenStore";
 import { useDisplay } from "vuetify";
 const speechStore = useSpeechStore();
+const spokenStore = useSpokenStore();
+
 const { mdAndUp } = useDisplay();
 
 const getAvatar = (voice) => {
@@ -27,6 +30,7 @@ const getAvatar = (voice) => {
 //   privVoiceType: 1,
 
 const characterList = ref<any>([]);
+const currentCharacter = ref<any>(null);
 
 const getChracterList = () => {
   const languages = ["ja-JP", "en-US", "zh-CN", "zh-HK"];
@@ -43,9 +47,10 @@ const getChracterList = () => {
       fullName: voice.privLocaleName,
       modelName: voice.privShortName,
       styleList: voice.privStyleList,
-      isSelected: false,
     };
   });
+
+  currentCharacter.value = characterList.value[0];
 };
 
 onMounted(() => {
@@ -83,26 +88,42 @@ const getTestText = (lang) => {
   return text;
 };
 
-const selectCharacter = (voice) => {
-  characterList.value.forEach((voice) => {
-    voice.isSelected = false;
-  });
-
-  voice.isSelected = true;
+const selectCharacter = (character) => {
+  currentCharacter.value = character;
 };
 
 const currentStyle = ref("");
+const voiceRate = ref(1);
+const chatTitle = ref("新会话");
 const currentStyleList = computed(() => {
-  const voice = characterList.value.find((voice) => voice.isSelected);
-  if (voice?.styleList) {
-    currentStyle.value = voice.styleList[0];
+  if (currentCharacter.value && currentCharacter.value.styleList.length > 0) {
+    currentStyle.value = currentCharacter.value.styleList[0];
+  } else {
+    currentStyle.value = "";
   }
-  return voice?.styleList || [];
+
+  return currentCharacter.value?.styleList || [];
 });
+
+const addChat = () => {
+  const id = Date.now();
+  const voiceConfig = {
+    voiceStyle: currentStyle.value,
+    voiceRate: voiceRate.value,
+    language: currentCharacter.value.locale,
+    voiceName: currentCharacter.value.modelName,
+  };
+  spokenStore.addChat(id, voiceConfig, chatTitle.value);
+};
 </script>
 
 <template>
-  <v-card class="mx-auto pa-2" :width="mdAndUp ? '500' : '100%'">
+  <v-card
+    class="mx-auto pa-2"
+    :width="mdAndUp ? '500' : '100%'"
+    max-height="90%"
+    style="overflow: scroll"
+  >
     <v-card>
       <v-card-title> 角色 </v-card-title>
     </v-card>
@@ -115,7 +136,7 @@ const currentStyleList = computed(() => {
         @click="selectCharacter(voice)"
         elevation="1"
         class="my-1"
-        :active="voice.isSelected"
+        :active="voice.localName === currentCharacter.localName"
         v-for="voice in characterList"
       >
         <template v-slot:prepend>
@@ -150,7 +171,7 @@ const currentStyleList = computed(() => {
     </v-list>
     <v-divider></v-divider>
 
-    <v-card class="mt-5">
+    <v-card min-height="200" class="mt-5">
       <v-card-title> 声音设定 </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
@@ -162,7 +183,7 @@ const currentStyleList = computed(() => {
           <v-col cols="12" sm="10">
             <v-slider
               color="primary"
-              v-model="speechStore.voiceRate"
+              v-model="voiceRate"
               thumb-label="always"
               :min="0.1"
               :max="2"
@@ -194,7 +215,7 @@ const currentStyleList = computed(() => {
     <v-card-actions>
       <v-btn color="gray">Cancel</v-btn>
       <v-spacer></v-spacer>
-      <v-btn color="primary">Create Chat</v-btn>
+      <v-btn color="primary" @click="addChat">Create Chat</v-btn>
     </v-card-actions>
     <!-- <v-row>
       <v-col cols="4" v-for="voice in voices">

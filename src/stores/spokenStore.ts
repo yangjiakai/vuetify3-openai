@@ -44,7 +44,7 @@ export const useSpokenStore = defineStore({
 
     persist: {
         enabled: true,
-        strategies: [{ storage: localStorage, paths: [] }],
+        strategies: [{ storage: localStorage, paths: ["characterList"] }],
     },
 
     getters: {
@@ -65,18 +65,25 @@ export const useSpokenStore = defineStore({
     },
     actions: {
         // 添加聊天菜单
-        addChat(id: number, title?: string) {
+        addChat(id: number, voiceConfig: any, title?: string,) {
+
             const newChat = {
                 id: id,
                 title: title || `New Chat`,
                 isMenuEdit: false,
                 idMenuDeleteConfirm: false,
                 messages: [],
-                configs: {
+                gptConfig: {
                     model: "gpt-3.5-turbo",
                     propmpt: "",
                     role: "",
                     proxy: ""
+                },
+                voiceConfig: {
+                    voiceName: voiceConfig.voiceName,
+                    language: voiceConfig.language,
+                    voiceRate: voiceConfig.voiceRate,
+                    voiceStyle: voiceConfig.voiceStyle,
                 }
             }
 
@@ -145,6 +152,16 @@ export const useSpokenStore = defineStore({
                 return chat.messages;
             }
             return [];
+        },
+
+        // 获取当前聊天的声音配置
+        getVoiceConfig(id: number) {
+
+            const chat = this.characterList.find((item) => item.id === id);
+            if (chat) {
+                return chat.voiceConfig;
+            }
+            return {};
         },
 
         // 打开添加角色对话框

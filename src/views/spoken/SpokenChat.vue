@@ -18,6 +18,14 @@ const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
 const spokenStore = useSpokenStore();
 const messages = ref<Message[]>([]);
+const currentId = ref(+route.params.id);
+const voiceConfig = ref({
+  voiceName: "",
+  language: "",
+  voiceRate: 1,
+  voiceStyle: "",
+});
+
 const promptMessage = computed(() => {
   return [
     {
@@ -27,10 +35,9 @@ const promptMessage = computed(() => {
   ];
 });
 
-const currentId = ref(+route.params.id);
-
 onMounted(() => {
   messages.value = spokenStore.getChatHistory(currentId.value);
+  voiceConfig.value = spokenStore.getVoiceConfig(currentId.value);
 });
 
 const requestMessages = computed(() => {
@@ -56,24 +63,13 @@ watch(
     // historyId.value = newVal;
     currentId.value = +newVal;
     messages.value = spokenStore.getChatHistory(currentId.value);
+    voiceConfig.value = spokenStore.getVoiceConfig(currentId.value);
   }
 );
 
 const inputRow = ref(1);
 // User Input Message
 const userMessage = ref("");
-const handleKeydown = (e) => {
-  if (e.key === "Enter" && (e.altKey || e.shiftKey)) {
-    // 当同时按下 alt或者shift 和 enter 时，插入一个换行符
-    e.preventDefault();
-    userMessage.value += "\n";
-  } else if (e.key === "Enter") {
-    // 当只按下 enter 时，发送消息
-    e.preventDefault();
-    sendMessage();
-  }
-};
-
 const sendMessage = () => {
   // 如果信息为空，则不发送
   if (userMessage.value.trim() === "") return;
@@ -139,10 +135,10 @@ const createCompletion = async () => {
 const readMessage = (id, text) => {
   const config = {
     messageId: id,
-    voiceEmotion: "",
-    voiceRate: 1.1,
-    language: "zh-CN",
-    voiceName: "zh-CN-XiaoxiaoNeural",
+    voiceEmotion: voiceConfig.value.voiceStyle,
+    voiceRate: voiceConfig.value.voiceRate,
+    language: voiceConfig.value.language,
+    voiceName: voiceConfig.value.voiceName,
   };
 
   const formmatedText = formatForTTS(text);
@@ -180,7 +176,7 @@ const startRecording = async () => {
   isRecording.value = true;
   try {
     const text = await speechStore.speechToText({
-      language: "zh-CN",
+      language: voiceConfig.value.language,
     });
     console.log("Recognized Text:", text);
     userMessage.value = text;
@@ -237,11 +233,16 @@ const stopRecording = () => {
     <div class="chat-title d-flex justify-center align-center text-deep-purple">
       <div><span class="font-weight-bold">模型:</span> gpt-3.5</div>
       <div class="ml-2"><span class="font-weight-bold">身份:</span> 默认</div>
+      {{ voiceConfig }}
     </div>
     <div class="message-area">
       <perfect-scrollbar v-if="messages.length > 1" class="message-container">
         <template v-for="message in displayMessages" :key="message.id">
-          <SpokenMessageCard :message="message" :role="message.body.role" />
+          <SpokenMessageCard
+            :message="message"
+            :role="message.body.role"
+            :voiceConfig="voiceConfig"
+          />
         </template>
       </perfect-scrollbar>
 
