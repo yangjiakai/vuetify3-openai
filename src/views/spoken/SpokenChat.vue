@@ -12,9 +12,9 @@ import { type Message } from "@/types/spokenTypes";
 import { Vue3Lottie } from "vue3-lottie";
 import { scrollToBottom } from "@/utils/common";
 import { useSpeechStore } from "@/stores/speechStore";
-
+import { formatForTTS } from "@/utils/aiUtils";
 const route = useRoute();
-const speeachStore = useSpeechStore();
+const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
 const spokenStore = useSpokenStore();
 const messages = ref<Message[]>([]);
@@ -106,7 +106,7 @@ const createCompletion = async () => {
         body: JSON.stringify({
           messages: requestMessages.value,
           model: "gpt-3.5-turbo",
-          stream: true,
+          // stream: true,
         }),
       }
     );
@@ -115,31 +115,41 @@ const createCompletion = async () => {
     if (!completion.ok) {
       const errorData = await completion.json();
       snackbarStore.showErrorMessage(errorData.error.message);
-
       return;
     }
 
-    // Create a reader
-    const reader = completion.body?.getReader();
-    if (!reader) {
-      snackbarStore.showErrorMessage("Cannot read the stream.");
-    }
+    const res = await completion.json();
+
+    console.log("completion", completion.json());
 
     // Add the bot message
+    const msgId = Date.now();
     spokenStore.addHistory(currentId.value, {
-      id: Date.now(),
+      id: msgId,
       isReading: false,
       body: {
-        content: "",
+        content: res.choices[0].message.content,
         role: "assistant",
       },
     });
-
-    // Read the stream
-    spokenStore.readStream(reader);
+    readMessage(msgId, res.choices[0].message.content);
   } catch (error) {
     snackbarStore.showErrorMessage(error.message);
   }
+};
+
+const readMessage = (id, text) => {
+  const config = {
+    messageId: id,
+    voiceEmotion: "",
+    voiceRate: 1.1,
+    language: "zh-CN",
+    VoiceName: "zh-CN-XiaoxiaoNeural",
+  };
+
+  const formmatedText = formatForTTS(text);
+
+  speechStore.ssmlToSpeech(formmatedText, config);
 };
 
 const displayMessages = computed(() => {
@@ -165,13 +175,18 @@ watch(
   }
 );
 
+const isRecording = ref(false);
+
 const recorder = ref<MediaRecorder | null>(null);
 const startRecording = async () => {
+  isRecording.value = true;
   try {
-    const text = await speeachStore.speechToText({
+    const text = await speechStore.speechToText({
       language: "zh-CN",
     });
     console.log("Recognized Text:", text);
+    userMessage.value = text;
+    sendMessage();
   } catch (error) {
     console.error("Speech to text failed:", error);
   }
@@ -202,7 +217,7 @@ const startRecording = async () => {
         // const file = new File([blob], "recording.wav", {
         //   type: "audio/wav",
         // });
-        speeachStore.stopSpeechToText();
+        speechStore.stopSpeechToText();
       };
     })
     .catch((error) => {
@@ -214,7 +229,8 @@ const stopRecording = () => {
   if (recorder.value) {
     recorder.value.stop();
   }
-  speeachStore.stopSpeechToText();
+  speechStore.stopSpeechToText();
+  isRecording.value = false;
 };
 </script>
 
@@ -244,10 +260,32 @@ const stopRecording = () => {
       <v-sheet
         color="transparent"
         elevation="0"
-        class="input-panel d-flex align-end pa-1"
+        class="input-panel d-flex align-center justify-center"
       >
-        <v-btn color="success" @click="startRecording">开始</v-btn>
-        <v-btn color="error" @click="stopRecording">结束</v-btn>
+        <!-- <Vue3Lottie
+          animationLink="https://lottie.host/847e58b9-0ad3-4e2e-9b48-58d45f8eae1f/LAHBICt4ey.json"
+          :height="200"
+          :width="200"
+        /> -->
+
+        <div class="animation-box">
+          <v-btn
+            @click="startRecording"
+            v-if="!isRecording"
+            size="67"
+            color="#6746F5"
+            icon
+          >
+            <v-icon size="40" color="white">mdi-microphone</v-icon>
+          </v-btn>
+          <Vue3Lottie
+            @click="stopRecording"
+            v-else
+            animationLink="https://lottie.host/b6030738-0d4e-40f3-b9b0-fa1206503ae5/p2yVzhDDc4.json"
+            :height="150"
+            :width="150"
+          />
+        </div>
       </v-sheet>
     </div>
   </div>
@@ -278,7 +316,7 @@ const stopRecording = () => {
     background-color: rgba(255, 255, 255, 1);
     width: 100%;
     bottom: 0;
-    padding: 1rem;
+
     align-items: center;
     border-top: 1px dotted rgba(0, 0, 0, 0.1);
 
@@ -286,6 +324,13 @@ const stopRecording = () => {
       border-radius: 5px;
       max-width: 1200px;
       margin: 0 auto;
+      .animation-box {
+        width: 150px;
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }
