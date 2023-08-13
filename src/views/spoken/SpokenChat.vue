@@ -174,6 +174,7 @@ const isRecording = ref(false);
 const recorder = ref<MediaRecorder | null>(null);
 const startRecording = async () => {
   isRecording.value = true;
+  // 调用微软语音识别，语音转文字
   try {
     const text = await speechStore.speechToText({
       language: voiceConfig.value.language,
@@ -185,7 +186,7 @@ const startRecording = async () => {
     console.error("Speech to text failed:", error);
   }
 
-  // 获取用户媒体权限，视频的话参数{audio: true, video: true}
+  // 开启麦克风，进行录音
   navigator.mediaDevices
     .getUserMedia({ audio: true })
     .then((stream) => {

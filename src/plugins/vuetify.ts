@@ -27,8 +27,8 @@ const Lighttheme: ThemeDefinition = {
   colors: {
     background: "#f2f5f8",
     surface: "#ffffff",
-    primary: "#705CF6",
-    secondary: "#334155",
+    primary: "#6746F5",
+    secondary: "#838EA3",
     accent: "#705CF6",
     error: "#ef476f",
     info: "#2196F3",

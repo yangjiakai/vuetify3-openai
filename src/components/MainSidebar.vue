@@ -45,15 +45,26 @@ const menus = [
 </script>
 
 <template>
-  <v-navigation-drawer color="#111827" class="text-white" rail>
+  <v-navigation-drawer width="100">
     <v-list nav>
       <v-list-item
         v-for="item in menus"
         :key="item.title"
-        :prepend-icon="item.icon"
         :value="item.title"
         :to="item.url"
+        lines="two"
+        class="text-grey-darken-1"
+        color="primary"
       >
+        <div>
+          <div class="text-center">
+            <v-icon size="26">{{ item.icon }}</v-icon>
+          </div>
+          <div class="title">
+            {{ item.title }}
+          </div>
+        </div>
+
         <v-tooltip
           activator="parent"
           location="right"
@@ -85,4 +96,11 @@ const menus = [
   </v-dialog>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.title {
+  font-size: 11.5px;
+  text-align: center;
+  margin-top: 5px;
+  font-weight: 600;
+}
+</style>
