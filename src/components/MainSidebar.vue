@@ -56,36 +56,51 @@ const menus = [
         class="text-grey-darken-1"
         color="primary"
       >
-        <div>
-          <div class="text-center">
-            <v-icon size="26">{{ item.icon }}</v-icon>
-          </div>
-          <div class="title">
-            {{ item.title }}
-          </div>
+        <div class="text-center">
+          <v-icon size="26">{{ item.icon }}</v-icon>
+        </div>
+        <div class="title">
+          {{ item.title }}
         </div>
 
+        <!-- 
         <v-tooltip
           activator="parent"
           location="right"
           class="text-white"
           :text="item.title"
-        ></v-tooltip>
+        ></v-tooltip> -->
       </v-list-item>
     </v-list>
     <template v-slot:append>
-      <v-list>
-        <v-list-item @click="handleContactUsShow">
+      <v-list lines="two">
+        <v-list-item
+          @click="handleContactUsShow"
+          class="text-grey-darken-1"
+          color="primary"
+        >
           <v-slot prepend>
-            <v-icon>mdi-wechat</v-icon>
-            <v-tooltip activator="parent" location="right" text="联系我们">
-            </v-tooltip>
+            <div class="text-center">
+              <v-icon size="26">mdi-wechat</v-icon>
+            </div>
+
+            <div class="title">联系我们</div>
+            <!-- <v-tooltip activator="parent" location="right" text="联系我们">
+            </v-tooltip> -->
           </v-slot>
         </v-list-item>
 
-        <v-list-item @click="handleLogout">
+        <v-list-item
+          @click="handleLogout"
+          class="text-grey-darken-1"
+          color="primary"
+        >
           <v-slot prepend>
-            <v-icon>mdi-logout</v-icon>
+            <div class="text-center">
+              <v-icon size="26">mdi-logout</v-icon>
+            </div>
+
+            <div class="title">退出登录</div>
           </v-slot>
         </v-list-item>
       </v-list>
