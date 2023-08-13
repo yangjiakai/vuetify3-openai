@@ -6,6 +6,7 @@
 <script setup lang="ts">
 import { useCustomizeThemeStore } from "@/stores/customizeTheme";
 import { useSpokenStore } from "@/stores/spokenStore";
+import { Icon } from "@iconify/vue";
 
 const spokenStore = useSpokenStore();
 const router = useRouter();
@@ -77,17 +78,17 @@ watch(
 </script>
 
 <template>
-  <v-navigation-drawer v-model="customizeTheme.subSidebar" theme="dark">
+  <v-navigation-drawer v-model="customizeTheme.subSidebar" width="240">
     <!-- ---------------------------------------------- -->
     <!---Nav List -->
     <!-- ---------------------------------------------- -->
     <perfect-scrollbar class="scrollnav">
       <v-divider></v-divider>
-      <v-list nav>
+      <v-list nav class="text-grey-darken-1" color="primary">
         <v-btn
           color="#705CF6"
           block
-          class="mb-3 text-white"
+          class="mb-3 text-white font-weight-bold"
           rounded="md"
           @click="spokenStore.showAddCharacterDialog()"
         >
@@ -99,7 +100,7 @@ watch(
         <transition-group name="slide-x" tag="div">
           <v-list-item
             v-for="chatMenu in chatMenus"
-            class="pl-5"
+            class="pl-5 font-weight-bold"
             :key="chatMenu.id"
             :to="chatMenu.url"
             @click="navigateTo(chatMenu.id)"
@@ -109,13 +110,15 @@ watch(
             @blur="editCancel(chatMenu.id)"
           >
             <template v-slot:prepend>
-              <v-avatar size="avatarSize" color="white">
-                <img
-                  width="26"
-                  height="26"
-                  src="https://img.icons8.com/fluency/48/user-female-circle.png"
-                  alt="user-female-circle"
-                />
+              <v-avatar size="avatarSize">
+                <v-icon
+                  :color="
+                    chatMenu.id === spokenStore.activeChatMenuId
+                      ? 'primary'
+                      : ''
+                  "
+                  >mdi-face-woman-shimmer</v-icon
+                >
               </v-avatar>
             </template>
             <v-list-item-title v-if="chatMenu.isMenuEdit">
@@ -132,7 +135,9 @@ watch(
             <v-list-item-title v-else-if="chatMenu.idMenuDeleteConfirm">
               {{ `删除 "${chatMenu.title}"?` }}</v-list-item-title
             >
-            <v-list-item-title v-else> {{ chatMenu.title }}</v-list-item-title>
+            <v-list-item-title class="font-weight-black" v-else>
+              {{ chatMenu.title }}</v-list-item-title
+            >
             <template v-slot:append>
               <!-- 普通状态 -->
               <div
