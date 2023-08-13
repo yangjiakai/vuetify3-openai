@@ -6,7 +6,6 @@
 <script setup lang="ts">
 import { useCustomizeThemeStore } from "@/stores/customizeTheme";
 import { useSpokenStore } from "@/stores/spokenStore";
-import { Icon } from "@iconify/vue";
 
 const spokenStore = useSpokenStore();
 const router = useRouter();
@@ -117,12 +116,18 @@ watch(
                       ? 'primary'
                       : ''
                   "
-                  >mdi-face-woman-shimmer</v-icon
                 >
+                  <!-- {{
+                    spokenStore.getChatActive.VoiceConfig.gender === 1
+                      ? "mdi-face-woman-shimmer"
+                      : "mdi-face-man-shimmer"
+                  }} -->
+                  mdi-face-man-shimmer
+                </v-icon>
               </v-avatar>
             </template>
             <v-list-item-title v-if="chatMenu.isMenuEdit">
-              <v-text-field
+              <!-- <v-text-field
                 ref="refEditInput"
                 v-model="editTile"
                 class="mr-2"
@@ -130,7 +135,16 @@ watch(
                 autofocus
                 density="compact"
                 @keyup.enter="editConfirm(chatMenu.id)"
-              ></v-text-field>
+              ></v-text-field> -->
+
+              <input
+                class="custom-input"
+                type="text"
+                ref="refEditInput"
+                autofocus
+                v-model="editTile"
+                @keyup.enter="editConfirm(chatMenu.id)"
+              />
             </v-list-item-title>
             <v-list-item-title v-else-if="chatMenu.idMenuDeleteConfirm">
               {{ `删除 "${chatMenu.title}"?` }}</v-list-item-title
@@ -146,6 +160,7 @@ watch(
                   !chatMenu.idMenuDeleteConfirm &&
                   !chatMenu.isMenuEdit
                 "
+                class="align-items-center d-flex"
               >
                 <v-btn
                   color="grey-lighten-1"
@@ -175,6 +190,7 @@ watch(
                   !chatMenu.idMenuDeleteConfirm &&
                   chatMenu.isMenuEdit
                 "
+                class="align-items-center d-flex"
               >
                 <v-btn
                   color="grey-lighten-1"
@@ -264,5 +280,22 @@ watch(
   );
   border-radius: 0px 3px 3px 0px;
   transition: opacity 0.3s;
+}
+
+.custom-input {
+  width: 100px; /* 设置输入框宽度 */
+  padding: 2px 5px; /* 增加内边距 */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s; /* 添加过渡效果 */
+
+  /* 默认状态样式 */
+  color: #757575;
+  font-weight: 600;
+}
+
+.custom-input:focus {
+  outline: none; /* 移除默认聚焦框 */
+  border-color: #6746f5; /* 聚焦时边框颜色 */
 }
 </style>

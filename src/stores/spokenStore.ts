@@ -9,37 +9,7 @@ export const useSpokenStore = defineStore({
         addCharacterDialog: false,
         // 当前激活的聊天菜单id
         activeChatMenuId: 1,
-        characterList: [
-            {
-                id: 1,
-                title: "小虾米",
-                isMenuEdit: false,
-                idMenuDeleteConfirm: false,
-                messages: [
-                    {
-                        id: 1,
-                        isReading: false,
-                        body: {
-                            role: "system",
-                            content: "你是一个口语对话机器人",
-                        }
-                    },
-                    {
-                        id: 2,
-                        isReading: false,
-                        body: {
-                            role: "assistant",
-                            content: "你好,云扬",
-                        }
-                    },
-                ],
-                character: {
-                    voiceName: "云扬",
-                    gender: 1,
-                    locale: "zh-CN",
-                }
-            },
-        ]
+        characterList: []
     }),
 
     persist: {
@@ -49,19 +19,17 @@ export const useSpokenStore = defineStore({
 
     getters: {
         getChatActive: (state) => () => {
-            return state.characterList.find((item) => item.id === state.activeChatMenuId);
+            return state.characterList.find((item: Spoken.SpokenChat) => item.id === state.activeChatMenuId);
         },
 
         // 获取当前激活的聊天的历史记录
         getHistoryActive: (state) => () => {
-            const activeChat = state.characterList.find((item) => item.id === state.activeChatMenuId);
+            const activeChat = state.characterList.find((item: Spoken.SpokenChat) => item.id === state.activeChatMenuId) as Spoken.SpokenChat | undefined;
             if (activeChat) {
                 return activeChat.messages;
             }
             return [];
         },
-
-
     },
     actions: {
         // 添加聊天菜单
