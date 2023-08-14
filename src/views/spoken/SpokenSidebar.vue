@@ -128,22 +128,12 @@ watch(
               </v-avatar>
             </template>
             <v-list-item-title v-if="chatMenu.isMenuEdit">
-              <!-- <v-text-field
-                ref="refEditInput"
-                v-model="editTile"
-                class="mr-2"
-                hide-details
-                autofocus
-                density="compact"
-                @keyup.enter="editConfirm(chatMenu.chatId)"
-              ></v-text-field> -->
-
               <input
                 class="custom-input"
                 type="text"
                 ref="refEditInput"
                 autofocus
-                v-model="editTile"
+                v-model="editTitle"
                 @keyup.enter="editConfirm(chatMenu.chatId)"
               />
             </v-list-item-title>
