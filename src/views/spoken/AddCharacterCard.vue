@@ -13,12 +13,6 @@ const spokenStore = useSpokenStore();
 
 const { mdAndUp } = useDisplay();
 
-const getAvatar = (voice) => {
-  return voice.privGender === 2
-    ? "https://img.icons8.com/bubbles/50/user-male.png"
-    : "https://img.icons8.com/bubbles/50/bartender-female.png";
-};
-
 const characterList = ref<any>([]);
 const currentCharacter = ref<any>(null);
 
@@ -54,6 +48,7 @@ const speakTest = (voice) => {
     gender: voice.gender,
     language: voice.locale,
     voiceName: voice.modelName,
+    localName: voice.localName,
   };
   const text = getTestText(voice.locale);
 
@@ -103,6 +98,7 @@ const addChat = () => {
     language: currentCharacter.value.locale,
     voiceName: currentCharacter.value.modelName,
     gender: currentCharacter.value.gender,
+    localName: currentCharacter.value.localName,
   };
   spokenStore.addChat(id, voiceConfig, chatTitle.value);
   spokenStore.switchAddCharacterDialog();

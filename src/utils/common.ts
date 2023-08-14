@@ -69,3 +69,24 @@ export const scrollToBottom = (
         top: element.scrollHeight,
     });
 };
+
+
+// 输入语言表示，输出语言中文
+// Chinese = "zh-CN",  中文
+// English = "en-US",  英语(美)
+// Japanese = "ja-JP", 日语
+// Korean = "ko-KR",  韩语
+export const getLanguageName = (language: string): string => {
+    switch (language) {
+        case "zh-CN":
+            return "中文";
+        case "en-US":
+            return "英语(美)";
+        case "ja-JP":
+            return "日语";
+        case "ko-KR":
+            return "韩语";
+        default:
+            return "未选定";
+    }
+}

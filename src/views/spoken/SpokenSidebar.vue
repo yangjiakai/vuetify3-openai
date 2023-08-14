@@ -91,7 +91,7 @@ watch(
       <v-divider></v-divider>
       <v-list nav class="text-grey-darken-1" color="primary">
         <v-btn
-          color="#705CF6"
+          color="primary"
           block
           class="mb-3 text-white font-weight-bold"
           rounded="md"

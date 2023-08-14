@@ -10,7 +10,7 @@ import { useSpeechStore } from "@/stores/speechStore";
 
 import SpokenMessageCard from "./SpokenMessageCard.vue";
 
-import { scrollToBottom } from "@/utils/common";
+import { scrollToBottom, getLanguageName } from "@/utils/common";
 import { formatForTTS, countAndCompleteCodeBlocks } from "@/utils/aiUtils";
 
 import { Vue3Lottie } from "vue3-lottie";
@@ -27,6 +27,7 @@ const voiceConfig = ref<Chat.VoiceConfig>({
   language: "",
   voiceRate: 1,
   voiceStyle: "",
+  localName: "",
 });
 
 const promptMessage = computed(() => {
@@ -230,11 +231,29 @@ const stopRecording = () => {
 
 <template>
   <div class="chat-container">
-    <div class="chat-title d-flex justify-center align-center text-deep-purple">
-      <div><span class="font-weight-bold">模型:</span> gpt-3.5</div>
-      <div class="ml-2"><span class="font-weight-bold">身份:</span> 默认</div>
-      {{ voiceConfig }}
-    </div>
+    <v-toolbar color="white shadow-1" class="text-grey-darken-2">
+      <v-app-bar-nav-icon color="primary" size="40"></v-app-bar-nav-icon>
+      <div>
+        <div class="text-body-1 font-weight-black d-flex align-center">
+          <span>音源:</span> {{ voiceConfig.localName }}
+          <v-chip
+            color="primary"
+            size="small"
+            label
+            class="ml-1"
+            :prepend-icon="
+              voiceConfig.gender === Gender.Man
+                ? 'mdi-face-man-shimmer'
+                : 'mdi-face-woman-shimmer'
+            "
+          >
+            {{ getLanguageName(voiceConfig.language) }}</v-chip
+          >
+        </div>
+        <div style="font-size: 12px" class=""></div>
+      </div>
+    </v-toolbar>
+
     <div class="message-area">
       <perfect-scrollbar v-if="messages.length > 1" class="message-container">
         <template v-for="message in displayMessages" :key="message.id">
