@@ -8,6 +8,7 @@ import { useAuthStore } from "@/stores/authStore";
 import ContactUsCard from "@/components/ContactUsCard.vue";
 const authStore = useAuthStore();
 const router = useRouter();
+const route = useRoute();
 const handleLogout = () => {
   authStore.removeToken();
   router.push("/login");
@@ -55,6 +56,12 @@ const menus = [
         lines="two"
         class="text-grey-darken-1"
         color="primary"
+        :active="
+          route.matched.some(
+            (record) =>
+              record.path === item.url || record.path.startsWith(item.url)
+          )
+        "
       >
         <div class="text-center">
           <v-icon size="26">{{ item.icon }}</v-icon>
