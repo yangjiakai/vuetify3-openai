@@ -26,8 +26,10 @@ const promptMessage = computed(() => {
 });
 
 const currentId = ref(+route.params.id);
+const chatInfo = ref<Chat.Chat>();
 
 onMounted(() => {
+  chatInfo.value = chatHistoryStore.getChat(currentId.value);
   messages.value = chatHistoryStore.getChatHistory(currentId.value);
 });
 
@@ -167,10 +169,25 @@ watch(
   <SubSidebar />
 
   <div class="chat-container">
-    <div class="chat-title d-flex justify-center align-center text-deep-purple">
-      <div><span class="font-weight-bold">模型:</span> gpt-3.5</div>
-      <div class="ml-2"><span class="font-weight-bold">身份:</span> 默认</div>
-    </div>
+    <v-toolbar color="white" class="text-grey-darken-2" border>
+      <v-app-bar-nav-icon color="primary" size="40"></v-app-bar-nav-icon>
+      <div>
+        <div class="text-body-1 font-weight-black d-flex align-center">
+          <span>主题:</span> {{ chatInfo?.menuConfig.menuTitle }}
+          <v-chip
+            color="primary"
+            size="small"
+            label
+            class="ml-1"
+            prepend-icon="
+            mdi-face-man-shimmer
+            "
+          >
+            默认身份</v-chip
+          >
+        </div>
+      </div>
+    </v-toolbar>
     <div class="message-area">
       <perfect-scrollbar v-if="messages.length > 1" class="message-container">
         <template v-for="message in displayMessages" :key="message.messageId">

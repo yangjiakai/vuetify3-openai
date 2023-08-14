@@ -231,7 +231,7 @@ const stopRecording = () => {
 
 <template>
   <div class="chat-container">
-    <v-toolbar color="white shadow-1" class="text-grey-darken-2">
+    <v-toolbar color="white" class="text-grey-darken-2" border>
       <v-app-bar-nav-icon color="primary" size="40"></v-app-bar-nav-icon>
       <div>
         <div class="text-body-1 font-weight-black d-flex align-center">
@@ -250,7 +250,6 @@ const stopRecording = () => {
             {{ getLanguageName(voiceConfig.language) }}</v-chip
           >
         </div>
-        <div style="font-size: 12px" class=""></div>
       </div>
     </v-toolbar>
 

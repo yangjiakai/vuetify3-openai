@@ -113,6 +113,10 @@ export const useChatHistoryStore = defineStore({
             }
         },
 
+        getChat(chatId: Chat.Id) {
+            return this.chatList.find((chat: Chat.Chat) => chat.chatId === chatId);
+        },
+
 
         // 获取指定id的聊天的历史记录
 
