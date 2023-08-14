@@ -5,21 +5,17 @@
 -->
 <script setup lang="ts">
 import { useChatHistoryStore } from "@/stores/chatHistoryStore";
-import { read, countAndCompleteCodeBlocks } from "@/utils/aiUtils";
+import { countAndCompleteCodeBlocks } from "@/utils/aiUtils";
 import { useSnackbarStore } from "@/stores/snackbarStore";
 import MessageCard from "@/components/MessageCard.vue";
 import SubSidebar from "@/components/SubSidebar.vue";
 import { Vue3Lottie } from "vue3-lottie";
 import { scrollToBottom } from "@/utils/common";
-interface Message {
-  content: string;
-  role: "user" | "assistant" | "system";
-}
 
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
 const chatHistoryStore = useChatHistoryStore();
-const messages = ref<Message[]>([]);
+const messages = ref<Chat.Message[]>([]);
 const promptMessage = computed(() => {
   return [
     {
@@ -36,11 +32,18 @@ onMounted(() => {
 });
 
 const requestMessages = computed(() => {
-  if (messages.value.length <= 10) {
-    return [...promptMessage.value, ...messages.value];
+  const pureMessages = messages.value.map((message) => {
+    return {
+      content: message.messageBody.content,
+      role: message.messageBody.role,
+    };
+  });
+
+  if (pureMessages.length <= 10) {
+    return [...promptMessage.value, ...pureMessages];
   } else {
     // 截取最新的10条信息
-    const slicedMessages = messages.value.slice(-8);
+    const slicedMessages = pureMessages.slice(-8);
     return [...promptMessage.value, ...slicedMessages];
   }
 });
@@ -74,8 +77,11 @@ const sendMessage = () => {
   if (userMessage.value.trim() === "") return;
 
   chatHistoryStore.addHistory(currentId.value, {
-    content: userMessage.value,
-    role: "user",
+    messageId: Date.now(),
+    messageBody: {
+      content: userMessage.value,
+      role: "user",
+    },
   });
 
   inputRow.value = 1;
@@ -116,14 +122,18 @@ const createCompletion = async () => {
       snackbarStore.showErrorMessage("Cannot read the stream.");
     }
 
-    // Add the bot message
-    messages.value.push({
-      content: "",
-      role: "assistant",
+    // 添加AI信息
+    const msgId = Date.now();
+    chatHistoryStore.addHistory(currentId.value, {
+      messageId: msgId,
+      messageBody: {
+        content: "",
+        role: "assistant",
+      },
     });
 
     // Read the stream
-    read(reader, messages);
+    chatHistoryStore.readStream(reader);
   } catch (error) {
     snackbarStore.showErrorMessage(error.message);
   }
@@ -134,7 +144,7 @@ const displayMessages = computed(() => {
   const lastMessage = messagesCopy[messagesCopy.length - 1];
   const updatedLastMessage = {
     ...lastMessage,
-    content: countAndCompleteCodeBlocks(lastMessage.content),
+    content: countAndCompleteCodeBlocks(lastMessage.messageBody.content),
   };
   messagesCopy[messagesCopy.length - 1] = updatedLastMessage;
   return messagesCopy;
@@ -163,8 +173,11 @@ watch(
     </div>
     <div class="message-area">
       <perfect-scrollbar v-if="messages.length > 1" class="message-container">
-        <template v-for="message in displayMessages" :key="message.id">
-          <MessageCard :content="message.content" :role="message.role" />
+        <template v-for="message in displayMessages" :key="message.messageId">
+          <MessageCard
+            :content="message.messageBody.content"
+            :role="message.messageBody.role"
+          />
         </template>
       </perfect-scrollbar>
 

@@ -68,7 +68,6 @@ export const readStream = async (
   const streamMessage = jsons
     .map(jn => jn.choices.map(choice => choice.delta.content).join(""))
     .join("");
-
   callback(streamMessage);
 
   return readStream(reader, callback);  // Recursive call

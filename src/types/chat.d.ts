@@ -23,7 +23,7 @@ declare namespace Chat {
         voiceName: string;
         voiceStyle: string;
         voiceRate: number;
-        localName: string;
+        localName?: string;
     }
 
     type GptConfig = {

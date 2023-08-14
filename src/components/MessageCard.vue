@@ -9,7 +9,7 @@ import "md-editor-v3/lib/style.css";
 interface Props {
   content?: string;
   isLoading?: boolean;
-  role?: "user" | "assistant" | "system";
+  role?: Chat.Role;
   dateTime?: string;
 }
 

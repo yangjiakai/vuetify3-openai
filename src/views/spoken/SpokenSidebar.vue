@@ -32,7 +32,7 @@ const editTitle = ref(spokenStore.activeChat?.menuConfig?.menuTitle);
 
 const navigateTo = (id) => {
   spokenStore.activeChatMenuId = id;
-  router.push(`/chat/${id}`);
+  router.push(`/spoken/${id}`);
 };
 
 const refEditInput = ref();

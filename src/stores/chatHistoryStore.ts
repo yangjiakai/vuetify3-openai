@@ -1,10 +1,8 @@
 import { defineStore } from "pinia";
 import router from "@/router";
+import { readStream } from "@/utils/aiUtils";
 
-interface Message {
-    content: string;
-    role: "user" | "assistant" | "system";
-}
+
 export const useChatHistoryStore = defineStore({
     id: "chatHistory",
     state: () => ({
@@ -12,26 +10,7 @@ export const useChatHistoryStore = defineStore({
         activeChatMenuId: 1,
         // 聊天列表
         chatList: [
-            {
-                id: 1,
-                title: "New Chat",
-                isMenuEdit: false,
-                idMenuDeleteConfirm: false,
-                messages: [
-                    {
-                        role: "system",
-                        content: "欢迎使用聊天机器人",
-                    },
-                    {
-                        role: "assistant",
-                        content: "你好，我是聊天机器人",
-                    },
-                    {
-                        role: "user",
-                        content: "你好，我是用户",
-                    },
-                ]
-            },
+
         ],
     }),
 
@@ -41,79 +20,80 @@ export const useChatHistoryStore = defineStore({
     },
 
     getters: {
-        activeChat: (state) => () => {
-            return state.chatList.find((item) => item.id === state.activeChatMenuId);
+        // 获取当前激活的聊天菜单
+        activeChat(state) {
+            return state.chatList.find((chat: Chat.Chat) => chat.chatId === state.activeChatMenuId);
         },
-
-        // 获取当前激活的聊天的历史记录
-        getHistoryActive: (state) => () => {
-            const activeChat = state.chatList.find((item) => item.id === state.activeChatMenuId);
-            if (activeChat) {
-                return activeChat.messages;
-            }
-            return [];
-        },
-
-
     },
     actions: {
         // 添加聊天菜单
-        addChat(id: number, title?: string) {
-            const newChat = {
-                id: id,
-                title: title || `New Chat`,
-                isMenuEdit: false,
-                idMenuDeleteConfirm: false,
-                messages: [],
-                configs: {
+        addChat(chatId: Chat.Id, title?: string,) {
+            const newChat: Chat.Chat = {
+                chatId: chatId,
+                menuConfig: {
+                    menuTitle: title || `新会话`,
+                    isMenuEdit: false,
+                    isMenuDeleteConfirm: false,
+                },
+
+                gptConfig: {
                     model: "gpt-3.5-turbo",
                     propmpt: "",
                     role: "",
                     proxy: ""
-                }
+                },
+
+                messages: [],
             }
 
             this.chatList.unshift(newChat);
-            this.activeChatMenuId = id;
-            router.push(`/chat/${id}`);
+            this.activeChatMenuId = chatId;
+            router.push(`/chat/${chatId}`);
         },
 
         // 删除聊天菜单
-        deleteMenu(id: number) {
+        deleteMenu(chatId: Chat.Id) {
             // 删除聊天菜单
-            this.chatList = this.chatList.filter((item) => item.id !== id);
-            // 如果删除的是当前激活的聊天菜单，则激活第一个聊天菜单
+            this.chatList = this.chatList.filter((chat: Chat.Chat) => chat.chatId !== chatId) as Chat.Chat[];
+
             if (this.chatList.length > 0) {
-                this.activeChatMenuId = this.chatList[0].id;
-                router.push(`/chat/${this.chatList[0].id}`);
+                // 如果删除的是当前激活的聊天菜单，则激活第一个聊天菜单
+                const newActiveChat = this.chatList[0];
+                this.setActiveChatMenu(newActiveChat.chatId);
             } else {
+                // 如果没有剩余聊天菜单，则添加一个新的
                 this.addChat(1);
             }
         },
 
+
+
         // 更新聊天菜单标题编辑状态
-        updateMenuIsMenuEdit(id: number, flag: boolean) {
-            const editMenu = this.chatList.find((chat) => chat.id === id);
-            if (editMenu) {
-                editMenu.isMenuEdit = flag;
+        updateMenuIsMenuEdit(chatId: Chat.Id, flag: boolean) {
+            const targetChat = this.chatList.find((chat: Chat.Chat) => chat.chatId === chatId) as Chat.Chat;
+            if (targetChat) {
+                targetChat.menuConfig.isMenuEdit = flag;
             }
         },
+
 
         // 更新聊天菜单标题
-        updateMenuTitle(id: number, title: string) {
-            const editMenu = this.chatList.find((chat) => chat.id === id);
-            if (editMenu) {
-                editMenu.title = title;
-                editMenu.isMenuEdit = false;
+        updateMenuTitle(chatId: Chat.Id, title: string) {
+            const targetChat = this.chatList.find((chat: Chat.Chat) => chat.chatId === chatId) as Chat.Chat;
+            if (targetChat) {
+                targetChat.menuConfig.menuTitle = title;
+                targetChat.menuConfig.isMenuEdit = false;
             }
         },
 
-        updateMenuDeleteConfirm(id: number, flag: boolean) {
-            const editMenu = this.chatList.find((chat) => chat.id === id);
-            if (editMenu) {
-                editMenu.idMenuDeleteConfirm = flag;
+        // 更新确认删除状态
+        updateMenuDeleteConfirm(chatId: Chat.Id, flag: boolean) {
+            const targetChat = this.chatList.find((chat: Chat.Chat) => chat.chatId === chatId) as Chat.Chat;
+            if (targetChat) {
+                targetChat.menuConfig.isMenuDeleteConfirm = flag;
             }
         },
+
 
         // 清空所有Chat并初始化选中第一个Chat
         clearAllChat() {
@@ -121,23 +101,30 @@ export const useChatHistoryStore = defineStore({
             this.addChat(1);
         },
 
-        // 新增历史消息
-        addHistory(id: any, message: Message) {
-            const currentChat = this.chatList.find((item) => item.id === id);
 
+        // 新增历史消息
+        addHistory(chatId: Chat.Id, message: Chat.Message) {
+            const currentChat = this.chatList.find((chat: Chat.Chat) => chat.chatId === chatId) as Chat.Chat;
             if (currentChat) {
                 currentChat.messages.push(message);
             }
         },
 
-        // 获取指定id的聊天的历史记录
-        getChatHistory(id: number) {
-            const chat = this.chatList.find((item) => item.id === id);
 
-            if (chat) {
-                return chat.messages;
-            }
-            return [];
+        // 获取指定id的聊天的历史记录
+
+        getChatHistory(chatId: Chat.Id) {
+            const targetChat = this.chatList.find((chat: Chat.Chat) => chat.chatId === chatId);
+            return targetChat ? targetChat.messages : [];
+        },
+
+        async readStream(reader) {
+            const activeChat = this.chatList.find((chat: Chat.Chat) => chat.chatId === this.activeChatMenuId);
+            readStream(reader, (message) => {
+                if (activeChat && activeChat.messages.length > 0) {
+                    activeChat.messages[activeChat.messages.length - 1].messageBody.content += message;
+                }
+            });
         }
     },
 });

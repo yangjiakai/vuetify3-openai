@@ -20,7 +20,6 @@ export const useSpokenStore = defineStore({
 
     getters: {
         // 获取当前激活的聊天菜单
-
         activeChat(state) {
             return state.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === state.activeChatMenuId);
         },
@@ -34,6 +33,7 @@ export const useSpokenStore = defineStore({
                 menuConfig: {
                     menuTitle: title || `New Chat`,
                     isMenuEdit: false,
+
                     isMenuDeleteConfirm: false,
                 },
 

@@ -11,19 +11,19 @@ const router = useRouter();
 const customizeTheme = useCustomizeThemeStore();
 
 const chatMenus = computed(() => {
-  return chatHistoryStore.chatList.map((chat) => {
+  return chatHistoryStore.chatList.map((chat: Chat.Chat) => {
     return {
-      id: chat.id,
-      title: chat.title,
-      icon: "mdi-chat",
-      isMenuEdit: chat.isMenuEdit,
-      idMenuDeleteConfirm: chat.idMenuDeleteConfirm,
-      url: "/chat/" + chat.id,
+      chatId: chat.chatId,
+      menuTitle: chat.menuConfig.menuTitle,
+      icon: "mdi-face-woman-shimmer",
+      isMenuEdit: chat.menuConfig.isMenuEdit,
+      isMenuDeleteConfirm: chat.menuConfig.isMenuDeleteConfirm,
+      url: "/chat/" + chat.chatId,
     };
   });
 });
 
-const editTile = ref(chatHistoryStore.activeChat.title);
+const editTitle = ref(chatHistoryStore.activeChat?.menuConfig?.menuTitle);
 
 const navigateTo = (id) => {
   chatHistoryStore.activeChatMenuId = id;
@@ -44,7 +44,7 @@ const handleEdit = (id) => {
 const editConfirm = (id) => {
   console.log("editConfirm");
 
-  chatHistoryStore.updateMenuTitle(id, editTile.value);
+  chatHistoryStore.updateMenuTitle(id, editTitle.value);
 };
 
 // 取消更新菜单标题
@@ -68,84 +68,88 @@ const deleteCancel = (id) => {
 };
 
 watch(
-  () => chatHistoryStore.activeChat(),
+  () => chatHistoryStore.activeChat,
   (newVal) => {
-    editTile.value = newVal?.title;
+    editTitle.value = newVal?.menuConfig?.menuTitle;
   }
 );
 </script>
 
 <template>
-  <v-navigation-drawer v-model="customizeTheme.subSidebar" theme="dark">
+  <v-navigation-drawer v-model="customizeTheme.subSidebar" width="240">
     <!-- ---------------------------------------------- -->
     <!---Nav List -->
     <!-- ---------------------------------------------- -->
     <perfect-scrollbar class="scrollnav">
       <v-divider></v-divider>
-      <v-list nav>
+      <v-list nav class="text-grey-darken-1" color="primary">
         <v-btn
-          color="#705CF6"
+          color="primary"
           block
-          size="large"
-          class="mb-3 text-white"
+          class="mb-3 text-white font-weight-bold"
           rounded="md"
           @click="chatHistoryStore.addChat(Date.now())"
         >
           <template v-slot:prepend>
             <v-icon>mdi-plus-circle</v-icon>
           </template>
-          新建会话</v-btn
+          添加会话</v-btn
         >
         <transition-group name="slide-x" tag="div">
           <v-list-item
             v-for="chatMenu in chatMenus"
-            class="pl-5"
-            :key="chatMenu.id"
+            class="pl-5 font-weight-bold"
+            :key="chatMenu.chatId"
             :to="chatMenu.url"
-            @click="navigateTo(chatMenu.id)"
+            @click="navigateTo(chatMenu.chatId)"
             active-class="active-nav"
             density="compact"
             rounded="xl"
-            @blur="editCancel(chatMenu.id)"
+            @blur="editCancel(chatMenu.chatId)"
           >
             <template v-slot:prepend>
-              <v-avatar size="avatarSize" color="white">
-                <img
-                  width="26"
-                  height="26"
-                  src="https://img.icons8.com/fluency/48/speech-bubble-with-dots--v1.png"
-                  alt="speech-bubble-with-dots--v1"
-                />
+              <v-avatar size="avatarSize">
+                <v-icon
+                  :color="
+                    chatMenu.chatId === chatHistoryStore.activeChatMenuId
+                      ? 'primary'
+                      : ''
+                  "
+                >
+                  {{ chatMenu.icon }}
+                </v-icon>
               </v-avatar>
             </template>
             <v-list-item-title v-if="chatMenu.isMenuEdit">
-              <v-text-field
+              <input
+                class="custom-input"
+                type="text"
                 ref="refEditInput"
-                v-model="editTile"
-                class="mr-2"
-                hide-details
                 autofocus
-                density="compact"
-                @keyup.enter="editConfirm(chatMenu.id)"
-              ></v-text-field>
+                v-model="editTitle"
+                @keyup.enter="editConfirm(chatMenu.chatId)"
+              />
             </v-list-item-title>
-            <v-list-item-title v-else-if="chatMenu.idMenuDeleteConfirm">
-              {{ `删除 "${chatMenu.title}"?` }}</v-list-item-title
+            <v-list-item-title v-else-if="chatMenu.isMenuDeleteConfirm">
+              {{ `删除 "${chatMenu.menuTitle}"?` }}</v-list-item-title
             >
-            <v-list-item-title v-else> {{ chatMenu.title }}</v-list-item-title>
+            <v-list-item-title class="font-weight-black" v-else>
+              {{ chatMenu.menuTitle }}</v-list-item-title
+            >
             <template v-slot:append>
               <!-- 普通状态 -->
               <div
                 v-if="
-                  chatMenu.id === chatHistoryStore.activeChatMenuId &&
-                  !chatMenu.idMenuDeleteConfirm &&
+                  chatMenu.chatId === chatHistoryStore.activeChatMenuId &&
+                  !chatMenu.isMenuDeleteConfirm &&
                   !chatMenu.isMenuEdit
                 "
+                class="align-items-center d-flex"
               >
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="handleEdit(chatMenu.id)"
+                  @click="handleEdit(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -155,7 +159,7 @@ watch(
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="handleDelete(chatMenu.id)"
+                  @click="handleDelete(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -166,15 +170,16 @@ watch(
               <!-- 编辑确认状态 -->
               <div
                 v-else-if="
-                  chatMenu.id === chatHistoryStore.activeChatMenuId &&
-                  !chatMenu.idMenuDeleteConfirm &&
+                  chatMenu.chatId === chatHistoryStore.activeChatMenuId &&
+                  !chatMenu.isMenuDeleteConfirm &&
                   chatMenu.isMenuEdit
                 "
+                class="align-items-center d-flex"
               >
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="editConfirm(chatMenu.id)"
+                  @click="editConfirm(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -184,7 +189,7 @@ watch(
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="editCancel(chatMenu.id)"
+                  @click="editCancel(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -195,14 +200,14 @@ watch(
               <!--删除确认状态 -->
               <div
                 v-else-if="
-                  chatMenu.id === chatHistoryStore.activeChatMenuId &&
-                  chatMenu.idMenuDeleteConfirm
+                  chatMenu.chatId === chatHistoryStore.activeChatMenuId &&
+                  chatMenu.isMenuDeleteConfirm
                 "
               >
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="deleteConfirm(chatMenu.id)"
+                  @click="deleteConfirm(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -212,7 +217,7 @@ watch(
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="deleteCancel(chatMenu.id)"
+                  @click="deleteCancel(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -259,5 +264,22 @@ watch(
   );
   border-radius: 0px 3px 3px 0px;
   transition: opacity 0.3s;
+}
+
+.custom-input {
+  width: 100px; /* 设置输入框宽度 */
+  padding: 2px 5px; /* 增加内边距 */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s; /* 添加过渡效果 */
+
+  /* 默认状态样式 */
+  color: #757575;
+  font-weight: 600;
+}
+
+.custom-input:focus {
+  outline: none; /* 移除默认聚焦框 */
+  border-color: #6746f5; /* 聚焦时边框颜色 */
 }
 </style>
