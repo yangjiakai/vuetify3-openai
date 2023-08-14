@@ -13,14 +13,6 @@ import {
 import { useSpokenStore } from "@/stores/spokenStore";
 
 
-interface VoiceConfig {
-    messageId: number,
-    voiceEmotion: string,
-    voiceRate: number,
-    language: string,
-    voiceName: string,
-}
-
 
 export const useSpeechStore = defineStore({
     id: 'speech',
@@ -35,7 +27,7 @@ export const useSpeechStore = defineStore({
         // 文字转语音(text to speech)配置参数
         speechSynthesisLanguage: "zh-CN",
         speechSynthesisVoiceName: "zh-CN-XiaoxiaoNeural",
-        voiceEmotion: "",
+        voiceStyle: "",
         voiceRate: 1,
 
         // 语音合成器
@@ -123,7 +115,7 @@ export const useSpeechStore = defineStore({
         },
 
         // 文本转语音
-        async ssmlToSpeech(text: string, voiceConfig: VoiceConfig, speakMode?: string) {
+        async ssmlToSpeech(text: string, voiceConfig: Chat.VoiceConfig, speakMode?: string, messageId?: Chat.Id) {
 
             const spokenStore = useSpokenStore();
             console.log("voiceConfig", voiceConfig);
@@ -139,14 +131,14 @@ export const useSpeechStore = defineStore({
             const player = new SpeakerAudioDestination();
             player.onAudioStart = () => {
                 if (speakMode !== "test") {
-                    spokenStore.startReading(voiceConfig.messageId);
+                    spokenStore.startReading(messageId);
                     console.log("开始播放");
                 }
 
             };
             player.onAudioEnd = () => {
                 if (speakMode !== "test") {
-                    spokenStore.endReading(voiceConfig.messageId);
+                    spokenStore.endReading(messageId);
                     console.log("播放结束");
                 }
             };
@@ -170,11 +162,11 @@ export const useSpeechStore = defineStore({
             }
         },
 
-        buildSSML(text: string, voiceConfig?: VoiceConfig) {
+        buildSSML(text: string, voiceConfig?: Chat.VoiceConfig) {
             return `
               <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${this.speechSynthesisLanguage}">
                 <voice name="${voiceConfig?.voiceName || this.speechSynthesisVoiceName}">
-                  <mstts:express-as type="${voiceConfig?.voiceEmotion || this.voiceEmotion}">
+                  <mstts:express-as type="${voiceConfig?.voiceStyle || this.voiceStyle}">
                     <prosody rate="${voiceConfig?.voiceRate || this.voiceRate}">
                       ${text}
                     </prosody>

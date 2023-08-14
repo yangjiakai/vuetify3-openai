@@ -41,7 +41,7 @@ export const useChatHistoryStore = defineStore({
     },
 
     getters: {
-        getChatActive: (state) => () => {
+        activeChat: (state) => () => {
             return state.chatList.find((item) => item.id === state.activeChatMenuId);
         },
 

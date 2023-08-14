@@ -23,7 +23,7 @@ const chatMenus = computed(() => {
   });
 });
 
-const editTile = ref(chatHistoryStore.getChatActive.title);
+const editTile = ref(chatHistoryStore.activeChat.title);
 
 const navigateTo = (id) => {
   chatHistoryStore.activeChatMenuId = id;
@@ -68,7 +68,7 @@ const deleteCancel = (id) => {
 };
 
 watch(
-  () => chatHistoryStore.getChatActive(),
+  () => chatHistoryStore.activeChat(),
   (newVal) => {
     editTile.value = newVal?.title;
   }

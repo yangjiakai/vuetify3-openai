@@ -12,19 +12,19 @@ const router = useRouter();
 const customizeTheme = useCustomizeThemeStore();
 
 const chatMenus = computed(() => {
-  return spokenStore.characterList.map((chat) => {
+  return spokenStore.spokenChatList.map((chat: Chat.SpokenChat) => {
     return {
-      id: chat.id,
-      title: chat.title,
+      chatId: chat.chatId,
+      menuTitle: chat.menuConfig.menuTitle,
       icon: "mdi-chat",
-      isMenuEdit: chat.isMenuEdit,
-      idMenuDeleteConfirm: chat.idMenuDeleteConfirm,
-      url: "/spoken/" + chat.id,
+      isMenuEdit: chat.menuConfig.isMenuEdit,
+      isMenuDeleteConfirm: chat.menuConfig.isMenuDeleteConfirm,
+      url: "/spoken/" + chat.chatId,
     };
   });
 });
 
-const editTile = ref(spokenStore.getChatActive.title);
+const editTitle = ref(spokenStore.activeChat?.menuConfig?.menuTitle);
 
 const navigateTo = (id) => {
   spokenStore.activeChatMenuId = id;
@@ -45,7 +45,7 @@ const handleEdit = (id) => {
 const editConfirm = (id) => {
   console.log("editConfirm");
 
-  spokenStore.updateMenuTitle(id, editTile.value);
+  spokenStore.updateMenuTitle(id, editTitle.value);
 };
 
 // 取消更新菜单标题
@@ -69,9 +69,11 @@ const deleteCancel = (id) => {
 };
 
 watch(
-  () => spokenStore.getChatActive(),
+  () => spokenStore.activeChat,
   (newVal) => {
-    editTile.value = newVal?.title;
+    if (newVal !== undefined) {
+      editTitle.value = newVal?.menuConfig?.menuTitle;
+    }
   }
 );
 </script>
@@ -89,7 +91,7 @@ watch(
           block
           class="mb-3 text-white font-weight-bold"
           rounded="md"
-          @click="spokenStore.showAddCharacterDialog()"
+          @click="spokenStore.switchAddCharacterDialog()"
         >
           <template v-slot:prepend>
             <v-icon>mdi-plus-circle</v-icon>
@@ -100,25 +102,25 @@ watch(
           <v-list-item
             v-for="chatMenu in chatMenus"
             class="pl-5 font-weight-bold"
-            :key="chatMenu.id"
+            :key="chatMenu.chatId"
             :to="chatMenu.url"
-            @click="navigateTo(chatMenu.id)"
+            @click="navigateTo(chatMenu.chatId)"
             active-class="active-nav"
             density="compact"
             rounded="xl"
-            @blur="editCancel(chatMenu.id)"
+            @blur="editCancel(chatMenu.chatId)"
           >
             <template v-slot:prepend>
               <v-avatar size="avatarSize">
                 <v-icon
                   :color="
-                    chatMenu.id === spokenStore.activeChatMenuId
+                    chatMenu.chatId === spokenStore.activeChatMenuId
                       ? 'primary'
                       : ''
                   "
                 >
                   <!-- {{
-                    spokenStore.getChatActive.VoiceConfig.gender === 1
+                    spokenStore.activeChat.VoiceConfig.gender === 1
                       ? "mdi-face-woman-shimmer"
                       : "mdi-face-man-shimmer"
                   }} -->
@@ -134,7 +136,7 @@ watch(
                 hide-details
                 autofocus
                 density="compact"
-                @keyup.enter="editConfirm(chatMenu.id)"
+                @keyup.enter="editConfirm(chatMenu.chatId)"
               ></v-text-field> -->
 
               <input
@@ -143,21 +145,21 @@ watch(
                 ref="refEditInput"
                 autofocus
                 v-model="editTile"
-                @keyup.enter="editConfirm(chatMenu.id)"
+                @keyup.enter="editConfirm(chatMenu.chatId)"
               />
             </v-list-item-title>
-            <v-list-item-title v-else-if="chatMenu.idMenuDeleteConfirm">
-              {{ `删除 "${chatMenu.title}"?` }}</v-list-item-title
+            <v-list-item-title v-else-if="chatMenu.isMenuDeleteConfirm">
+              {{ `删除 "${chatMenu.menuTitle}"?` }}</v-list-item-title
             >
             <v-list-item-title class="font-weight-black" v-else>
-              {{ chatMenu.title }}</v-list-item-title
+              {{ chatMenu.menuTitle }}</v-list-item-title
             >
             <template v-slot:append>
               <!-- 普通状态 -->
               <div
                 v-if="
-                  chatMenu.id === spokenStore.activeChatMenuId &&
-                  !chatMenu.idMenuDeleteConfirm &&
+                  chatMenu.chatId === spokenStore.activeChatMenuId &&
+                  !chatMenu.isMenuDeleteConfirm &&
                   !chatMenu.isMenuEdit
                 "
                 class="align-items-center d-flex"
@@ -165,7 +167,7 @@ watch(
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="handleEdit(chatMenu.id)"
+                  @click="handleEdit(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -175,7 +177,7 @@ watch(
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="handleDelete(chatMenu.id)"
+                  @click="handleDelete(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -186,8 +188,8 @@ watch(
               <!-- 编辑确认状态 -->
               <div
                 v-else-if="
-                  chatMenu.id === spokenStore.activeChatMenuId &&
-                  !chatMenu.idMenuDeleteConfirm &&
+                  chatMenu.chatId === spokenStore.activeChatMenuId &&
+                  !chatMenu.isMenuDeleteConfirm &&
                   chatMenu.isMenuEdit
                 "
                 class="align-items-center d-flex"
@@ -195,7 +197,7 @@ watch(
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="editConfirm(chatMenu.id)"
+                  @click="editConfirm(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -205,7 +207,7 @@ watch(
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="editCancel(chatMenu.id)"
+                  @click="editCancel(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -216,14 +218,14 @@ watch(
               <!--删除确认状态 -->
               <div
                 v-else-if="
-                  chatMenu.id === spokenStore.activeChatMenuId &&
-                  chatMenu.idMenuDeleteConfirm
+                  chatMenu.chatId === spokenStore.activeChatMenuId &&
+                  chatMenu.isMenuDeleteConfirm
                 "
               >
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="deleteConfirm(chatMenu.id)"
+                  @click="deleteConfirm(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>
@@ -233,7 +235,7 @@ watch(
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="deleteCancel(chatMenu.id)"
+                  @click="deleteCancel(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>

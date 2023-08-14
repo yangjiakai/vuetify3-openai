@@ -1,25 +1,28 @@
 <!--
 * @Component: 
 * @Maintainer: J.K. Yang
-* @Description: 
+* @Description: 语音对话对话窗口
 -->
 <script setup lang="ts">
-import { countAndCompleteCodeBlocks } from "@/utils/aiUtils";
 import { useSnackbarStore } from "@/stores/snackbarStore";
 import { useSpokenStore } from "@/stores/spokenStore";
-import SpokenMessageCard from "./SpokenMessageCard.vue";
-import { type Message } from "@/types/spokenTypes";
-import { Vue3Lottie } from "vue3-lottie";
-import { scrollToBottom } from "@/utils/common";
 import { useSpeechStore } from "@/stores/speechStore";
-import { formatForTTS } from "@/utils/aiUtils";
+
+import SpokenMessageCard from "./SpokenMessageCard.vue";
+
+import { scrollToBottom } from "@/utils/common";
+import { formatForTTS, countAndCompleteCodeBlocks } from "@/utils/aiUtils";
+
+import { Vue3Lottie } from "vue3-lottie";
+import { Gender, ReadMode } from "@/enums";
 const route = useRoute();
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
 const spokenStore = useSpokenStore();
-const messages = ref<Message[]>([]);
+const messages = ref<Chat.SpokenMessage[]>([]);
 const currentId = ref(+route.params.id);
-const voiceConfig = ref({
+const voiceConfig = ref<Chat.VoiceConfig>({
+  gender: Gender.Woman,
   voiceName: "",
   language: "",
   voiceRate: 1,
@@ -43,8 +46,8 @@ onMounted(() => {
 const requestMessages = computed(() => {
   const pureMessages = messages.value.map((message) => {
     return {
-      content: message.body.content,
-      role: message.body.role,
+      content: message.messageBody.content,
+      role: message.messageBody.role,
     };
   });
 
@@ -75,9 +78,9 @@ const sendMessage = () => {
   if (userMessage.value.trim() === "") return;
 
   spokenStore.addHistory(currentId.value, {
-    id: Date.now(),
+    messageId: Date.now(),
     isReading: false,
-    body: {
+    messageBody: {
       content: userMessage.value,
       role: "user",
     },
@@ -107,7 +110,7 @@ const createCompletion = async () => {
       }
     );
 
-    // Handle errors
+    // 处理错误信息
     if (!completion.ok) {
       const errorData = await completion.json();
       snackbarStore.showErrorMessage(errorData.error.message);
@@ -116,12 +119,12 @@ const createCompletion = async () => {
 
     const res = await completion.json();
 
-    // Add the bot message
+    // 添加AI信息
     const msgId = Date.now();
     spokenStore.addHistory(currentId.value, {
-      id: msgId,
+      messageId: msgId,
       isReading: false,
-      body: {
+      messageBody: {
         content: res.choices[0].message.content,
         role: "assistant",
       },
@@ -132,18 +135,14 @@ const createCompletion = async () => {
   }
 };
 
-const readMessage = (id, text) => {
+const readMessage = (messageId: Chat.Id, text: string) => {
   const config = {
-    messageId: id,
-    voiceEmotion: voiceConfig.value.voiceStyle,
-    voiceRate: voiceConfig.value.voiceRate,
-    language: voiceConfig.value.language,
-    voiceName: voiceConfig.value.voiceName,
+    ...voiceConfig.value,
   };
 
   const formmatedText = formatForTTS(text);
 
-  speechStore.ssmlToSpeech(formmatedText, config);
+  speechStore.ssmlToSpeech(formmatedText, config, ReadMode.Read, messageId);
 };
 
 const displayMessages = computed(() => {
@@ -151,7 +150,7 @@ const displayMessages = computed(() => {
   const lastMessage = messagesCopy[messagesCopy.length - 1];
   const updatedLastMessage = {
     ...lastMessage,
-    content: countAndCompleteCodeBlocks(lastMessage.body.content),
+    content: countAndCompleteCodeBlocks(lastMessage.messageBody.content),
   };
   messagesCopy[messagesCopy.length - 1] = updatedLastMessage;
   return messagesCopy;
@@ -241,7 +240,7 @@ const stopRecording = () => {
         <template v-for="message in displayMessages" :key="message.id">
           <SpokenMessageCard
             :message="message"
-            :role="message.body.role"
+            :role="message.messageBody.role"
             :voiceConfig="voiceConfig"
           />
         </template>

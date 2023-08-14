@@ -6,39 +6,40 @@
 <script setup lang="ts">
 import { useSpeechStore } from "@/stores/speechStore";
 import { useSnackbarStore } from "@/stores/snackbarStore";
-import { type Message } from "@/types/spokenTypes";
 import { MdPreview } from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { formatForTTS } from "@/utils/aiUtils";
 import { Icon } from "@iconify/vue";
 import { readStream } from "@/utils/aiUtils";
+import { ReadMode } from "@/enums";
 
 const speechStore = useSpeechStore();
 interface Props {
-  message: Message;
+  message: Chat.SpokenMessage;
   isLoading?: boolean;
-  role?: "user" | "assistant" | "system";
+  role?: Chat.Role;
   dateTime?: string;
-  voiceConfig: any;
+  voiceConfig: Chat.VoiceConfig;
 }
 const snackbarStore = useSnackbarStore();
 const props = defineProps<Props>();
 const content = computed(() => {
-  return props.message.body.content;
+  return props.message.messageBody.content;
 });
 
 const readMessage = () => {
   const config = {
-    messageId: props.message.id || 0,
-    voiceEmotion: props.voiceConfig.voiceStyle || "",
-    voiceRate: props.voiceConfig.voiceRate,
-    language: props.voiceConfig.language,
-    voiceName: props.voiceConfig.voiceName,
+    ...props.voiceConfig,
   };
 
   const text = formatForTTS(content.value);
 
-  speechStore.ssmlToSpeech(text, config);
+  speechStore.ssmlToSpeech(
+    text,
+    config,
+    ReadMode.Read,
+    props.message.messageId
+  );
 };
 
 const translatedContent = ref("");
@@ -116,7 +117,7 @@ const handleCollect = () => {
         </v-avatar>
         <v-card class="rounded-xl rounded-bs-0">
           <div>
-            <MdPreview :modelValue="props.message.body.content" />
+            <MdPreview :modelValue="props.message.messageBody.content" />
             <div
               v-if="translatedContent"
               class="mx-5 mb-5 text-body-2 text-blue-grey-darken-2"
@@ -201,7 +202,7 @@ const handleCollect = () => {
         </v-avatar>
         <v-card class="gradient gray rounded-xl rounded-be-0">
           <v-card-text class="ml-1 mt-1">
-            <b> {{ props.message.body.content }}</b></v-card-text
+            <b> {{ props.message.messageBody.content }}</b></v-card-text
           >
           <div
             v-if="translatedContent"

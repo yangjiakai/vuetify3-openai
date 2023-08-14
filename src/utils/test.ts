@@ -38,11 +38,11 @@ const write = (user: string = "admin", time: number = 5) => {
 
 type VoiceConfig = {
 
-    voiceEmotion: string,
+    voiceStyle: string,
 
 }
 
-const voiceConfig: VoiceConfig = { voiceEmotion: 'aaa' } as const
+const voiceConfig: VoiceConfig = { voiceStyle: 'aaa' } as const
 
 type Photo = {
     [property: string]: string | number

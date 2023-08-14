@@ -1,46 +1,42 @@
 import { defineStore } from "pinia";
 import router from "@/router";
-import { type Message } from "@/types/spokenTypes";
 import { readStream } from "@/utils/aiUtils";
 
 export const useSpokenStore = defineStore({
     id: "spoken",
     state: () => ({
+        // 是否显示添加聊天菜单对话框
         addCharacterDialog: false,
         // 当前激活的聊天菜单id
         activeChatMenuId: 1,
-        characterList: []
+        // 语音会话列表
+        spokenChatList: []
     }),
 
     persist: {
         enabled: true,
-        strategies: [{ storage: localStorage, paths: ["characterList"] }],
+        strategies: [{ storage: localStorage, paths: ["spokenChatList"] }],
     },
 
     getters: {
-        getChatActive: (state) => () => {
-            return state.characterList.find((item: Spoken.SpokenChat) => item.id === state.activeChatMenuId);
+        // 获取当前激活的聊天菜单
+
+        activeChat(state) {
+            return state.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === state.activeChatMenuId);
         },
 
-        // 获取当前激活的聊天的历史记录
-        getHistoryActive: (state) => () => {
-            const activeChat = state.characterList.find((item: Spoken.SpokenChat) => item.id === state.activeChatMenuId) as Spoken.SpokenChat | undefined;
-            if (activeChat) {
-                return activeChat.messages;
-            }
-            return [];
-        },
     },
     actions: {
         // 添加聊天菜单
-        addChat(id: number, voiceConfig: any, title?: string,) {
+        addChat(chatId: Chat.Id, voiceConfig: Chat.VoiceConfig, title?: string,) {
+            const newChat: Chat.SpokenChat = {
+                chatId: chatId,
+                menuConfig: {
+                    menuTitle: title || `New Chat`,
+                    isMenuEdit: false,
+                    isMenuDeleteConfirm: false,
+                },
 
-            const newChat = {
-                id: id,
-                title: title || `New Chat`,
-                isMenuEdit: false,
-                idMenuDeleteConfirm: false,
-                messages: [],
                 gptConfig: {
                     model: "gpt-3.5-turbo",
                     propmpt: "",
@@ -48,116 +44,114 @@ export const useSpokenStore = defineStore({
                     proxy: ""
                 },
                 voiceConfig: {
-                    voiceName: voiceConfig.voiceName,
-                    language: voiceConfig.language,
-                    voiceRate: voiceConfig.voiceRate,
-                    voiceStyle: voiceConfig.voiceStyle,
-                }
+                    ...voiceConfig
+                },
+                messages: [],
             }
 
-            this.characterList.unshift(newChat);
-            this.activeChatMenuId = id;
-            router.push(`/spoken/${id}`);
+            this.spokenChatList.unshift(newChat);
+            this.activeChatMenuId = chatId;
+            router.push(`/spoken/${chatId}`);
         },
 
         // 删除聊天菜单
-        deleteMenu(id: number) {
+        deleteMenu(chatId: Chat.Id) {
             // 删除聊天菜单
-            this.characterList = this.characterList.filter((item) => item.id !== id);
-            // 如果删除的是当前激活的聊天菜单，则激活第一个聊天菜单
-            if (this.characterList.length > 0) {
-                this.activeChatMenuId = this.characterList[0].id;
-                router.push(`/spoken/${this.characterList[0].id}`);
+            this.spokenChatList = this.spokenChatList.filter((chat: Chat.SpokenChat) => chat.chatId !== chatId) as Chat.SpokenChat[];
+
+            if (this.spokenChatList.length > 0) {
+                // 如果删除的是当前激活的聊天菜单，则激活第一个聊天菜单
+                const newActiveChat = this.spokenChatList[0];
+                this.setActiveChatMenu(newActiveChat.chatId);
             } else {
+                // 如果没有剩余聊天菜单，则添加一个新的
                 this.addChat(1);
             }
         },
 
+
         // 更新聊天菜单标题编辑状态
-        updateMenuIsMenuEdit(id: number, flag: boolean) {
-            const editMenu = this.characterList.find((chat) => chat.id === id);
-            if (editMenu) {
-                editMenu.isMenuEdit = flag;
+        updateMenuIsMenuEdit(chatId: Chat.Id, flag: boolean) {
+            const targetChat = this.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === chatId) as Chat.SpokenChat;
+            if (targetChat) {
+                targetChat.menuConfig.isMenuEdit = flag;
             }
         },
 
         // 更新聊天菜单标题
-        updateMenuTitle(id: number, title: string) {
-            const editMenu = this.characterList.find((chat) => chat.id === id);
-            if (editMenu) {
-                editMenu.title = title;
-                editMenu.isMenuEdit = false;
+        updateMenuTitle(chatId: Chat.Id, title: string) {
+            const targetChat = this.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === chatId) as Chat.SpokenChat;
+            if (targetChat) {
+                targetChat.menuConfig.menuTitle = title;
+                targetChat.menuConfig.isMenuEdit = false;
             }
         },
 
-        updateMenuDeleteConfirm(id: number, flag: boolean) {
-            const editMenu = this.characterList.find((chat) => chat.id === id);
-            if (editMenu) {
-                editMenu.idMenuDeleteConfirm = flag;
+        // 更新确认删除状态
+        updateMenuDeleteConfirm(chatId: Chat.Id, flag: boolean) {
+            const targetChat = this.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === chatId) as Chat.SpokenChat;
+            if (targetChat) {
+                targetChat.menuConfig.isMenuDeleteConfirm = flag;
             }
         },
 
         // 清空所有Chat并初始化选中第一个Chat
         clearAllChat() {
-            this.characterList = [];
+            this.spokenChatList = [];
             this.addChat(1);
         },
 
         // 新增历史消息
-        addHistory(id: any, message: Message) {
-            const currentChat = this.characterList.find((item) => item.id === id);
-
+        addHistory(chatId: Chat.Id, message: Chat.SpokenMessage) {
+            const currentChat = this.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === chatId) as Chat.SpokenChat;
             if (currentChat) {
                 currentChat.messages.push(message);
             }
         },
 
         // 获取指定id的聊天的历史记录
-        getChatHistory(id: number) {
-            const chat = this.characterList.find((item) => item.id === id);
 
-            if (chat) {
-                return chat.messages;
-            }
-            return [];
+        getChatHistory(chatId: Chat.Id) {
+            const targetChat = this.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === chatId);
+            return targetChat ? targetChat.messages : [];
         },
 
         // 获取当前聊天的声音配置
-        getVoiceConfig(id: number) {
-
-            const chat = this.characterList.find((item) => item.id === id);
-            if (chat) {
-                return chat.voiceConfig;
-            }
-            return {};
+        getVoiceConfig(chatId: Chat.Id) {
+            const targetChat = this.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === chatId);
+            return targetChat ? targetChat.voiceConfig : {};
         },
 
         // 打开添加角色对话框
-        showAddCharacterDialog() {
-            this.addCharacterDialog = true;
+        switchAddCharacterDialog() {
+            this.addCharacterDialog = !this.addCharacterDialog;
         },
 
         // 开始阅读信息
-        startReading(messageId: number) {
-            const chat = this.characterList.find((item) => item.id === this.activeChatMenuId);
-            if (chat) {
-                chat.messages.find((message) => message.id === messageId).isReading = true;
+        startReading(messageId: Chat.Id) {
+            const targetChat = this.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === this.activeChatMenuId);
+            if (targetChat) {
+                targetChat.messages.find((message: Chat.SpokenMessage) => message.messageId === messageId).isReading = true;
             }
         },
 
         // 结束阅读信息
-        endReading(messageId: number) {
-            const chat = this.characterList.find((item) => item.id === this.activeChatMenuId);
-            if (chat) {
-                chat.messages.find((message) => message.id === messageId).isReading = false;
+        endReading(messageId: Chat.Id) {
+            const targetChat = this.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === this.activeChatMenuId);
+            if (targetChat) {
+                targetChat.messages.find((message: Chat.SpokenMessage) => message.messageId === messageId).isReading = false;
             }
         },
 
+        setActiveChatMenu(id: Chat.Id) {
+            this.activeChatMenuId = id;
+        },
+
         async readStream(reader) {
-            const activeChat = this.getChatActive();
+            const activeChat = this.spokenChatList.find((chat: Chat.SpokenChat) => chat.chatId === this.activeChatMenuId);
             readStream(reader, (message) => {
                 if (activeChat && activeChat.messages.length > 0) {
-                    activeChat.messages[activeChat.messages.length - 1].body.content += message;
+                    activeChat.messages[activeChat.messages.length - 1].messageBody.content += message;
                 }
             });
         }

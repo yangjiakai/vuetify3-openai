@@ -18,17 +18,6 @@ const getAvatar = (voice) => {
     : "https://img.icons8.com/bubbles/50/bartender-female.png";
 };
 
-//   Voice结构
-//   privGender: 1,
-//   privLocalName: "Adri",
-//   privLocale: "af-ZA",
-//   privLocaleName: "Afrikaans (South Africa)",
-//   privName: "Microsoft Server Speech Text to Speech Voice (af-ZA, AdriNeural)",
-//   privShortName: "af-ZA-AdriNeural",
-//   privStyleList: [],
-//   privVoicePath: "",
-//   privVoiceType: 1,
-
 const characterList = ref<any>([]);
 const currentCharacter = ref<any>(null);
 
@@ -59,9 +48,9 @@ onMounted(() => {
 
 const speakTest = (voice) => {
   const config = {
-    messageId: 0,
-    voiceEmotion: "",
+    voiceStyle: "",
     voiceRate: 1,
+    gender: voice.gender,
     language: voice.locale,
     voiceName: voice.modelName,
   };
@@ -70,7 +59,7 @@ const speakTest = (voice) => {
   speechStore.ssmlToSpeech(text, config, "test");
 };
 
-const getTestText = (lang) => {
+const getTestText = (lang: string) => {
   let text = "我们来聊天吧";
   if (lang === "en-US") {
     text = "Let's chat";
@@ -112,6 +101,7 @@ const addChat = () => {
     voiceRate: voiceRate.value,
     language: currentCharacter.value.locale,
     voiceName: currentCharacter.value.modelName,
+    gender: currentCharacter.value.gender,
   };
   spokenStore.addChat(id, voiceConfig, chatTitle.value);
 };
