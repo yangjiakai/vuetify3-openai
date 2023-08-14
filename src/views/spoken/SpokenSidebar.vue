@@ -6,6 +6,7 @@
 <script setup lang="ts">
 import { useCustomizeThemeStore } from "@/stores/customizeTheme";
 import { useSpokenStore } from "@/stores/spokenStore";
+import { Gender } from "~/src/enums";
 
 const spokenStore = useSpokenStore();
 const router = useRouter();
@@ -16,7 +17,10 @@ const chatMenus = computed(() => {
     return {
       chatId: chat.chatId,
       menuTitle: chat.menuConfig.menuTitle,
-      icon: "mdi-chat",
+      icon:
+        chat.voiceConfig.gender === Gender.Man
+          ? "mdi-face-man-shimmer"
+          : "mdi-face-woman-shimmer",
       isMenuEdit: chat.menuConfig.isMenuEdit,
       isMenuDeleteConfirm: chat.menuConfig.isMenuDeleteConfirm,
       url: "/spoken/" + chat.chatId,
@@ -119,12 +123,7 @@ watch(
                       : ''
                   "
                 >
-                  <!-- {{
-                    spokenStore.activeChat.VoiceConfig.gender === 1
-                      ? "mdi-face-woman-shimmer"
-                      : "mdi-face-man-shimmer"
-                  }} -->
-                  mdi-face-man-shimmer
+                  {{ chatMenu.icon }}
                 </v-icon>
               </v-avatar>
             </template>

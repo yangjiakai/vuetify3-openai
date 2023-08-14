@@ -7,6 +7,7 @@
 import { useSpeechStore } from "@/stores/speechStore";
 import { useSpokenStore } from "@/stores/spokenStore";
 import { useDisplay } from "vuetify";
+import { Gender } from "~/src/enums";
 const speechStore = useSpeechStore();
 const spokenStore = useSpokenStore();
 
@@ -83,7 +84,7 @@ const selectCharacter = (character) => {
 
 const currentStyle = ref("");
 const voiceRate = ref(1);
-const chatTitle = ref("新会话");
+const chatTitle = ref("新朋友");
 const currentStyleList = computed(() => {
   if (currentCharacter.value && currentCharacter.value.styleList.length > 0) {
     currentStyle.value = currentCharacter.value.styleList[0];
@@ -104,6 +105,7 @@ const addChat = () => {
     gender: currentCharacter.value.gender,
   };
   spokenStore.addChat(id, voiceConfig, chatTitle.value);
+  spokenStore.switchAddCharacterDialog();
 };
 </script>
 
@@ -115,10 +117,12 @@ const addChat = () => {
     style="overflow: scroll"
   >
     <v-card>
-      <v-card-title> 角色 </v-card-title>
+      <v-card-title class="font-weight-bold text-grey-darken-2">
+        角色
+      </v-card-title>
     </v-card>
     <v-divider></v-divider>
-    <v-list height="400" class="pa-1" lines="three" densit y="compact">
+    <v-list height="400" class="pa-1" lines="two" densit y="compact">
       <!-- ---------------------------------------------- -->
       <!-- Profile Area -->
       <!-- ---------------------------------------------- -->
@@ -128,11 +132,14 @@ const addChat = () => {
         class="my-1"
         :active="voice.localName === currentCharacter.localName"
         v-for="voice in characterList"
+        color="primary"
       >
         <template v-slot:prepend>
-          <v-avatar size="50">
-            <v-img :src="getAvatar(voice)"></v-img>
-          </v-avatar>
+          <v-icon size="30">{{
+            voice.gender === Gender.Man
+              ? "mdi-face-man-shimmer"
+              : "mdi-face-woman-shimmer"
+          }}</v-icon>
         </template>
 
         <v-list-item-title class="font-weight-bold text-grey-darken-3">
@@ -143,17 +150,27 @@ const addChat = () => {
         </v-list-item-subtitle>
 
         <template v-slot:append>
-          <span class="text-body-2 text-grey"> 试听 </span>
+          <span class="text-body-2 text-grey-lighten-1 font-weight-bold">
+            试听
+          </span>
 
           <v-btn
             class="ml-1"
             color="grey-lighten-1"
             variant="text"
-            @click="speakTest(voice)"
+            @click.stop="speakTest(voice)"
             size="20"
           >
             <template v-slot:prepend>
-              <v-icon size="20" color="#6746F5">mdi-play-circle-outline</v-icon>
+              <v-icon
+                size="20"
+                :color="
+                  voice.localName === currentCharacter.localName
+                    ? 'primary'
+                    : 'primary-lighten-2'
+                "
+                >mdi-play-circle-outline</v-icon
+              >
             </template>
           </v-btn>
         </template>
@@ -162,13 +179,16 @@ const addChat = () => {
     <v-divider></v-divider>
 
     <v-card min-height="200" class="mt-5">
-      <v-card-title> 声音设定 </v-card-title>
+      <v-card-title class="font-weight-bold text-grey-darken-2">
+        声音设定
+      </v-card-title>
+
       <v-divider></v-divider>
       <v-card-text>
         <!-- Rate -->
         <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-medium">语速</v-label>
+            <v-label class="font-weight-bold text-grey-darken-2">语速</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-slider
@@ -186,10 +206,11 @@ const addChat = () => {
         <!-- Emotion -->
         <v-row class="align-center mb-3">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-medium">风格</v-label>
+            <v-label class="font-weight-bold text-grey-darken-2">风格</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-select
+              color="primary"
               variant="outlined"
               v-model="currentStyle"
               hide-details
@@ -203,9 +224,16 @@ const addChat = () => {
     </v-card>
 
     <v-card-actions>
-      <v-btn color="gray">Cancel</v-btn>
+      <v-btn
+        color="grey"
+        class="font-weight-bold"
+        @click="spokenStore.switchAddCharacterDialog()"
+        >取消添加</v-btn
+      >
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="addChat">Create Chat</v-btn>
+      <v-btn color="primary" class="font-weight-bold" @click="addChat"
+        >确认添加</v-btn
+      >
     </v-card-actions>
     <!-- <v-row>
       <v-col cols="4" v-for="voice in voices">

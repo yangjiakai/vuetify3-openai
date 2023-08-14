@@ -16,7 +16,6 @@ const handleLogout = () => {
 
 const handleContactUsShow = () => {
   contactUsDialogShow.value = true;
-  console.log("handleContactUsShow");
 };
 
 const contactUsDialogShow = ref(false);
