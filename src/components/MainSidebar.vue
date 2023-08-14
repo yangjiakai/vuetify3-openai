@@ -5,8 +5,12 @@
 -->
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/authStore";
+import { useSpokenStore } from "@/stores/spokenStore";
+import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 import ContactUsCard from "@/components/ContactUsCard.vue";
 const authStore = useAuthStore();
+const spokenStore = useSpokenStore();
+const chatHistoryStore = useChatHistoryStore();
 const router = useRouter();
 const route = useRoute();
 const handleLogout = () => {
@@ -42,6 +46,22 @@ const menus = [
     url: "/spoken",
   },
 ];
+
+const naviagteTo = (url: string) => {
+  // debugger;
+  if (url === "/spoken") {
+    const lastPageId = spokenStore.lastPageId;
+    const newUrl = `/spoken/${lastPageId}`;
+    router.push(newUrl);
+    return;
+  } else if (url === "/chat") {
+    const lastPageId = chatHistoryStore.lastPageId;
+    const newUrl = `/chat/${lastPageId}`;
+    router.push(newUrl);
+  } else {
+    router.push(url);
+  }
+};
 </script>
 
 <template>
@@ -51,7 +71,7 @@ const menus = [
         v-for="item in menus"
         :key="item.title"
         :value="item.title"
-        :to="item.url"
+        @click="naviagteTo(item.url)"
         lines="two"
         class="text-grey-darken-1"
         color="primary"

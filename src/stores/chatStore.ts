@@ -10,7 +10,7 @@ export const useChatStore = defineStore({
 
   persist: {
     enabled: true,
-    strategies: [{ storage: localStorage, paths: ["chatHistory", "apiKey"] }],
+    strategies: [{ storage: localStorage, paths: ["chatHistory", "apiKey",] }],
   },
 
   getters: {},

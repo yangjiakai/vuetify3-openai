@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
+import { useSpokenStore } from "@/stores/spokenStore";
+import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 
 export const routes = [
   {
@@ -11,15 +13,20 @@ export const routes = [
       // GPT
       {
         path: "/chat",
-        redirect: "/chat/1", // 默认跳转到第一个chat
+        children: [
+          {
+            path: "", // 空路径，对应父路由的默认子路由
+            redirect: "chat/1", // 跳转到第一个子路由
+          },
+          {
+            path: ":id",
+            name: "chat-id",
+            component: () => import("@/views/Chat.vue"),
+            meta: { requiresAuth: true },
+          },
+        ],
       },
-      {
-        path: "/chat/:id",
-        name: "chat-id",
-        component: () =>
-          import(/* webpackChunkName: "app-chat-id" */ "@/views/Chat.vue"),
-        meta: { requiresAuth: true },
-      },
+
 
       // 创作中心
       {
@@ -44,10 +51,14 @@ export const routes = [
         component: () => import("@/views/spoken/SpokenPage.vue"),
         children: [
           {
-
-            path: "",
-            redirect: "/spoken/1",
+            path: "", // 空路径，对应父路由的默认子路由
+            redirect: "spoken/1", // 跳转到第一个子路由
           },
+          // {
+          //   path: "home",
+          //   name: "spoken-home",
+          //   component: () => import("@/views/spoken/SpokenHome.vue"),
+          // },
           {
             path: ":id",
             component: () => import("@/views/spoken/SpokenChat.vue"),
@@ -114,6 +125,7 @@ router.beforeEach((to, from, next) => {
         path: "/login",
       });
     } else {
+      saveLastPageId(to, from);
       // 如果已经登录，正常进行导航
       next();
     }
@@ -122,5 +134,23 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+const saveLastPageId = (to: any, from: any) => {
+  const spokenStore = useSpokenStore();
+  const chatHistoryStore = useChatHistoryStore();
+  const fromPath = from.path;
+  const toPath = to.path;
+  // 如果从spoken页面跳转到其他页面，记录最后的spoken页面id
+  if (fromPath.startsWith("/spoken/") && !toPath.startsWith("/spoken/")) {
+    const spokenId = from.params.id;
+    spokenStore.lastPageId = spokenId;
+
+    // 如果从chat页面跳转到其他页面，记录最后的chat页面id
+  } else if (fromPath.startsWith("/chat/") && !toPath.startsWith("/chat/")) {
+    const chatId = from.params.id;
+    chatHistoryStore.updateLastPageId(chatId);
+  } else {
+  }
+};
 
 export default router;

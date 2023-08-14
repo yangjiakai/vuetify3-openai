@@ -5,7 +5,10 @@ import { readStream } from "@/utils/aiUtils";
 
 export const useChatHistoryStore = defineStore({
     id: "chatHistory",
+
     state: () => ({
+        // 最后离开的页面id
+        lastPageId: 1,
         // 当前激活的聊天菜单id
         activeChatMenuId: 1,
         // 聊天列表
@@ -16,7 +19,7 @@ export const useChatHistoryStore = defineStore({
 
     persist: {
         enabled: true,
-        strategies: [{ storage: localStorage, paths: ["chatList"] }],
+        strategies: [{ storage: localStorage, paths: ["chatList", "activeChatMenuId", "lastPageId"] }],
     },
 
     getters: {
@@ -125,6 +128,10 @@ export const useChatHistoryStore = defineStore({
                     activeChat.messages[activeChat.messages.length - 1].messageBody.content += message;
                 }
             });
+        },
+
+        updateLastPageId(pageId: number) {
+            this.lastPageId = pageId;
         }
     },
 });
