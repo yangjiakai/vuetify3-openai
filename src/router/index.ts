@@ -13,6 +13,9 @@ export const routes = [
       // GPT
       {
         path: "/chat",
+        name: "chat",
+        component: () => import("@/views/base/BasePage.vue"),
+        meta: { requiresAuth: true },
         children: [
           {
             path: "", // 空路径，对应父路由的默认子路由
@@ -26,7 +29,6 @@ export const routes = [
           },
         ],
       },
-
 
       // 创作中心
       {
@@ -48,13 +50,17 @@ export const routes = [
       {
         path: "/consultant",
         name: "consultant",
-        component: () => import("@/views/ConsultantPage.vue"),
+        component: () => import("@/views/consultant/ConsultantPage.vue"),
         meta: { requiresAuth: true },
         children: [
           {
+            path: "", // 空路径，对应父路由的默认子路由
+            redirect: "/consultant/1", // 跳转到第一个子路由
+          },
+          {
             path: ":id",
             name: "consultant-id",
-            component: () => import("@/views/consultant/ConsultantPage.vue"),
+            component: () => import("@/views/Chat.vue"),
             meta: { requiresAuth: true },
           },
         ],
@@ -161,6 +167,7 @@ router.beforeEach((to, from, next) => {
 });
 
 const saveLastPageId = (to: any, from: any) => {
+
   const spokenStore = useSpokenStore();
   const chatHistoryStore = useChatHistoryStore();
   const fromPath = from.path;

@@ -8,7 +8,6 @@ import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 import { countAndCompleteCodeBlocks } from "@/utils/aiUtils";
 import { useSnackbarStore } from "@/stores/snackbarStore";
 import MessageCard from "@/components/MessageCard.vue";
-import SubSidebar from "@/components/SubSidebar.vue";
 import { Vue3Lottie } from "vue3-lottie";
 import { scrollToBottom } from "@/utils/common";
 import SidebarToggle from "@/components/SidebarToggle.vue";
@@ -32,6 +31,15 @@ onMounted(() => {
   chatInfo.value = chatHistoryStore.getChat(currentId.value);
   messages.value = chatHistoryStore.getChatHistory(currentId.value);
 });
+
+watch(
+  () => route.params.id,
+  (newVal) => {
+    chatInfo.value = chatHistoryStore.getChat(currentId.value);
+
+    messages.value = chatHistoryStore.getChatHistory(currentId.value);
+  }
+);
 
 const requestMessages = computed(() => {
   const pureMessages = messages.value.map((message) => {
@@ -168,8 +176,6 @@ watch(
 </script>
 
 <template>
-  <SubSidebar />
-
   <div class="chat-container">
     <v-toolbar color="white" class="text-grey-darken-2" border>
       <SidebarToggle />

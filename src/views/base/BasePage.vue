@@ -4,12 +4,13 @@
 * @Description: 
 -->
 <script setup lang="ts">
-import ConsultantSidebar from "@/components/ConsultantSidebar.vue";
+import SubSidebar from "@/components/SubSidebar.vue";
 </script>
 
 <template>
   <div class="">
-    <ConsultantSidebar />
+    <SubSidebar />
+    <RouterView />
   </div>
 </template>
 

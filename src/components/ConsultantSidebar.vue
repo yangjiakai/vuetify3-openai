@@ -30,7 +30,7 @@ const chatMenus = computed(() => {
 
 const navigateTo = (id) => {
   chatHistoryStore.activeChatMenuId = id;
-  router.push(`/chat/${id}`);
+  router.push(`/consultant/${id}`);
 };
 </script>
 
