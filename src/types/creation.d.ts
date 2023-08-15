@@ -7,6 +7,7 @@ declare namespace Creation {
         icon: string;
         prompt: string;
         isVip: boolean;
+        isCollected: boolean;
         url: string;
     }
 }

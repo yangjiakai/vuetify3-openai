@@ -30,10 +30,19 @@ export const routes = [
 
       // 创作中心
       {
-        path: "/creator",
-        name: "creator",
-        component: () => import("@/views/CreatorPage.vue"),
+        path: "/creation",
+        name: "creation",
+        component: () => import("@/views/creation/CreationPage.vue"),
         meta: { requiresAuth: true },
+        children: [
+
+          {
+            path: ":id",
+            name: "creation-id",
+            component: () => import("@/views/Chat.vue"),
+            meta: { requiresAuth: true },
+          },
+        ],
       },
 
       // 咨询顾问

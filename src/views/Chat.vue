@@ -11,7 +11,7 @@ import MessageCard from "@/components/MessageCard.vue";
 import SubSidebar from "@/components/SubSidebar.vue";
 import { Vue3Lottie } from "vue3-lottie";
 import { scrollToBottom } from "@/utils/common";
-
+import SidebarToggle from "@/components/SidebarToggle.vue";
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
 const chatHistoryStore = useChatHistoryStore();
@@ -170,11 +170,7 @@ watch(
 
   <div class="chat-container">
     <v-toolbar color="white" class="text-grey-darken-2" border>
-      <v-app-bar-nav-icon
-        color="primary"
-        size="40"
-        class="mr-2"
-      ></v-app-bar-nav-icon>
+      <SidebarToggle />
       <div>
         <div class="text-body-1 font-weight-black d-flex align-center">
           <span>主题:</span> {{ chatInfo?.menuConfig.menuTitle }}

@@ -7,6 +7,7 @@
 import { useSnackbarStore } from "@/stores/snackbarStore";
 import { useSpokenStore } from "@/stores/spokenStore";
 import { useSpeechStore } from "@/stores/speechStore";
+import SidebarToggle from "@/components/SidebarToggle.vue";
 
 import SpokenMessageCard from "./SpokenMessageCard.vue";
 
@@ -232,11 +233,7 @@ const stopRecording = () => {
 <template>
   <div class="chat-container">
     <v-toolbar color="white" class="text-grey-darken-2" border>
-      <v-app-bar-nav-icon
-        color="primary"
-        size="40"
-        class="mr-2"
-      ></v-app-bar-nav-icon>
+      <SidebarToggle />
       <div>
         <div class="text-body-1 font-weight-black d-flex align-center">
           <span>音源:</span> {{ voiceConfig.localName }}
