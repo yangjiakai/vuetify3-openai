@@ -6,6 +6,7 @@
 <script setup lang="ts">
 import { useSpeechStore } from "@/stores/speechStore";
 import { useSnackbarStore } from "@/stores/snackbarStore";
+import { useCollectionStore } from "@/stores/collectionStore";
 import { MdPreview } from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { formatForTTS } from "@/utils/aiUtils";
@@ -13,6 +14,7 @@ import { Icon } from "@iconify/vue";
 import { readStream } from "@/utils/aiUtils";
 import { ReadMode } from "@/enums";
 
+const collectionStore = useCollectionStore();
 const speechStore = useSpeechStore();
 interface Props {
   message: Chat.SpokenMessage;
@@ -43,11 +45,10 @@ const readMessage = () => {
 };
 
 const translatedContent = ref("");
-const isTanslating = ref(false);
-const isCollected = ref(false);
+const isTranslating = ref(false);
 
 const translation = async () => {
-  isTanslating.value = true;
+  isTranslating.value = true;
   try {
     const completion = await fetch(
       "https://api.openai.com/v1/chat/completions",
@@ -93,18 +94,30 @@ const translation = async () => {
   } catch (error) {
     snackbarStore.showErrorMessage(error.message);
   } finally {
-    isTanslating.value = false;
+    isTranslating.value = false;
   }
 };
 
+// 将语句添加到句子收藏列表
 const handleCollect = () => {
-  isCollected.value = !isCollected.value;
-  if (!isCollected.value) {
+  const sentence = {
+    sentenceId: props.message.messageId,
+    text: formatForTTS(content.value),
+    voiceConfig: props.voiceConfig,
+  } as Collection.Sentence;
+
+  if (collectionStore.isCollected(sentence.sentenceId)) {
+    collectionStore.removeSentence(sentence.sentenceId);
     snackbarStore.showSuccessMessage("已取消收藏");
   } else {
+    collectionStore.addSentence(sentence);
     snackbarStore.showSuccessMessage("已收藏");
   }
 };
+
+const isCollected = computed(() => {
+  return collectionStore.isCollected(props.message.messageId);
+});
 </script>
 
 <template>
@@ -161,7 +174,7 @@ const handleCollect = () => {
               >
                 <template v-slot:prepend>
                   <v-icon
-                    :color="isTanslating ? '#705CF6' : ''"
+                    :color="isTranslating ? '#705CF6' : ''"
                     class="tool-icon"
                     size="18"
                     >mdi-translate</v-icon
@@ -247,7 +260,7 @@ const handleCollect = () => {
             >
               <template v-slot:prepend>
                 <v-icon
-                  :color="isTanslating ? '#705CF6' : ''"
+                  :color="isTranslating ? '#705CF6' : ''"
                   class="tool-icon"
                   size="18"
                   >mdi-translate</v-icon

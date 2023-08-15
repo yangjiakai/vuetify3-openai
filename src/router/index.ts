@@ -67,6 +67,14 @@ export const routes = [
         meta: { requiresAut: true },
       },
 
+      // 语句收藏
+      {
+        path: "/collection",
+        name: "collection",
+        component: () => import("@/views/collection/CollectionPage.vue"),
+        meta: { requiresAuth: true },
+      },
+
       // this page is sample page for layout
       {
         path: "/ui",
@@ -91,6 +99,7 @@ export const routes = [
           ),
         meta: { requiresAuth: true },
       },
+
     ],
     meta: { requiresAuth: true },
   },

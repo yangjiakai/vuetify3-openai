@@ -3,7 +3,7 @@ export enum Gender {
     Man = 2,
 }
 
-export declare enum Language {
+export enum Language {
     Chinese = "zh-CN",
     English = "en-US",
     Japanese = "ja-JP",

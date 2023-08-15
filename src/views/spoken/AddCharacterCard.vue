@@ -118,7 +118,7 @@ const addChat = () => {
       </v-card-title>
     </v-card>
     <v-divider></v-divider>
-    <v-list height="400" class="pa-1" lines="two" densit y="compact">
+    <v-list height="400" class="pa-1" lines="two" density="compact">
       <!-- ---------------------------------------------- -->
       <!-- Profile Area -->
       <!-- ---------------------------------------------- -->

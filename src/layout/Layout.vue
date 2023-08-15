@@ -5,13 +5,12 @@
 -->
 <script setup lang="ts">
 import MainSidebar from "@/components/MainSidebar.vue";
-import SubSidebar from "@/components/SubSidebar.vue";
-import AppBar from "@/components/AppBar.vue";
+
 import Snackbar from "@/components/Snackbar.vue";
 </script>
 
 <template>
-  <div class="">
+  <div class="h-100">
     <!-- ---------------------------------------------- -->
     <!---Main Sidebar -->
     <!-- ---------------------------------------------- -->
@@ -20,7 +19,7 @@ import Snackbar from "@/components/Snackbar.vue";
     <!---Main -->
     <!-- ---------------------------------------------- -->
     <!-- ---------------------------------------------- -->
-    <v-main>
+    <v-main class="h-100">
       <RouterView />
     </v-main>
 

@@ -81,7 +81,7 @@ export const getLanguageName = (language: string): string => {
         case "zh-CN":
             return "中文";
         case "en-US":
-            return "英语(美)";
+            return "英语";
         case "ja-JP":
             return "日语";
         case "ko-KR":
