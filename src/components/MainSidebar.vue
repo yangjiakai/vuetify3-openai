@@ -7,7 +7,9 @@
 import { useAuthStore } from "@/stores/authStore";
 import { useSpokenStore } from "@/stores/spokenStore";
 import { useChatHistoryStore } from "@/stores/chatHistoryStore";
+import { useAppStore } from "@/stores/appStore";
 import ContactUsCard from "@/components/ContactUsCard.vue";
+const appStore = useAppStore();
 const authStore = useAuthStore();
 const spokenStore = useSpokenStore();
 const chatHistoryStore = useChatHistoryStore();
@@ -33,7 +35,7 @@ const menus = [
   {
     title: "创作中心",
     icon: "mdi-notebook",
-    url: "/creator",
+    url: "/creation",
   },
   {
     title: "咨询顾问",
@@ -45,10 +47,14 @@ const menus = [
     icon: "mdi-account-voice",
     url: "/spoken",
   },
+  {
+    title: "语句收藏",
+    icon: "mdi-text-box-edit",
+    url: "/collection",
+  },
 ];
 
 const naviagteTo = (url: string) => {
-  // debugger;
   if (url === "/spoken") {
     const lastPageId = spokenStore.lastPageId;
     const newUrl = `/spoken/${lastPageId}`;
@@ -65,7 +71,7 @@ const naviagteTo = (url: string) => {
 </script>
 
 <template>
-  <v-navigation-drawer width="100">
+  <v-navigation-drawer v-model="appStore.mainSidebar" width="100">
     <v-list nav>
       <v-list-item
         v-for="item in menus"

@@ -35,7 +35,6 @@ export const routes = [
         component: () => import("@/views/creation/CreationPage.vue"),
         meta: { requiresAuth: true },
         children: [
-
           {
             path: ":id",
             name: "creation-id",
