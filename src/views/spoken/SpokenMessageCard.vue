@@ -13,6 +13,7 @@ import { formatForTTS } from "@/utils/aiUtils";
 import { Icon } from "@iconify/vue";
 import { readStream } from "@/utils/aiUtils";
 import { ReadMode } from "@/enums";
+import moment from "moment";
 
 const collectionStore = useCollectionStore();
 const speechStore = useSpeechStore();
@@ -118,29 +119,135 @@ const handleCollect = () => {
 const isCollected = computed(() => {
   return collectionStore.isCollected(props.message.messageId);
 });
+
+const getDateTime = computed(() => {
+  return moment(props.dateTime).format("MM/DD HH:mm");
+});
 </script>
 
 <template>
   <div>
-    <!-- 朋友信息 -->
+    <!-- AI信息 -->
     <div v-if="props.role === 'assistant'">
       <div class="pa-5 d-flex align-start flex-row">
-        <v-avatar class="mr-4" rounded="sm" variant="elevated">
+        <v-avatar
+          class="mr-4"
+          rounded="xl"
+          variant="outlined"
+          color="grey-lighten-1"
+        >
           <img src="@/assets/images/avatars/avatar_assistant.jpg" alt="alt" />
         </v-avatar>
-        <v-card class="rounded-xl rounded-bs-0">
-          <div>
-            <MdPreview :modelValue="props.message.messageBody.content" />
+        <div>
+          <v-card class="rounded-xl rounded-bs-0">
+            <div>
+              <MdPreview :modelValue="props.message.messageBody.content" />
+              <div
+                v-if="translatedContent"
+                class="mx-5 mb-5 text-body-2 text-blue-grey-darken-2"
+              >
+                {{ translatedContent }}
+              </div>
+              <div class="toolbox px-5 pb-5">
+                <v-btn
+                  class="mr-3"
+                  color="grey-lighten-1"
+                  variant="text"
+                  @click="readMessage"
+                  size="20"
+                  v-if="!props.message.isReading"
+                >
+                  <template v-slot:prepend>
+                    <v-icon class="tool-icon" size="18">mdi-volume-high</v-icon>
+                  </template>
+                  <v-tooltip activator="parent" location="bottom" text="朗读">
+                  </v-tooltip>
+                </v-btn>
+                <v-btn
+                  class="mr-3"
+                  color="grey-lighten-1"
+                  variant="text"
+                  @click="readMessage"
+                  size="20"
+                  v-else
+                >
+                  <template v-slot:prepend>
+                    <Icon color="#705CF6" icon="svg-spinners:bars-scale-fade" />
+                  </template>
+                </v-btn>
+
+                <v-btn
+                  class="mr-3"
+                  color="grey-lighten-1"
+                  variant="text"
+                  @click="translation"
+                  size="20"
+                >
+                  <template v-slot:prepend>
+                    <v-icon
+                      :color="isTranslating ? '#705CF6' : ''"
+                      class="tool-icon"
+                      size="18"
+                      >mdi-translate</v-icon
+                    >
+                    <v-tooltip activator="parent" location="bottom" text="翻译">
+                    </v-tooltip>
+                  </template>
+                </v-btn>
+                <v-btn
+                  variant="text"
+                  @click="handleCollect"
+                  size="20"
+                  color="grey-lighten-1"
+                >
+                  <template v-slot:prepend>
+                    <v-icon
+                      :color="isCollected ? '#705CF6' : ''"
+                      class="tool-icon"
+                      size="18"
+                      >{{
+                        isCollected ? "mdi-heart" : "mdi-heart-outline"
+                      }}</v-icon
+                    >
+                    <v-tooltip activator="parent" location="bottom" text="收藏">
+                    </v-tooltip>
+                  </template>
+                </v-btn>
+              </div>
+            </div>
+          </v-card>
+          <div class="mt-2 ml-1 text-grey-lighten-1 text-caption">
+            {{ getDateTime }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 用户信息 -->
+    <div v-else-if="props.role === 'user'">
+      <div class="pa-5 d-flex align-start flex-row-reverse">
+        <v-avatar
+          class="ml-4"
+          rounded="xl"
+          variant="outlined"
+          color="grey-lighten-1"
+        >
+          <img src="@/assets/images/avatars/avatar_user.jpg" alt="alt" />
+        </v-avatar>
+        <div>
+          <v-card class="gradient purple rounded-xl rounded-be-0">
+            <v-card-text class="ml-1 mt-1">
+              <b> {{ props.message.messageBody.content }}</b></v-card-text
+            >
             <div
               v-if="translatedContent"
-              class="mx-5 mb-5 text-body-2 text-blue-grey-darken-2"
+              class="mx-5 mb-5 text-body-2 text-blue-grey-lighten-4"
             >
               {{ translatedContent }}
             </div>
             <div class="toolbox px-5 pb-5">
               <v-btn
                 class="mr-3"
-                color="grey-lighten-1"
+                color="white"
                 variant="text"
                 @click="readMessage"
                 size="20"
@@ -154,27 +261,27 @@ const isCollected = computed(() => {
               </v-btn>
               <v-btn
                 class="mr-3"
-                color="grey-lighten-1"
+                color="white"
                 variant="text"
                 @click="readMessage"
                 size="20"
                 v-else
               >
                 <template v-slot:prepend>
-                  <Icon color="#705CF6" icon="svg-spinners:bars-scale-fade" />
+                  <Icon icon="svg-spinners:bars-scale-fade" />
                 </template>
               </v-btn>
 
               <v-btn
                 class="mr-3"
-                color="grey-lighten-1"
+                color="white"
                 variant="text"
                 @click="translation"
                 size="20"
               >
                 <template v-slot:prepend>
                   <v-icon
-                    :color="isTranslating ? '#705CF6' : ''"
+                    :color="isTranslating ? '#ccc' : ''"
                     class="tool-icon"
                     size="18"
                     >mdi-translate</v-icon
@@ -183,94 +290,12 @@ const isCollected = computed(() => {
                   </v-tooltip>
                 </template>
               </v-btn>
-              <v-btn
-                variant="text"
-                @click="handleCollect"
-                size="20"
-                color="grey-lighten-1"
-              >
-                <template v-slot:prepend>
-                  <v-icon
-                    :color="isCollected ? '#705CF6' : ''"
-                    class="tool-icon"
-                    size="18"
-                    >{{
-                      isCollected ? "mdi-heart" : "mdi-heart-outline"
-                    }}</v-icon
-                  >
-                  <v-tooltip activator="parent" location="bottom" text="收藏">
-                  </v-tooltip>
-                </template>
-              </v-btn>
             </div>
+          </v-card>
+          <div class="mt-2 mr-1 text-right text-grey-lighten-1 text-caption">
+            {{ getDateTime }}
           </div>
-        </v-card>
-      </div>
-    </div>
-    <!-- 用户信息 -->
-    <div v-else-if="props.role === 'user'">
-      <div class="pa-5 d-flex align-center flex-row-reverse">
-        <v-avatar class="ml-4" rounded="lg" variant="elevated">
-          <img src="@/assets/images/avatars/avatar_user.jpg" alt="alt" />
-        </v-avatar>
-        <v-card class="gradient gray rounded-xl rounded-be-0">
-          <v-card-text class="ml-1 mt-1">
-            <b> {{ props.message.messageBody.content }}</b></v-card-text
-          >
-          <div
-            v-if="translatedContent"
-            class="mx-5 mb-5 text-body-2 text-blue-grey-lighten-3"
-          >
-            {{ translatedContent }}
-          </div>
-          <div class="toolbox px-5 pb-5">
-            <v-btn
-              class="mr-3"
-              color="grey-lighten-1"
-              variant="text"
-              @click="readMessage"
-              size="20"
-              v-if="!props.message.isReading"
-            >
-              <template v-slot:prepend>
-                <v-icon class="tool-icon" size="18">mdi-volume-high</v-icon>
-              </template>
-              <v-tooltip activator="parent" location="bottom" text="朗读">
-              </v-tooltip>
-            </v-btn>
-            <v-btn
-              class="mr-3"
-              color="grey-lighten-1"
-              variant="text"
-              @click="readMessage"
-              size="20"
-              v-else
-            >
-              <template v-slot:prepend>
-                <Icon color="#705CF6" icon="svg-spinners:bars-scale-fade" />
-              </template>
-            </v-btn>
-
-            <v-btn
-              class="mr-3"
-              color="grey-lighten-1"
-              variant="text"
-              @click="translation"
-              size="20"
-            >
-              <template v-slot:prepend>
-                <v-icon
-                  :color="isTranslating ? '#705CF6' : ''"
-                  class="tool-icon"
-                  size="18"
-                  >mdi-translate</v-icon
-                >
-                <v-tooltip activator="parent" location="bottom" text="翻译">
-                </v-tooltip>
-              </template>
-            </v-btn>
-          </div>
-        </v-card>
+        </div>
       </div>
     </div>
   </div>

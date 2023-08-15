@@ -11,99 +11,133 @@ const router = useRouter();
 const customizeTheme = useCustomizeThemeStore();
 
 const chatMenus = computed(() => {
-  return chatHistoryStore.chatList.map((chat) => {
+  return chatHistoryStore.chatList.map((chat: Chat.Chat) => {
     return {
-      id: chat.id,
-      title: chat.title,
-      icon: "mdi-chat",
-      isMenuEdit: chat.isMenuEdit,
-      idMenuDeleteConfirm: chat.idMenuDeleteConfirm,
-      url: "/chat/" + chat.id,
+      chatId: chat.chatId,
+      menuTitle: chat.menuConfig.menuTitle,
+      icon: "mdi-face-agent",
+      isMenuEdit: chat.menuConfig.isMenuEdit,
+      isMenuDeleteConfirm: chat.menuConfig.isMenuDeleteConfirm,
+      url: "/chat/" + chat.chatId,
     };
   });
 });
 
-const menus = [
-  {
-    id: 1,
-    title: "学习顾问",
-    icon: "mdi-chat",
-    url: "/consultant/1",
-  },
-  {
-    id: 2,
-    title: "医疗顾问",
-    icon: "mdi-chat",
-    url: "/consultant/2",
-  },
-  // 法律顾问
-  {
-    id: 3,
-    title: "法律顾问",
-    icon: "mdi-chat",
-    url: "/consultant/3",
-  },
-  // 财务顾问
-  {
-    id: 4,
-    title: "财务顾问",
-    icon: "mdi-chat",
-    url: "/consultant/4",
-  },
-  // 移民顾问
-  {
-    id: 5,
-    title: "职业顾问",
-    icon: "mdi-chat",
-    url: "/consultant/5",
-  },
-  // 心理医生
-  {
-    id: 6,
-    title: "心理医生",
-    icon: "mdi-chat",
-    url: "/consultant/6",
-  },
-];
+const editTitle = ref(chatHistoryStore.activeChat?.menuConfig?.menuTitle);
 
 const navigateTo = (id) => {
   chatHistoryStore.activeChatMenuId = id;
   router.push(`/chat/${id}`);
 };
+
+const refEditInput = ref();
+
+// 切换编辑菜单视图
+const handleEdit = (id) => {
+  chatHistoryStore.updateMenuIsMenuEdit(id, true);
+  nextTick(() => {
+    refEditInput.value[0]?.focus();
+  });
+};
+
+// 确认更新菜单标题
+const editConfirm = (id) => {
+  console.log("editConfirm");
+
+  chatHistoryStore.updateMenuTitle(id, editTitle.value);
+};
+
+// 取消更新菜单标题
+const editCancel = (id) => {
+  chatHistoryStore.updateMenuIsMenuEdit(id, false);
+};
+
+// 切换确认删除视图
+const handleDelete = (id) => {
+  chatHistoryStore.updateMenuDeleteConfirm(id, true);
+};
+
+// 确认删除当前菜单
+const deleteConfirm = (id) => {
+  chatHistoryStore.deleteMenu(id);
+};
+
+// 取消更新菜单标题
+const deleteCancel = (id) => {
+  chatHistoryStore.updateMenuDeleteConfirm(id, false);
+};
+
+watch(
+  () => chatHistoryStore.activeChat,
+  (newVal) => {
+    editTitle.value = newVal?.menuConfig?.menuTitle;
+  }
+);
 </script>
 
 <template>
-  <v-navigation-drawer v-model="customizeTheme.subSidebar" theme="dark">
+  <v-navigation-drawer v-model="customizeTheme.subSidebar" width="240">
     <!-- ---------------------------------------------- -->
     <!---Nav List -->
     <!-- ---------------------------------------------- -->
     <perfect-scrollbar class="scrollnav">
       <v-divider></v-divider>
-      <v-list nav>
-        <v-list-item
-          v-for="chatMenu in menus"
-          class="pl-5"
-          :key="chatMenu.id"
-          :prepend-icon="chatMenu.icon"
-          :to="chatMenu.url"
-          @click="navigateTo(chatMenu.id)"
-          active-class="active-nav"
-          density="compact"
-          rounded="xl"
-        >
-          <template v-slot:prepend>
-            <v-avatar size="avatarSize" color="white">
-              <img
-                width="26"
-                height="26"
-                src="https://img.icons8.com/fluency/48/user-female-circle.png"
-                alt="user-female-circle"
+      <v-list nav class="text-grey-darken-1" color="primary">
+        <transition-group name="slide-x" tag="div">
+          <v-list-item
+            v-for="chatMenu in chatMenus"
+            class="pl-5 font-weight-bold"
+            :key="chatMenu.chatId"
+            :to="chatMenu.url"
+            @click="navigateTo(chatMenu.chatId)"
+            active-class="active-nav"
+            density="compact"
+            rounded="xl"
+            @blur="editCancel(chatMenu.chatId)"
+          >
+            <template v-slot:prepend>
+              <v-avatar size="avatarSize">
+                <v-icon
+                  :color="
+                    chatMenu.chatId === chatHistoryStore.activeChatMenuId
+                      ? 'primary'
+                      : ''
+                  "
+                >
+                  {{ chatMenu.icon }}
+                </v-icon>
+              </v-avatar>
+            </template>
+            <v-list-item-title v-if="chatMenu.isMenuEdit">
+              <input
+                class="custom-input"
+                type="text"
+                ref="refEditInput"
+                autofocus
+                v-model="editTitle"
+                @keyup.enter="editConfirm(chatMenu.chatId)"
               />
-            </v-avatar>
-          </template>
-
-          <v-list-item-title> {{ chatMenu.title }}</v-list-item-title>
-        </v-list-item>
+            </v-list-item-title>
+            <v-list-item-title v-else-if="chatMenu.isMenuDeleteConfirm">
+              {{ `删除 "${chatMenu.menuTitle}"?` }}</v-list-item-title
+            >
+            <v-list-item-title class="font-weight-black" v-else>
+              {{ chatMenu.menuTitle }}</v-list-item-title
+            >
+            <template v-slot:append>
+              <v-btn
+                color="grey-lighten-1"
+                variant="text"
+                @click="handleDelete(chatMenu.chatId)"
+                size="20"
+              >
+                <template v-slot:prepend>
+                  <v-icon size="18">mdi-heart-outline</v-icon>
+                </template>
+              </v-btn>
+            </template>
+          </v-list-item>
+        </transition-group>
       </v-list>
     </perfect-scrollbar>
   </v-navigation-drawer>
@@ -140,5 +174,22 @@ const navigateTo = (id) => {
   );
   border-radius: 0px 3px 3px 0px;
   transition: opacity 0.3s;
+}
+
+.custom-input {
+  width: 100px; /* 设置输入框宽度 */
+  padding: 2px 5px; /* 增加内边距 */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s; /* 添加过渡效果 */
+
+  /* 默认状态样式 */
+  color: #757575;
+  font-weight: 600;
+}
+
+.custom-input:focus {
+  outline: none; /* 移除默认聚焦框 */
+  border-color: #6746f5; /* 聚焦时边框颜色 */
 }
 </style>

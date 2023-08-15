@@ -15,7 +15,7 @@ const chatMenus = computed(() => {
     return {
       chatId: chat.chatId,
       menuTitle: chat.menuConfig.menuTitle,
-      icon: "mdi-face-woman-shimmer",
+      icon: "mdi-robot-excited-outline",
       isMenuEdit: chat.menuConfig.isMenuEdit,
       isMenuDeleteConfirm: chat.menuConfig.isMenuDeleteConfirm,
       url: "/chat/" + chat.chatId,
