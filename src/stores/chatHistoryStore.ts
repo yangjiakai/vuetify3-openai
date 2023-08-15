@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import router from "@/router";
 import { readStream } from "@/utils/aiUtils";
-
+import { ChatType } from "@/enums";
+import { consultantData } from "@/data/chatData";
 
 export const useChatHistoryStore = defineStore({
     id: "chatHistory",
@@ -13,7 +14,7 @@ export const useChatHistoryStore = defineStore({
         activeChatMenuId: 1,
         // 聊天列表
         chatList: [
-
+            ...consultantData,
         ],
     }),
 
@@ -27,12 +28,17 @@ export const useChatHistoryStore = defineStore({
         activeChat(state) {
             return state.chatList.find((chat: Chat.Chat) => chat.chatId === state.activeChatMenuId);
         },
+
+        consultantList: (state) => state.chatList.filter((chat: Chat.Chat) => chat.chatType === ChatType.Consultant) as Chat.Chat[],
+        creationList: (state) => state.chatList.filter((chat: Chat.Chat) => chat.chatType === ChatType.Creation) as Chat.Chat[],
+        baseList: (state) => state.chatList.filter((chat: Chat.Chat) => chat.chatType === ChatType.Base) as Chat.Chat[],
     },
     actions: {
         // 添加聊天菜单
         addChat(chatId: Chat.Id, title?: string,) {
             const newChat: Chat.Chat = {
                 chatId: chatId,
+                chatType: ChatType.Base,
                 menuConfig: {
                     menuTitle: title || `新会话`,
                     isMenuEdit: false,
@@ -41,7 +47,7 @@ export const useChatHistoryStore = defineStore({
 
                 gptConfig: {
                     model: "gpt-3.5-turbo",
-                    propmpt: "",
+                    prompt: "",
                     role: "",
                     proxy: ""
                 },

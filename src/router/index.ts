@@ -50,6 +50,14 @@ export const routes = [
         name: "consultant",
         component: () => import("@/views/ConsultantPage.vue"),
         meta: { requiresAuth: true },
+        children: [
+          {
+            path: ":id",
+            name: "consultant-id",
+            component: () => import("@/views/consultant/ConsultantPage.vue"),
+            meta: { requiresAuth: true },
+          },
+        ],
       },
 
       // 口语交流

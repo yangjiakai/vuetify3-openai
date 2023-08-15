@@ -11,7 +11,7 @@ const router = useRouter();
 const customizeTheme = useCustomizeThemeStore();
 
 const chatMenus = computed(() => {
-  return chatHistoryStore.chatList.map((chat: Chat.Chat) => {
+  return chatHistoryStore.baseList.map((chat: Chat.Chat) => {
     return {
       chatId: chat.chatId,
       menuTitle: chat.menuConfig.menuTitle,

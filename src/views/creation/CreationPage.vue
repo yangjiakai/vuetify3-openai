@@ -4,12 +4,12 @@
 * @Description: 
 -->
 <script setup lang="ts">
-import { creationListData } from "./data";
+import { creationsData } from "@/data/chatData";
 import SidebarToggle from "@/components/SidebarToggle.vue";
 
 const creationList = ref<Creation.Creation[]>();
 onMounted(() => {
-  creationList.value = creationListData;
+  creationList.value = creationsData;
 });
 
 const typeList = computed(() => {

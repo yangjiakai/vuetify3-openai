@@ -11,68 +11,27 @@ const router = useRouter();
 const customizeTheme = useCustomizeThemeStore();
 
 const chatMenus = computed(() => {
-  return chatHistoryStore.chatList.map((chat: Chat.Chat) => {
+  console.log(
+    "chatHistoryStore.consultantList",
+    chatHistoryStore.consultantList
+  );
+
+  return chatHistoryStore.consultantList.map((chat: Chat.Chat) => {
     return {
       chatId: chat.chatId,
       menuTitle: chat.menuConfig.menuTitle,
       icon: "mdi-face-agent",
       isMenuEdit: chat.menuConfig.isMenuEdit,
       isMenuDeleteConfirm: chat.menuConfig.isMenuDeleteConfirm,
-      url: "/chat/" + chat.chatId,
+      url: "/consultant/" + chat.chatId,
     };
   });
 });
-
-const editTitle = ref(chatHistoryStore.activeChat?.menuConfig?.menuTitle);
 
 const navigateTo = (id) => {
   chatHistoryStore.activeChatMenuId = id;
   router.push(`/chat/${id}`);
 };
-
-const refEditInput = ref();
-
-// 切换编辑菜单视图
-const handleEdit = (id) => {
-  chatHistoryStore.updateMenuIsMenuEdit(id, true);
-  nextTick(() => {
-    refEditInput.value[0]?.focus();
-  });
-};
-
-// 确认更新菜单标题
-const editConfirm = (id) => {
-  console.log("editConfirm");
-
-  chatHistoryStore.updateMenuTitle(id, editTitle.value);
-};
-
-// 取消更新菜单标题
-const editCancel = (id) => {
-  chatHistoryStore.updateMenuIsMenuEdit(id, false);
-};
-
-// 切换确认删除视图
-const handleDelete = (id) => {
-  chatHistoryStore.updateMenuDeleteConfirm(id, true);
-};
-
-// 确认删除当前菜单
-const deleteConfirm = (id) => {
-  chatHistoryStore.deleteMenu(id);
-};
-
-// 取消更新菜单标题
-const deleteCancel = (id) => {
-  chatHistoryStore.updateMenuDeleteConfirm(id, false);
-};
-
-watch(
-  () => chatHistoryStore.activeChat,
-  (newVal) => {
-    editTitle.value = newVal?.menuConfig?.menuTitle;
-  }
-);
 </script>
 
 <template>
@@ -93,7 +52,6 @@ watch(
             active-class="active-nav"
             density="compact"
             rounded="xl"
-            @blur="editCancel(chatMenu.chatId)"
           >
             <template v-slot:prepend>
               <v-avatar size="avatarSize">
@@ -108,29 +66,12 @@ watch(
                 </v-icon>
               </v-avatar>
             </template>
-            <v-list-item-title v-if="chatMenu.isMenuEdit">
-              <input
-                class="custom-input"
-                type="text"
-                ref="refEditInput"
-                autofocus
-                v-model="editTitle"
-                @keyup.enter="editConfirm(chatMenu.chatId)"
-              />
-            </v-list-item-title>
-            <v-list-item-title v-else-if="chatMenu.isMenuDeleteConfirm">
-              {{ `删除 "${chatMenu.menuTitle}"?` }}</v-list-item-title
-            >
-            <v-list-item-title class="font-weight-black" v-else>
+
+            <v-list-item-title class="font-weight-black">
               {{ chatMenu.menuTitle }}</v-list-item-title
             >
             <template v-slot:append>
-              <v-btn
-                color="grey-lighten-1"
-                variant="text"
-                @click="handleDelete(chatMenu.chatId)"
-                size="20"
-              >
+              <v-btn color="grey-lighten-1" variant="text" @click="" size="20">
                 <template v-slot:prepend>
                   <v-icon size="18">mdi-heart-outline</v-icon>
                 </template>

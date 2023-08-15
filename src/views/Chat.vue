@@ -80,6 +80,7 @@ const sendMessage = () => {
 
   chatHistoryStore.addHistory(currentId.value, {
     messageId: Date.now(),
+    messageTime: Date.now().toString(),
     messageBody: {
       content: userMessage.value,
       role: "user",
@@ -128,6 +129,7 @@ const createCompletion = async () => {
     const msgId = Date.now();
     chatHistoryStore.addHistory(currentId.value, {
       messageId: msgId,
+      messageTime: Date.now().toString(),
       messageBody: {
         content: "",
         role: "assistant",

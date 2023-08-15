@@ -81,6 +81,7 @@ const sendMessage = () => {
 
   spokenStore.addHistory(currentId.value, {
     messageId: Date.now(),
+    messageTime: Date.now().toString(),
     isReading: false,
     messageBody: {
       content: userMessage.value,
@@ -125,6 +126,7 @@ const createCompletion = async () => {
     const msgId = Date.now();
     spokenStore.addHistory(currentId.value, {
       messageId: msgId,
+      messageTime: Date.now().toString(),
       isReading: false,
       messageBody: {
         content: res.choices[0].message.content,

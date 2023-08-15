@@ -1,6 +1,118 @@
+import { ChatType } from "@/enums";
+
+export const consultantData: Chat.Chat[] = [
+    // 1. 法律顾问
+    {
+        chatId: 1,
+        chatType: ChatType.Consultant,
+        menuConfig: {
+            menuTitle: "法律顾问",
+            isMenuEdit: false,
+            isMenuDeleteConfirm: false
+        },
+        gptConfig: {
+            model: "gpt-3.5-turbo",
+            prompt: "",
+            role: "法律顾问",
+            proxy: ""
+        },
+        messages: []
+    },
+
+    // 2. 会计顾问
+    {
+        chatId: 2,
+        chatType: ChatType.Consultant,
+        menuConfig: {
+            menuTitle: "会计顾问",
+            isMenuEdit: false,
+            isMenuDeleteConfirm: false
+        },
+        gptConfig: {
+            model: "gpt-3.5-turbo",
+            prompt: "",
+            role: "会计顾问",
+            proxy: ""
+        },
+        messages: []
+    },
+
+    // 3. 学习顾问
+    {
+        chatId: 3,
+        chatType: ChatType.Consultant,
+        menuConfig: {
+            menuTitle: "学习顾问",
+            isMenuEdit: false,
+            isMenuDeleteConfirm: false
+        },
+        gptConfig: {
+            model: "gpt-3.5-turbo",
+            prompt: "",
+            role: "学习顾问",
+            proxy: ""
+        },
+        messages: []
+    },
+
+    // 4. 职业顾问
+    {
+        chatId: 4,
+        chatType: ChatType.Consultant,
+        menuConfig: {
+            menuTitle: "职业顾问",
+            isMenuEdit: false,
+            isMenuDeleteConfirm: false
+        },
+        gptConfig: {
+            model: "gpt-3.5-turbo",
+            prompt: "",
+            role: "职业顾问",
+            proxy: ""
+        },
+        messages: []
+    },
+
+    // 5. 医疗顾问
+    {
+        chatId: 5,
+        chatType: ChatType.Consultant,
+        menuConfig: {
+            menuTitle: "医疗顾问",
+            isMenuEdit: false,
+            isMenuDeleteConfirm: false
+        },
+        gptConfig: {
+            model: "gpt-3.5-turbo",
+            prompt: "",
+            role: "医疗顾问",
+            proxy: ""
+        },
+        messages: []
+    },
+
+    // 6. 心理医生
+    {
+        chatId: 6,
+        chatType: ChatType.Consultant,
+        menuConfig: {
+            menuTitle: "心理医生",
+            isMenuEdit: false,
+            isMenuDeleteConfirm: false
+        },
+        gptConfig: {
+            model: "gpt-3.5-turbo",
+            prompt: "",
+            role: "心理医生",
+            proxy: ""
+        },
+        messages: []
+    }
+];
 
 
-export const creationListData = [
+
+export const creationsData = [
     // 工作效率:商品文案
     {
         creationId: 1,

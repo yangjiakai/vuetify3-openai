@@ -7,6 +7,7 @@ declare namespace Chat {
 
     interface Message {
         messageId: Id;
+        messageTime: string;
         messageBody: {
             role: Role;
             content: string;
@@ -28,7 +29,7 @@ declare namespace Chat {
 
     type GptConfig = {
         model: string;
-        propmpt: string;
+        prompt: string;
         role: string;
         proxy: string;
     }
@@ -41,6 +42,7 @@ declare namespace Chat {
 
     export interface Chat {
         chatId: Id;
+        chatType: "base" | "creation" | "consultant" | "spoken";
         menuConfig: MenuConfig;
         gptConfig: GptConfig;
         messages: Message[];

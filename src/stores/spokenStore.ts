@@ -40,7 +40,7 @@ export const useSpokenStore = defineStore({
 
                 gptConfig: {
                     model: "gpt-3.5-turbo",
-                    propmpt: "",
+                    prompt: "",
                     role: "",
                     proxy: ""
                 },

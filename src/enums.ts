@@ -14,3 +14,10 @@ export enum ReadMode {
     Test = "test",
     Read = "read",
 }
+
+export enum ChatType {
+    Base = "base",
+    Creation = "creation",
+    Consultant = "consultant",
+    Spoken = "spoken"
+} 
