@@ -176,11 +176,14 @@ const saveLastPageId = (to: any, from: any) => {
   if (fromPath.startsWith("/spoken/") && !toPath.startsWith("/spoken/")) {
     const spokenId = from.params.id;
     spokenStore.lastPageId = spokenId;
-
     // 如果从chat页面跳转到其他页面，记录最后的chat页面id
   } else if (fromPath.startsWith("/chat/") && !toPath.startsWith("/chat/")) {
     const chatId = from.params.id;
     chatHistoryStore.updateLastPageId(chatId);
+    // 如果从consultant页面跳转到其他页面，记录最后的consultant页面id
+  } else if (fromPath.startsWith("/consultant/") && !toPath.startsWith("/consultant/")) {
+    const chatId = from.params.id;
+    chatHistoryStore.updateLastConsultPageId(chatId);
   } else {
   }
 };

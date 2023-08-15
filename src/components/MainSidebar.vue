@@ -64,6 +64,10 @@ const naviagteTo = (url: string) => {
     const lastPageId = chatHistoryStore.lastPageId;
     const newUrl = `/chat/${lastPageId}`;
     router.push(newUrl);
+  } else if (url === "/consultant") {
+    const lastPageId = chatHistoryStore.lastConsultPageId;
+    const newUrl = `/consultant/${lastPageId}`;
+    router.push(newUrl);
   } else {
     router.push(url);
   }

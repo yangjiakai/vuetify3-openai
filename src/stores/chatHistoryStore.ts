@@ -10,6 +10,8 @@ export const useChatHistoryStore = defineStore({
     state: () => ({
         // 最后离开的页面id
         lastPageId: 1,
+        // 咨询顾问最后离开页面
+        lastConsultPageId: 1,
         // 当前激活的聊天菜单id
         activeChatMenuId: 1,
         // 聊天列表
@@ -142,6 +144,10 @@ export const useChatHistoryStore = defineStore({
 
         updateLastPageId(pageId: number) {
             this.lastPageId = pageId;
+        },
+        updateLastConsultPageId(pageId: number) {
+            this.lastConsultPageId = pageId;
         }
+
     },
 });
