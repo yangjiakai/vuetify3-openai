@@ -4,6 +4,7 @@ export const useAppStore = defineStore({
     id: 'app',
     state: () => ({
         mainSidebar: true,
+        configDialog: false,
     }),
 
     persist: {
@@ -14,6 +15,12 @@ export const useAppStore = defineStore({
     actions: {
         toggleMainSidebar() {
             this.mainSidebar = !this.mainSidebar;
+        },
+        toggleConfigDialog() {
+            this.configDialog = !this.configDialog;
         }
+
+
+
     },
 })

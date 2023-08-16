@@ -7,10 +7,13 @@
 import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 import { countAndCompleteCodeBlocks } from "@/utils/aiUtils";
 import { useSnackbarStore } from "@/stores/snackbarStore";
+import { useAppStore } from "@/stores/appStore";
 import MessageCard from "@/components/MessageCard.vue";
 import { Vue3Lottie } from "vue3-lottie";
 import { scrollToBottom } from "@/utils/common";
 import SidebarToggle from "@/components/SidebarToggle.vue";
+import ConfigDialog from "@/components/ConfigDialog.vue";
+const appStore = useAppStore();
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
 const chatHistoryStore = useChatHistoryStore();
@@ -220,7 +223,12 @@ watch(
         elevation="0"
         class="input-panel d-flex align-end pa-1"
       >
-        <v-btn class="mb-1" variant="elevated" icon @click="">
+        <v-btn
+          class="mb-1"
+          variant="elevated"
+          icon
+          @click="appStore.toggleConfigDialog"
+        >
           <v-icon size="30" class="text-primary">mdi-cog-outline</v-icon>
           <v-tooltip
             activator="parent"
@@ -250,6 +258,7 @@ watch(
           <v-icon size="24" @click="sendMessage">mdi-send</v-icon>
         </v-btn>
       </v-sheet>
+      <ConfigDialog :config="chatInfo?.gptConfig" />
     </div>
   </div>
 </template>

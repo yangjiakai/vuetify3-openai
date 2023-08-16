@@ -7,6 +7,9 @@ export default {
       noResultsText: "未找到匹配的记录",
       loadingText: "正在载入项目...",
     },
+    input: {
+      clear: "清除",
+    },
     dataTable: {
       itemsPerPageText: "每页行数：",
       ariaLabel: {

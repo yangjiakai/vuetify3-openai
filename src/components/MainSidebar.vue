@@ -115,7 +115,7 @@ const naviagteTo = (url: string) => {
           class="text-grey-darken-1"
           color="primary"
         >
-          <v-slot prepend>
+          <div>
             <div class="text-center">
               <v-icon size="26">mdi-wechat</v-icon>
             </div>
@@ -123,7 +123,7 @@ const naviagteTo = (url: string) => {
             <div class="title">联系我们</div>
             <!-- <v-tooltip activator="parent" location="right" text="联系我们">
             </v-tooltip> -->
-          </v-slot>
+          </div>
         </v-list-item>
 
         <v-list-item
@@ -131,13 +131,13 @@ const naviagteTo = (url: string) => {
           class="text-grey-darken-1"
           color="primary"
         >
-          <v-slot prepend>
+          <div>
             <div class="text-center">
               <v-icon size="26">mdi-logout</v-icon>
             </div>
 
             <div class="title">退出登录</div>
-          </v-slot>
+          </div>
         </v-list-item>
       </v-list>
     </template>
