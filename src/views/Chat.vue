@@ -13,14 +13,15 @@ import { Vue3Lottie } from "vue3-lottie";
 import { scrollToBottom } from "@/utils/common";
 import SidebarToggle from "@/components/SidebarToggle.vue";
 import ConfigDialog from "@/components/ConfigDialog.vue";
+import { Icon } from "@iconify/vue";
 const appStore = useAppStore();
 const route = useRoute();
 const snackbarStore = useSnackbarStore();
 const chatHistoryStore = useChatHistoryStore();
-const messages = ref<Chat.Message[]>([]);
 
 const currentId = ref(+route.params.id);
 const chatInfo = ref<Chat.Chat>();
+const messages = ref<Chat.Message[]>([]);
 const gptConfig = computed(() => {
   return (
     chatInfo.value?.gptConfig || {
@@ -64,6 +65,7 @@ watch(
   (newVal) => {
     if (newVal) {
       chatInfo.value = newVal;
+      messages.value = chatHistoryStore.getChatHistory(currentId.value);
     }
   },
 
@@ -265,7 +267,25 @@ watch(
           <v-tooltip
             activator="parent"
             location="top"
-            text="ChatGPT Config"
+            text="Chat 配置"
+          ></v-tooltip>
+        </v-btn>
+        <v-btn
+          class="ml-1 mb-1"
+          variant="elevated"
+          icon
+          @click="chatHistoryStore.clearChatHistory(currentId)"
+        >
+          <!-- <v-icon size="30" class="text-primary">mdi-brash</v-icon> -->
+          <Icon
+            class="text-primary"
+            width="30"
+            icon="ant-design:clear-outlined"
+          />
+          <v-tooltip
+            activator="parent"
+            location="top"
+            text="清空信息"
           ></v-tooltip>
         </v-btn>
 

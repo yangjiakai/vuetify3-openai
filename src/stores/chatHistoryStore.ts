@@ -136,6 +136,15 @@ export const useChatHistoryStore = defineStore({
             return targetChat ? targetChat.messages : [];
         },
 
+        // 删除指定id的聊天的历史记录
+        clearChatHistory(chatId: Chat.Id) {
+            const targetChat = this.chatList.find((chat: Chat.Chat) => chat.chatId === chatId);
+            if (targetChat) {
+                targetChat.messages = [];
+            }
+        },
+
+
         async readStream(reader) {
             const activeChat = this.chatList.find((chat: Chat.Chat) => chat.chatId === this.activeChatMenuId);
             readStream(reader, (message) => {
