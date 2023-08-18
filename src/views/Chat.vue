@@ -18,17 +18,33 @@ const route = useRoute();
 const snackbarStore = useSnackbarStore();
 const chatHistoryStore = useChatHistoryStore();
 const messages = ref<Chat.Message[]>([]);
+
+const currentId = ref(+route.params.id);
+const chatInfo = ref<Chat.Chat>();
+const gptConfig = computed(() => {
+  return (
+    chatInfo.value?.gptConfig || {
+      model: "gpt-3.5-turbo-0613",
+      temperature: 0.5,
+      max_tokens: 2000,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      history_number: 6,
+      prompt: "",
+      role: "",
+      proxy: "",
+    }
+  );
+});
+
 const promptMessage = computed(() => {
   return [
     {
-      content: "你是一个口语对话机器人",
+      content: chatInfo.value?.gptConfig.prompt,
       role: "system",
     },
   ];
 });
-
-const currentId = ref(+route.params.id);
-const chatInfo = ref<Chat.Chat>();
 
 onMounted(() => {
   chatInfo.value = chatHistoryStore.getChat(currentId.value);
@@ -39,8 +55,20 @@ watch(
   () => route.params.id,
   (newVal) => {
     chatInfo.value = chatHistoryStore.getChat(currentId.value);
-
     messages.value = chatHistoryStore.getChatHistory(currentId.value);
+  }
+);
+
+watch(
+  () => chatHistoryStore.activeChat,
+  (newVal) => {
+    if (newVal) {
+      chatInfo.value = newVal;
+    }
+  },
+
+  {
+    deep: true,
   }
 );
 
@@ -52,11 +80,11 @@ const requestMessages = computed(() => {
     };
   });
 
-  if (pureMessages.length <= 10) {
+  if (pureMessages.length <= gptConfig.value.history_number) {
     return [...promptMessage.value, ...pureMessages];
   } else {
     // 截取最新的10条信息
-    const slicedMessages = pureMessages.slice(-8);
+    const slicedMessages = pureMessages.slice(-gptConfig.value.history_number);
     return [...promptMessage.value, ...slicedMessages];
   }
 });
@@ -116,7 +144,11 @@ const createCompletion = async () => {
         method: "POST",
         body: JSON.stringify({
           messages: requestMessages.value,
-          model: "gpt-3.5-turbo-0613",
+          model: gptConfig.value.model,
+          temperature: gptConfig.value.temperature,
+          max_tokens: Number(gptConfig.value.max_tokens),
+          presence_penalty: gptConfig.value.presence_penalty,
+          frequency_penalty: gptConfig.value.frequency_penalty,
           stream: true,
         }),
       }
@@ -191,10 +223,10 @@ watch(
             label
             class="ml-1"
             prepend-icon="
-            mdi-face-man-shimmer
+            mdi-robot-excited-outline
             "
           >
-            默认身份</v-chip
+            {{ chatInfo?.gptConfig.role }}</v-chip
           >
         </div>
       </div>
@@ -258,7 +290,7 @@ watch(
           <v-icon size="24" @click="sendMessage">mdi-send</v-icon>
         </v-btn>
       </v-sheet>
-      <ConfigDialog :config="chatInfo?.gptConfig" />
+      <ConfigDialog v-if="chatInfo?.gptConfig" :config="chatInfo?.gptConfig" />
     </div>
   </div>
 </template>

@@ -6,7 +6,8 @@
 <script setup lang="ts">
 import { useAppStore } from "@/stores/appStore";
 import promptsZh from "@/data/prompts-zh.json";
-
+import { useChatHistoryStore } from "@/stores/chatHistoryStore";
+const chatHistoryStore = useChatHistoryStore();
 const appStore = useAppStore();
 interface Props {
   config: Chat.GptConfig;
@@ -14,17 +15,7 @@ interface Props {
 
 const props = defineProps<Props>();
 // const defaultConfig = ref<Chat.GptConfig>();
-const currentConfig = ref<Chat.GptConfig>({
-  model: "gpt-3.5-turbo-0613",
-  temperature: 0.5,
-  max_tokens: 2000,
-  presence_penalty: 0,
-  frequency_penalty: 0,
-  history_number: 6,
-  prompt: "",
-  role: "",
-  proxy: "",
-});
+const currentConfig = ref<Chat.GptConfig>(props.config);
 
 watch(
   () => props.config,
@@ -40,8 +31,18 @@ const handleCancel = () => {
   appStore.toggleConfigDialog();
 };
 
+const getRole = (prompt) => {
+  const role = promptsZh.find((item) => item.prompt === prompt) || {
+    act: "默认",
+    prompt: "",
+  };
+  return role.act;
+};
+
 const handleSave = () => {
-  //   appStore.setConfig(config.value);
+  currentConfig.value.role = getRole(currentConfig.value.prompt);
+  chatHistoryStore.updateChatConfig(currentConfig.value);
+  appStore.toggleConfigDialog();
 };
 </script>
 
@@ -195,7 +196,7 @@ const handleSave = () => {
             <v-select
               color="primary"
               variant="outlined"
-              v-model="currentConfig.role"
+              v-model="currentConfig.prompt"
               hide-details
               density="compact"
               :items="promptsZh"

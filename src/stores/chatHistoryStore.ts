@@ -27,10 +27,7 @@ export const useChatHistoryStore = defineStore({
 
     getters: {
         // 获取当前激活的聊天菜单
-        activeChat(state) {
-            return state.chatList.find((chat: Chat.Chat) => chat.chatId === state.activeChatMenuId);
-        },
-
+        activeChat: (state) => state.chatList.find((chat: Chat.Chat) => chat.chatId === state.activeChatMenuId),
         consultantList: (state) => state.chatList.filter((chat: Chat.Chat) => chat.chatType === ChatType.Consultant) as Chat.Chat[],
         creationList: (state) => state.chatList.filter((chat: Chat.Chat) => chat.chatType === ChatType.Creation) as Chat.Chat[],
         baseList: (state) => state.chatList.filter((chat: Chat.Chat) => chat.chatType === ChatType.Base) as Chat.Chat[],
@@ -50,7 +47,7 @@ export const useChatHistoryStore = defineStore({
                 gptConfig: {
                     model: "gpt-3.5-turbo-0613",
                     prompt: "",
-                    role: "",
+                    role: "默认",
                     proxy: "",
                     temperature: 0.5,
                     max_tokens: 2000,
@@ -153,7 +150,15 @@ export const useChatHistoryStore = defineStore({
         },
         updateLastConsultPageId(pageId: number) {
             this.lastConsultPageId = pageId;
-        }
+        },
+
+        // 更新聊天配置
+        updateChatConfig(config: Chat.GptConfig) {
+            const targetChat = this.chatList.find((chat: Chat.Chat) => chat.chatId === this.activeChatMenuId) as Chat.Chat;
+            if (targetChat) {
+                targetChat.gptConfig = config;
+            }
+        },
 
     },
 });
