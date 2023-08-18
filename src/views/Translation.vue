@@ -72,7 +72,7 @@ const prompt = computed(() => {
 
 const isLoading = ref(false);
 
-// const completion = await fetch("https://api.openai.com/v1/chat/completions", {
+// const completion = await fetch("https://openai.wndbac.cn/v1/chat/completions", {
 //   headers: {
 //     "Content-Type": "application/json",
 //     Authorization: `Bearer ${chatStore.apiKey}`,
@@ -96,21 +96,24 @@ const translate = async () => {
   }
   isLoading.value = true;
 
-  const completion = await fetch("https://api.openai.com/v1/chat/completions", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${chatStore.apiKey}`,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      messages: [
-        { role: "user", content: prompt.value },
-        { role: "user", content: baseContent.value },
-      ],
-      model: "gpt-3.5-turbo-0613",
-      stream: true,
-    }),
-  });
+  const completion = await fetch(
+    "https://openai.wndbac.cn/v1/chat/completions",
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${chatStore.apiKey}`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        messages: [
+          { role: "user", content: prompt.value },
+          { role: "user", content: baseContent.value },
+        ],
+        model: "gpt-3.5-turbo-0613",
+        stream: true,
+      }),
+    }
+  );
 
   const reader = completion.body?.getReader();
 

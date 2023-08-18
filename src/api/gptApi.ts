@@ -2,7 +2,7 @@ import { useChatStore } from "@/stores/chatStore";
 const chatStore = useChatStore();
 
 const gptInstance = axios.create({
-  baseURL: "https://api.openai.com",
+  baseURL: "https://openai.wndbac.cn",
   timeout: 100000,
 });
 
@@ -42,4 +42,4 @@ export const createTranscriptionApi = (formData: any) => {
   });
 };
 
-export {};
+export { };

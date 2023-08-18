@@ -98,7 +98,7 @@ const sendMessage = () => {
 const createCompletion = async () => {
   try {
     const completion = await fetch(
-      "https://api.openai.com/v1/chat/completions",
+      "https://openai.wndbac.cn/v1/chat/completions",
       {
         headers: {
           "Content-Type": "application/json",
@@ -108,6 +108,7 @@ const createCompletion = async () => {
         body: JSON.stringify({
           messages: requestMessages.value,
           model: "gpt-3.5-turbo-0613",
+
           // stream: true,
         }),
       }
