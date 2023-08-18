@@ -14,6 +14,11 @@ const props = defineProps<Props>();
 
 const config = ref<Chat.GptConfig>({
   model: "gpt-3.5-turbo-0613",
+  temperature: 0.5,
+  max_tokens: 2000,
+  presence_penalty: 0,
+  frequency_penalty: 0,
+  history_number: 6,
   prompt: "",
   role: "",
   proxy: "",
@@ -81,7 +86,43 @@ const handleSave = () => {
             </div>
           </v-col>
         </v-row>
-        <!-- Rate -->
+        <!-- Emotion -->
+        <v-row class="align-center mb-3">
+          <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
+            <v-label class="font-weight-bold text-grey-darken-2"
+              >最大token</v-label
+            >
+          </v-col>
+          <v-col cols="12" sm="10">
+            <v-text-field
+              type="number"
+              v-model="config.max_tokens"
+              hide-details
+              density="compact"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <!-- 历史消息数 -->
+        <v-row class="align-center">
+          <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
+            <v-label class="font-weight-bold text-grey-darken-2"
+              >历史消息数</v-label
+            >
+          </v-col>
+          <v-col cols="12" sm="10">
+            <v-slider
+              color="primary"
+              v-model="config.history_number"
+              thumb-label="always"
+              :min="0"
+              :max="64"
+              :step="1"
+              hide-details
+            ></v-slider>
+          </v-col>
+        </v-row>
+        <!-- 自由度 -->
         <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
             <v-label class="font-weight-bold text-grey-darken-2"
@@ -91,20 +132,59 @@ const handleSave = () => {
           <v-col cols="12" sm="10">
             <v-slider
               color="primary"
-              value="1.0"
+              v-model="config.temperature"
               thumb-label="always"
-              :min="0.1"
-              :max="2"
+              :min="0"
+              :max="1"
+              :step="0.1"
+              hide-details
+            ></v-slider>
+          </v-col>
+        </v-row>
+        <!-- 话题新鲜度 -->
+        <v-row class="align-center">
+          <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
+            <v-label class="font-weight-bold text-grey-darken-2"
+              >话题新鲜度</v-label
+            >
+          </v-col>
+          <v-col cols="12" sm="10">
+            <v-slider
+              color="primary"
+              thumb-label="always"
+              v-model="config.presence_penalty"
+              :min="-2.0"
+              :max="2.0"
               :step="0.1"
               hide-details
             ></v-slider>
           </v-col>
         </v-row>
 
-        <!-- Emotion -->
+        <!-- 频率惩罚度 -->
+        <v-row class="align-center">
+          <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
+            <v-label class="font-weight-bold text-grey-darken-2"
+              >频率惩罚度</v-label
+            >
+          </v-col>
+          <v-col cols="12" sm="10">
+            <v-slider
+              color="primary"
+              thumb-label="always"
+              v-model="config.frequency_penalty"
+              :min="-2.0"
+              :max="2.0"
+              :step="0.1"
+              hide-details
+            ></v-slider>
+          </v-col>
+        </v-row>
+
+        <!-- 角色 -->
         <v-row class="align-center mb-3">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
-            <v-label class="font-weight-bold text-grey-darken-2">风格</v-label>
+            <v-label class="font-weight-bold text-grey-darken-2">角色</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-select

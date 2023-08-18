@@ -28,7 +28,18 @@ declare namespace Chat {
     }
 
     type GptConfig = {
+        // 模型
         model: string;
+        // 随机性
+        temperature: number;
+        // 最大token
+        max_tokens: number;
+        // 话题新鲜度
+        presence_penalty?: number
+        // 频率惩罚度
+        frequency_penalty?: number;
+        // 历史消息数
+        history_number?: number;
         prompt: string;
         role: string;
         proxy: string;
