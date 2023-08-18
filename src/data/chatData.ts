@@ -11,7 +11,7 @@ export const consultantData: Chat.Chat[] = [
             isMenuDeleteConfirm: false
         },
         gptConfig: {
-            model: "gpt-3.5-turbo",
+            model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "法律顾问",
             proxy: ""
@@ -29,7 +29,7 @@ export const consultantData: Chat.Chat[] = [
             isMenuDeleteConfirm: false
         },
         gptConfig: {
-            model: "gpt-3.5-turbo",
+            model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "会计顾问",
             proxy: ""
@@ -47,7 +47,7 @@ export const consultantData: Chat.Chat[] = [
             isMenuDeleteConfirm: false
         },
         gptConfig: {
-            model: "gpt-3.5-turbo",
+            model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "学习顾问",
             proxy: ""
@@ -65,7 +65,7 @@ export const consultantData: Chat.Chat[] = [
             isMenuDeleteConfirm: false
         },
         gptConfig: {
-            model: "gpt-3.5-turbo",
+            model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "职业顾问",
             proxy: ""
@@ -83,7 +83,7 @@ export const consultantData: Chat.Chat[] = [
             isMenuDeleteConfirm: false
         },
         gptConfig: {
-            model: "gpt-3.5-turbo",
+            model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "医疗顾问",
             proxy: ""
@@ -101,7 +101,7 @@ export const consultantData: Chat.Chat[] = [
             isMenuDeleteConfirm: false
         },
         gptConfig: {
-            model: "gpt-3.5-turbo",
+            model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "心理医生",
             proxy: ""

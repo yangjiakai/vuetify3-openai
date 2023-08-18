@@ -116,7 +116,7 @@ const createCompletion = async () => {
         method: "POST",
         body: JSON.stringify({
           messages: requestMessages.value,
-          model: "gpt-3.5-turbo",
+          model: "gpt-3.5-turbo-0613",
           stream: true,
         }),
       }

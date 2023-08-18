@@ -48,7 +48,7 @@ export const useChatHistoryStore = defineStore({
                 },
 
                 gptConfig: {
-                    model: "gpt-3.5-turbo",
+                    model: "gpt-3.5-turbo-0613",
                     prompt: "",
                     role: "",
                     proxy: ""

@@ -13,7 +13,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const config = ref<Chat.GptConfig>({
-  model: "gpt-3.5-turbo",
+  model: "gpt-3.5-turbo-0613",
   prompt: "",
   role: "",
   proxy: "",
@@ -63,10 +63,12 @@ const handleSave = () => {
               class="flex ml-2 bg-grey-lighten-3 pa-2 rounded"
             >
               <v-btn
-                :variant="config?.model === 'gpt-3.5-turbo' ? 'flat' : 'text'"
+                :variant="
+                  config?.model === 'gpt-3.5-turbo-0613' ? 'flat' : 'text'
+                "
                 color="primary"
                 class="flex-fill mr-3"
-                @click="config.model = 'gpt-3.5-turbo'"
+                @click="config.model = 'gpt-3.5-turbo-0613'"
                 >GPT-3.5</v-btn
               >
               <v-btn
