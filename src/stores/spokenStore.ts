@@ -58,11 +58,13 @@ export const useSpokenStore = defineStore({
 
             this.spokenChatList.unshift(newChat);
             this.activeChatMenuId = chatId;
+
             router.push(`/spoken/${chatId}`);
         },
 
         // 删除聊天菜单
         deleteMenu(chatId: Chat.Id) {
+
             // 删除聊天菜单
             this.spokenChatList = this.spokenChatList.filter((chat: Chat.SpokenChat) => chat.chatId !== chatId) as Chat.SpokenChat[];
 
