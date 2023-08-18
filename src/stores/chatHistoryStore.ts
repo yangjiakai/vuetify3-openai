@@ -51,7 +51,12 @@ export const useChatHistoryStore = defineStore({
                     model: "gpt-3.5-turbo-0613",
                     prompt: "",
                     role: "",
-                    proxy: ""
+                    proxy: "",
+                    temperature: 0.5,
+                    max_tokens: 2000,
+                    presence_penalty: 0,
+                    frequency_penalty: 0,
+                    history_number: 6,
                 },
 
                 messages: [],
@@ -70,7 +75,8 @@ export const useChatHistoryStore = defineStore({
             if (this.chatList.length > 0) {
                 // 如果删除的是当前激活的聊天菜单，则激活第一个聊天菜单
                 const newActiveChat = this.chatList[0];
-                this.setActiveChatMenu(newActiveChat.chatId);
+                this.activeChatMenuId = newActiveChat.chatId;
+
             } else {
                 // 如果没有剩余聊天菜单，则添加一个新的
                 this.addChat(1);

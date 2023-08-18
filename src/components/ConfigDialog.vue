@@ -5,14 +5,16 @@
 -->
 <script setup lang="ts">
 import { useAppStore } from "@/stores/appStore";
+import promptsZh from "@/data/prompts-zh.json";
+
 const appStore = useAppStore();
 interface Props {
-  config?: Chat.GptConfig;
+  config: Chat.GptConfig;
 }
 
 const props = defineProps<Props>();
-
-const config = ref<Chat.GptConfig>({
+// const defaultConfig = ref<Chat.GptConfig>();
+const currentConfig = ref<Chat.GptConfig>({
   model: "gpt-3.5-turbo-0613",
   temperature: 0.5,
   max_tokens: 2000,
@@ -23,24 +25,23 @@ const config = ref<Chat.GptConfig>({
   role: "",
   proxy: "",
 });
-const dialog = ref(false);
 
 watch(
   () => props.config,
   () => {
     if (props.config) {
-      config.value = props.config;
+      currentConfig.value = { ...props.config };
     }
   }
 );
 
 const handleCancel = () => {
-  dialog.value = false;
+  currentConfig.value = { ...props.config };
+  appStore.toggleConfigDialog();
 };
 
 const handleSave = () => {
   //   appStore.setConfig(config.value);
-  dialog.value = false;
 };
 </script>
 
@@ -69,18 +70,20 @@ const handleSave = () => {
             >
               <v-btn
                 :variant="
-                  config?.model === 'gpt-3.5-turbo-0613' ? 'flat' : 'text'
+                  currentConfig?.model === 'gpt-3.5-turbo-0613'
+                    ? 'flat'
+                    : 'text'
                 "
                 color="primary"
                 class="flex-fill mr-3"
-                @click="config.model = 'gpt-3.5-turbo-0613'"
+                @click="currentConfig.model = 'gpt-3.5-turbo-0613'"
                 >GPT-3.5</v-btn
               >
               <v-btn
-                :variant="config?.model === 'gpt-4' ? 'flat' : 'text'"
+                :variant="currentConfig?.model === 'gpt-4' ? 'flat' : 'text'"
                 color="primary"
                 class="flex-fill"
-                @click="config.model = 'gpt-4'"
+                @click="currentConfig.model = 'gpt-4'"
                 >GPT-4.0</v-btn
               >
             </div>
@@ -96,7 +99,9 @@ const handleSave = () => {
           <v-col cols="12" sm="10">
             <v-text-field
               type="number"
-              v-model="config.max_tokens"
+              variant="outlined"
+              color="primary"
+              v-model="currentConfig.max_tokens"
               hide-details
               density="compact"
             ></v-text-field>
@@ -113,7 +118,7 @@ const handleSave = () => {
           <v-col cols="12" sm="10">
             <v-slider
               color="primary"
-              v-model="config.history_number"
+              v-model="currentConfig.history_number"
               thumb-label="always"
               :min="0"
               :max="64"
@@ -132,7 +137,7 @@ const handleSave = () => {
           <v-col cols="12" sm="10">
             <v-slider
               color="primary"
-              v-model="config.temperature"
+              v-model="currentConfig.temperature"
               thumb-label="always"
               :min="0"
               :max="1"
@@ -152,7 +157,7 @@ const handleSave = () => {
             <v-slider
               color="primary"
               thumb-label="always"
-              v-model="config.presence_penalty"
+              v-model="currentConfig.presence_penalty"
               :min="-2.0"
               :max="2.0"
               :step="0.1"
@@ -172,7 +177,7 @@ const handleSave = () => {
             <v-slider
               color="primary"
               thumb-label="always"
-              v-model="config.frequency_penalty"
+              v-model="currentConfig.frequency_penalty"
               :min="-2.0"
               :max="2.0"
               :step="0.1"
@@ -190,8 +195,12 @@ const handleSave = () => {
             <v-select
               color="primary"
               variant="outlined"
+              v-model="currentConfig.role"
               hide-details
               density="compact"
+              :items="promptsZh"
+              item-title="act"
+              item-value="prompt"
             ></v-select>
           </v-col>
         </v-row>

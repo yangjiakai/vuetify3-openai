@@ -31,6 +31,7 @@ export const useSpokenStore = defineStore({
         addChat(chatId: Chat.Id, voiceConfig: Chat.VoiceConfig, title?: string,) {
             const newChat: Chat.SpokenChat = {
                 chatId: chatId,
+                chatType: "spoken",
                 menuConfig: {
                     menuTitle: title || `New Chat`,
                     isMenuEdit: false,
@@ -42,7 +43,12 @@ export const useSpokenStore = defineStore({
                     model: "gpt-3.5-turbo-0613",
                     prompt: "",
                     role: "",
-                    proxy: ""
+                    proxy: "",
+                    temperature: 0.5,
+                    max_tokens: 2000,
+                    presence_penalty: 0,
+                    frequency_penalty: 0,
+                    history_number: 6,
                 },
                 voiceConfig: {
                     ...voiceConfig

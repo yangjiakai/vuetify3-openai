@@ -14,7 +14,12 @@ export const consultantData: Chat.Chat[] = [
             model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "法律顾问",
-            proxy: ""
+            proxy: "",
+            temperature: 0.5,
+            max_tokens: 2000,
+            presence_penalty: 0,
+            frequency_penalty: 0,
+            history_number: 6,
         },
         messages: []
     },
@@ -32,7 +37,13 @@ export const consultantData: Chat.Chat[] = [
             model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "会计顾问",
-            proxy: ""
+            proxy: "",
+            temperature: 0.5,
+            max_tokens: 2000,
+            presence_penalty: 0,
+            frequency_penalty: 0,
+            history_number: 6,
+
         },
         messages: []
     },
@@ -50,7 +61,12 @@ export const consultantData: Chat.Chat[] = [
             model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "学习顾问",
-            proxy: ""
+            proxy: "",
+            temperature: 0.5,
+            max_tokens: 2000,
+            presence_penalty: 0,
+            frequency_penalty: 0,
+            history_number: 6,
         },
         messages: []
     },
@@ -68,7 +84,12 @@ export const consultantData: Chat.Chat[] = [
             model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "职业顾问",
-            proxy: ""
+            proxy: "",
+            temperature: 0.5,
+            max_tokens: 2000,
+            presence_penalty: 0,
+            frequency_penalty: 0,
+            history_number: 6,
         },
         messages: []
     },
@@ -86,7 +107,12 @@ export const consultantData: Chat.Chat[] = [
             model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "医疗顾问",
-            proxy: ""
+            proxy: "",
+            temperature: 0.5,
+            max_tokens: 2000,
+            presence_penalty: 0,
+            frequency_penalty: 0,
+            history_number: 6,
         },
         messages: []
     },
@@ -104,7 +130,12 @@ export const consultantData: Chat.Chat[] = [
             model: "gpt-3.5-turbo-0613",
             prompt: "",
             role: "心理医生",
-            proxy: ""
+            proxy: "",
+            temperature: 0.5,
+            max_tokens: 2000,
+            presence_penalty: 0,
+            frequency_penalty: 0,
+            history_number: 6,
         },
         messages: []
     }
