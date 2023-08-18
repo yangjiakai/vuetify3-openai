@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue";
 import { useDisplay } from "vuetify";
 import { login } from "@/api/auth";
 import { useAuthStore } from "@/stores/authStore";
@@ -7,14 +6,12 @@ const router = useRouter();
 const authStore = useAuthStore();
 const { mdAndUp } = useDisplay();
 
-const username = ref("");
-
 // sign in buttons
 const isLoading = ref(false);
 const isLoginDisabled = ref(false);
 const refLoginForm = ref();
 const isFormValid = ref(true);
-const email = ref("");
+
 const phone = ref("");
 const password = ref("");
 
@@ -85,15 +82,17 @@ const resetErrors = () => {
 <template>
   <div class="h-100 d-flex align-center justify-center flex-column">
     <v-card
-      :width="mdAndUp ? 500 : '90%'"
+      :width="mdAndUp ? 400 : '90%'"
       color="white"
       class="pa-3 ma-3"
       elevation="3"
     >
-      <v-card-title primary-title class="my-4 text-h4">
-        <span class="flex-fill text-center"> 帐号登录 </span>
+      <v-card-title class="my-4 text-h5">
+        <span class="flex-fill text-center font-weight-bold text-grey-darken-2">
+          智子星球
+        </span>
       </v-card-title>
-      <!-- <v-card-subtitle>Let's build amazing products</v-card-subtitle> -->
+      <v-card-subtitle class="text-center"></v-card-subtitle>
       <!-- sign in form -->
 
       <v-card-text>
@@ -144,7 +143,7 @@ const resetErrors = () => {
             :loading="isLoading"
             :disabled="isLoginDisabled"
             block
-            size="x-large"
+            size="large"
             color="primary"
             @click="handleLogin"
             class="mt-2"
@@ -183,7 +182,7 @@ const resetErrors = () => {
             {{ errorProviderMessages }}
           </div>
 
-          <div class="my-5 text-center">
+          <div class="my-5 text-center text-caption">
             统一条款
             <br />
             <router-link class="text-primary" to=""> 服务条款</router-link>
@@ -195,7 +194,7 @@ const resetErrors = () => {
     </v-card>
     <div class="text-center mt-6">
       已经有帐号了？
-      <router-link to="/auth/signin" class="text-primary font-weight-bold">
+      <router-link to="" class="text-primary font-weight-bold">
         登录
       </router-link>
     </div>
