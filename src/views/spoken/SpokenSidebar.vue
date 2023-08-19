@@ -4,14 +4,14 @@
 * @Description: 
 -->
 <script setup lang="ts">
-import { useCustomizeThemeStore } from "@/stores/customizeTheme";
+import { useAppStore } from "@/stores/appStore";
 import { useSpokenStore } from "@/stores/spokenStore";
 import { Gender } from "~/src/enums";
 
 const spokenStore = useSpokenStore();
 const router = useRouter();
-const customizeTheme = useCustomizeThemeStore();
 
+const appStore = useAppStore();
 const chatMenus = computed(() => {
   return spokenStore.spokenChatList.map((chat: Chat.SpokenChat) => {
     return {
@@ -83,7 +83,7 @@ watch(
 </script>
 
 <template>
-  <v-navigation-drawer v-model="customizeTheme.subSidebar" width="240">
+  <v-navigation-drawer v-model="appStore.mainSidebar" width="240">
     <!-- ---------------------------------------------- -->
     <!---Nav List -->
     <!-- ---------------------------------------------- -->

@@ -4,12 +4,11 @@
 * @Description: 
 -->
 <script setup lang="ts">
-import { useCustomizeThemeStore } from "@/stores/customizeTheme";
+import { useAppStore } from "@/stores/appStore";
 import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 const chatHistoryStore = useChatHistoryStore();
 const router = useRouter();
-const customizeTheme = useCustomizeThemeStore();
-
+const appStore = useAppStore();
 const chatMenus = computed(() => {
   console.log(
     "chatHistoryStore.consultantList",
@@ -35,7 +34,7 @@ const navigateTo = (id) => {
 </script>
 
 <template>
-  <v-navigation-drawer v-model="customizeTheme.subSidebar" width="240">
+  <v-navigation-drawer v-model="appStore.mainSidebar" width="240">
     <!-- ---------------------------------------------- -->
     <!---Nav List -->
     <!-- ---------------------------------------------- -->
