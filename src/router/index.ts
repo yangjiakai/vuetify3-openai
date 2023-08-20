@@ -139,6 +139,12 @@ export const routes = [
     name: "Register",
     component: () => import("@/views/Register.vue"),
   },
+  // text
+  {
+    path: "/test",
+    name: "Test",
+    component: () => import("@/views/TestPage.vue"),
+  },
 ];
 
 const router = createRouter({
