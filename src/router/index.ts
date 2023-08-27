@@ -96,6 +96,13 @@ export const routes = [
         component: () => import("@/views/collection/CollectionPage.vue"),
         meta: { requiresAuth: true },
       },
+      // 文章分析
+      {
+        path: "/article",
+        name: "article",
+        component: () => import("@/views/article/ArticlePage.vue"),
+        meta: { requiresAuth: true },
+      },
 
       // this page is sample page for layout
       {

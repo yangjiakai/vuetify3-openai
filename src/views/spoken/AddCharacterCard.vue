@@ -50,6 +50,8 @@ const speakTest = (voice) => {
     voiceName: voice.modelName,
     localName: voice.localName,
   };
+  console.log(config);
+
   const text = getTestText(voice.locale);
 
   speechStore.ssmlToSpeech(text, config, "test");

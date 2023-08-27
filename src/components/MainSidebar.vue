@@ -52,6 +52,11 @@ const menus = [
     icon: "mdi-text-box-edit",
     url: "/collection",
   },
+  {
+    title: "文章分析",
+    icon: "mdi-text-box-edit",
+    url: "/article",
+  },
 ];
 
 const naviagteTo = (url: string) => {
