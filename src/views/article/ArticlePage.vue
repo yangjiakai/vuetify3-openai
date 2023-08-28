@@ -14,7 +14,7 @@ const sourceArticle = ref(`
 `);
 const targetArticle = ref<string[]>([]);
 const transferArtile = (text: string) => {
-  return text.split(/[。？！：\n]/).filter((item) => item !== "");
+  return text.split(/[。？！：\n]/).filter((item) => item.trim() !== "");
 };
 
 const speakTest = (text) => {
