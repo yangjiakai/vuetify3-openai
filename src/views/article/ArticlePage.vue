@@ -84,10 +84,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .content {
-  height: 95vh;
+  height: calc(100vh - 30px);
 }
 
 .message-container {
-  height: 100%;
+  height: calc(100vh - 100px);
 }
 </style>
