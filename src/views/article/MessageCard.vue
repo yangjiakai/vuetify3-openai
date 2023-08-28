@@ -21,8 +21,8 @@ const speakTest = (text) => {
     voiceRate: 1.1,
     gender: Gender.Woman,
     language: "ja-JP",
-    voiceName: "ja-JP-NanamiNeural",
-    localName: "七海",
+    voiceName: "ja-JP-MayuNeural",
+    localName: "真夕",
   };
 
   speechStore.ssmlToSpeech(text, config, "test");
@@ -89,7 +89,7 @@ const translation = async () => {
       <v-spacer></v-spacer>
 
       <v-btn
-        class="mr-2"
+        class="ml-1 mr-2"
         color="grey-lighten-1"
         variant="text"
         @click.stop="translation"
