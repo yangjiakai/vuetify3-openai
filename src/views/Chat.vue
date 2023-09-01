@@ -263,7 +263,11 @@ watch(
           icon
           @click="appStore.toggleConfigDialog"
         >
-          <v-icon size="30" class="text-primary">mdi-cog-outline</v-icon>
+          <Icon
+            class="text-primary"
+            width="30"
+            icon="solar:settings-line-duotone"
+          />
           <v-tooltip
             activator="parent"
             location="top"
@@ -280,7 +284,7 @@ watch(
           <Icon
             class="text-primary"
             width="30"
-            icon="ant-design:clear-outlined"
+            icon="solar:notification-lines-remove-line-duotone"
           />
           <v-tooltip
             activator="parent"
@@ -307,7 +311,11 @@ watch(
         </v-textarea>
 
         <v-btn class="mb-1" color="primary" variant="elevated" icon>
-          <v-icon size="24" @click="sendMessage">mdi-send</v-icon>
+          <Icon
+            width="26"
+            icon="solar:plain-bold-duotone"
+            @click="sendMessage"
+          />
         </v-btn>
       </v-sheet>
       <ConfigDialog v-if="chatInfo?.gptConfig" :config="chatInfo?.gptConfig" />

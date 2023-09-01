@@ -9,6 +9,7 @@ import { useSpokenStore } from "@/stores/spokenStore";
 import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 import { useAppStore } from "@/stores/appStore";
 import ContactUsCard from "@/components/ContactUsCard.vue";
+import { Icon } from "@iconify/vue";
 const appStore = useAppStore();
 const authStore = useAuthStore();
 const spokenStore = useSpokenStore();
@@ -29,32 +30,33 @@ const contactUsDialogShow = ref(false);
 const menus = [
   {
     title: "GPT",
-    icon: "mdi-chat-processing-outline",
+    icon: "solar:face-scan-circle-line-duotone",
+
     url: "/chat",
   },
   {
     title: "创作中心",
-    icon: "mdi-notebook",
+    icon: "solar:bookmark-opened-line-duotone",
     url: "/creation",
   },
   {
     title: "咨询顾问",
-    icon: "mdi-chat-question",
+    icon: "solar:chat-square-check-line-duotone",
     url: "/consultant",
   },
   {
     title: "口语交流",
-    icon: "mdi-account-voice",
+    icon: "solar:dialog-2-line-duotone",
     url: "/spoken",
   },
   {
     title: "语句收藏",
-    icon: "mdi-text-box-edit",
+    icon: "solar:book-bookmark-minimalistic-line-duotone",
     url: "/collection",
   },
   {
     title: "文章分析",
-    icon: "mdi-text-box-edit",
+    icon: "solar:infinity-line-duotone",
     url: "/article",
   },
 ];
@@ -98,7 +100,7 @@ const naviagteTo = (url: string) => {
         "
       >
         <div class="text-center">
-          <v-icon size="26">{{ item.icon }}</v-icon>
+          <Icon class="mx-auto" width="26" :icon="item.icon" />
         </div>
         <div class="title">
           {{ item.title }}
@@ -122,7 +124,11 @@ const naviagteTo = (url: string) => {
         >
           <div>
             <div class="text-center">
-              <v-icon size="26">mdi-wechat</v-icon>
+              <Icon
+                class="mx-auto"
+                width="26"
+                icon="solar:link-square-line-duotone"
+              />
             </div>
 
             <div class="title">联系我们</div>
@@ -138,7 +144,11 @@ const naviagteTo = (url: string) => {
         >
           <div>
             <div class="text-center">
-              <v-icon size="26">mdi-logout</v-icon>
+              <Icon
+                class="mx-auto"
+                width="26"
+                icon="solar:logout-3-line-duotone"
+              />
             </div>
 
             <div class="title">退出登录</div>

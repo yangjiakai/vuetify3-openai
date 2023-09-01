@@ -8,7 +8,7 @@ import { useSnackbarStore } from "@/stores/snackbarStore";
 import { useSpokenStore } from "@/stores/spokenStore";
 import { useSpeechStore } from "@/stores/speechStore";
 import SidebarToggle from "@/components/SidebarToggle.vue";
-
+import { Icon } from "@iconify/vue";
 import SpokenMessageCard from "./SpokenMessageCard.vue";
 
 import { scrollToBottom, getLanguageName } from "@/utils/common";
@@ -297,7 +297,11 @@ const stopRecording = () => {
             color="#6746F5"
             icon
           >
-            <v-icon size="40" color="white">mdi-microphone</v-icon>
+            <Icon
+              color="white"
+              icon="solar:microphone-bold-duotone"
+              width="40"
+            />
           </v-btn>
           <Vue3Lottie
             @click="stopRecording"
