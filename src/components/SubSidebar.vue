@@ -105,9 +105,10 @@ watch(
             density="compact"
             rounded="xl"
             @blur="editCancel(chatMenu.chatId)"
+            active-class="active-nav"
           >
             <template v-slot:prepend>
-              <v-icon>
+              <v-icon class="mr-3">
                 {{ chatMenu.icon }}
               </v-icon>
             </template>

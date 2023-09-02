@@ -53,17 +53,9 @@ const navigateTo = (id) => {
             rounded="xl"
           >
             <template v-slot:prepend>
-              <v-avatar size="avatarSize">
-                <v-icon
-                  :color="
-                    chatMenu.chatId === chatHistoryStore.activeChatMenuId
-                      ? 'primary'
-                      : ''
-                  "
-                >
-                  {{ chatMenu.icon }}
-                </v-icon>
-              </v-avatar>
+              <v-icon class="mr-3">
+                {{ chatMenu.icon }}
+              </v-icon>
             </template>
 
             <v-list-item-title class="font-weight-black">

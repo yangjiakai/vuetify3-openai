@@ -115,17 +115,9 @@ watch(
             @blur="editCancel(chatMenu.chatId)"
           >
             <template v-slot:prepend>
-              <v-avatar size="avatarSize">
-                <v-icon
-                  :color="
-                    chatMenu.chatId === spokenStore.activeChatMenuId
-                      ? 'primary'
-                      : ''
-                  "
-                >
-                  {{ chatMenu.icon }}
-                </v-icon>
-              </v-avatar>
+              <v-icon class="mr-3">
+                {{ chatMenu.icon }}
+              </v-icon>
             </template>
             <v-list-item-title v-if="chatMenu.isMenuEdit">
               <input
