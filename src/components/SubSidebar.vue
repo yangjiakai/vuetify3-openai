@@ -102,23 +102,14 @@ watch(
             :key="chatMenu.chatId"
             :to="chatMenu.url"
             @click="navigateTo(chatMenu.chatId)"
-            active-class="active-nav"
             density="compact"
             rounded="xl"
             @blur="editCancel(chatMenu.chatId)"
           >
             <template v-slot:prepend>
-              <v-avatar size="avatarSize">
-                <v-icon
-                  :color="
-                    chatMenu.chatId === chatHistoryStore.activeChatMenuId
-                      ? 'primary'
-                      : ''
-                  "
-                >
-                  {{ chatMenu.icon }}
-                </v-icon>
-              </v-avatar>
+              <v-icon>
+                {{ chatMenu.icon }}
+              </v-icon>
             </template>
             <v-list-item-title v-if="chatMenu.isMenuEdit">
               <input
