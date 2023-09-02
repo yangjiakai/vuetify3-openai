@@ -64,17 +64,11 @@ export const useSpokenStore = defineStore({
 
         // 删除聊天菜单
         deleteMenu(chatId: Chat.Id) {
-
             // 删除聊天菜单
             this.spokenChatList = this.spokenChatList.filter((chat: Chat.SpokenChat) => chat.chatId !== chatId) as Chat.SpokenChat[];
-
-            if (this.spokenChatList.length > 0) {
-                // 如果删除的是当前激活的聊天菜单，则激活第一个聊天菜单
-                const newActiveChat = this.spokenChatList[0];
-                this.setActiveChatMenu(newActiveChat.chatId);
-            } else {
-                // 如果没有剩余聊天菜单，则添加一个新的
-                this.addChat(1);
+            if (this.spokenChatList.length === 0) {
+                this.activeChatMenuId = 0;
+                this.lastPageId = 0;
             }
         },
 

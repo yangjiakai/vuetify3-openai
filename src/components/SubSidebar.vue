@@ -60,6 +60,15 @@ const handleDelete = (id) => {
 // 确认删除当前菜单
 const deleteConfirm = (id) => {
   chatHistoryStore.deleteMenu(id);
+  router.push({
+    name: "chat-home",
+  });
+};
+
+const toHome = () => {
+  router.push({
+    name: "chat-home",
+  });
 };
 
 // 取消更新菜单标题
@@ -199,7 +208,7 @@ watch(
                 <v-btn
                   color="grey-lighten-1"
                   variant="text"
-                  @click="deleteConfirm(chatMenu.chatId)"
+                  @click.stop.prevent="deleteConfirm(chatMenu.chatId)"
                   size="20"
                 >
                   <template v-slot:prepend>

@@ -19,7 +19,13 @@ export const routes = [
         children: [
           {
             path: "", // 空路径，对应父路由的默认子路由
-            redirect: "chat/1", // 跳转到第一个子路由
+            redirect: "home", // 跳转到home路由
+          },
+          // chat-home
+          {
+            path: "home",
+            name: "chat-home",
+            component: () => import("@/views/ChatHome.vue"),
           },
           {
             path: ":id",
@@ -55,7 +61,13 @@ export const routes = [
         children: [
           {
             path: "", // 空路径，对应父路由的默认子路由
-            redirect: "/consultant/1", // 跳转到第一个子路由
+            redirect: "/consultant/home", // 跳转到home路由
+          },
+          // consultant-home
+          {
+            path: "home",
+            name: "consultant-home",
+            component: () => import("@/views/consultant/ConsultantHome.vue"),
           },
           {
             path: ":id",
@@ -74,13 +86,13 @@ export const routes = [
         children: [
           {
             path: "", // 空路径，对应父路由的默认子路由
-            redirect: "spoken/1", // 跳转到第一个子路由
+            redirect: "spoken/home", // 跳转到第一个子路由
           },
-          // {
-          //   path: "home",
-          //   name: "spoken-home",
-          //   component: () => import("@/views/spoken/SpokenHome.vue"),
-          // },
+          {
+            path: "home",
+            name: "spoken-home",
+            component: () => import("@/views/spoken/SpokenHome.vue"),
+          },
           {
             path: ":id",
             component: () => import("@/views/spoken/SpokenChat.vue"),
@@ -180,23 +192,23 @@ router.beforeEach((to, from, next) => {
 });
 
 const saveLastPageId = (to: any, from: any) => {
-
   const spokenStore = useSpokenStore();
   const chatHistoryStore = useChatHistoryStore();
   const fromPath = from.path;
   const toPath = to.path;
+
   // 如果从spoken页面跳转到其他页面，记录最后的spoken页面id
   if (fromPath.startsWith("/spoken/") && !toPath.startsWith("/spoken/")) {
     const spokenId = from.params.id;
-    spokenStore.lastPageId = spokenId;
+    spokenStore.lastPageId = spokenId ? spokenId : 0;
     // 如果从chat页面跳转到其他页面，记录最后的chat页面id
   } else if (fromPath.startsWith("/chat/") && !toPath.startsWith("/chat/")) {
     const chatId = from.params.id;
-    chatHistoryStore.updateLastPageId(chatId);
+    chatHistoryStore.updateLastPageId(chatId ? chatId : 0);
     // 如果从consultant页面跳转到其他页面，记录最后的consultant页面id
   } else if (fromPath.startsWith("/consultant/") && !toPath.startsWith("/consultant/")) {
     const chatId = from.params.id;
-    chatHistoryStore.updateLastConsultPageId(chatId);
+    chatHistoryStore.updateLastConsultPageId(chatId ? chatId : 0);
   } else {
   }
 };

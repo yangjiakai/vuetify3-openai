@@ -9,11 +9,11 @@ export const useChatHistoryStore = defineStore({
 
     state: () => ({
         // 最后离开的页面id
-        lastPageId: 1,
+        lastPageId: 0,
         // 咨询顾问最后离开页面
         lastConsultPageId: 1,
         // 当前激活的聊天菜单id
-        activeChatMenuId: 1,
+        activeChatMenuId: 0,
         // 聊天列表
         chatList: [
             ...consultantData,
@@ -69,14 +69,9 @@ export const useChatHistoryStore = defineStore({
             // 删除聊天菜单
             this.chatList = this.chatList.filter((chat: Chat.Chat) => chat.chatId !== chatId) as Chat.Chat[];
 
-            if (this.chatList.length > 0) {
-                // 如果删除的是当前激活的聊天菜单，则激活第一个聊天菜单
-                const newActiveChat = this.chatList[0];
-                this.activeChatMenuId = newActiveChat.chatId;
-
-            } else {
-                // 如果没有剩余聊天菜单，则添加一个新的
-                this.addChat(1);
+            if (this.chatList.length === 0) {
+                this.activeChatMenuId = 0;
+                this.lastPageId = 0;
             }
         },
 
