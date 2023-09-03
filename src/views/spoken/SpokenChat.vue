@@ -108,7 +108,7 @@ const createCompletion = async () => {
         body: JSON.stringify({
           messages: requestMessages.value,
           model: "gpt-3.5-turbo-0613",
-
+          max_tokens: 100,
           // stream: true,
         }),
       }
@@ -183,7 +183,7 @@ const startRecording = async () => {
     const text = await speechStore.speechToText({
       language: voiceConfig.value.language,
     });
-    console.log("Recognized Text:", text);
+
     userMessage.value = text;
     sendMessage();
   } catch (error) {

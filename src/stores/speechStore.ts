@@ -117,8 +117,12 @@ export const useSpeechStore = defineStore({
         // 文本转语音
         async ssmlToSpeech(text: string, voiceConfig: Chat.VoiceConfig, speakMode?: string, messageId?: Chat.Id) {
 
+
+
+            this.stopTextToSpeech();
+
             const spokenStore = useSpokenStore();
-            console.log("voiceConfig", voiceConfig);
+
 
             // 语音服务配置
             const speechConfig = SpeechConfig.fromSubscription(this.subscriptionKey, this.region);
@@ -144,6 +148,7 @@ export const useSpeechStore = defineStore({
             };
 
             const audioConfig = AudioConfig.fromSpeakerOutput(player);
+
 
             // 创建语音合成器
             this.synthesizer = new SpeechSynthesizer(speechConfig, audioConfig);
@@ -199,6 +204,9 @@ export const useSpeechStore = defineStore({
             const synthesizer = new SpeechSynthesizer(speechConfig);
             const result = await synthesizer.getVoicesAsync();
             this.allVoices = result.voices;
-        }
+        },
+
+
+
     },
 })

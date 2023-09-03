@@ -30,14 +30,14 @@ const content = computed(() => {
   return props.message.messageBody.content;
 });
 
-const readMessage = () => {
+const readMessage = async () => {
   const config = {
     ...props.voiceConfig,
   };
 
   const text = formatForTTS(content.value);
 
-  speechStore.ssmlToSpeech(
+  await speechStore.ssmlToSpeech(
     text,
     config,
     ReadMode.Read,
@@ -172,7 +172,7 @@ const getDateTime = computed(() => {
                   v-else
                 >
                   <template v-slot:prepend>
-                    <Icon color="#705CF6" icon="svg-spinners:bars-scale-fade" />
+                    <Icon color="primary" icon="svg-spinners:bars-scale-fade" />
                   </template>
                 </v-btn>
 
@@ -185,7 +185,7 @@ const getDateTime = computed(() => {
                 >
                   <template v-slot:prepend>
                     <v-icon
-                      :color="isTranslating ? '#705CF6' : ''"
+                      :color="isTranslating ? 'primary' : ''"
                       class="tool-icon"
                       size="18"
                       >mdi-translate</v-icon
@@ -202,7 +202,7 @@ const getDateTime = computed(() => {
                 >
                   <template v-slot:prepend>
                     <v-icon
-                      :color="isCollected ? '#705CF6' : ''"
+                      :color="isCollected ? 'primary' : ''"
                       class="tool-icon"
                       size="18"
                       >{{
