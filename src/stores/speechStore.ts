@@ -117,10 +117,6 @@ export const useSpeechStore = defineStore({
         // 文本转语音
         async ssmlToSpeech(text: string, voiceConfig: Chat.VoiceConfig, speakMode?: string, messageId?: Chat.Id) {
 
-
-
-            this.stopTextToSpeech();
-
             const spokenStore = useSpokenStore();
 
 
