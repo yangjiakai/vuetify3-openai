@@ -7,7 +7,7 @@ export const routes = [
   {
     path: "/",
     name: "Home",
-    redirect: "/chat",
+    redirect: "/chat/home",
     component: () => import("@/layout/Layout.vue"),
     children: [
       // GPT
@@ -19,7 +19,7 @@ export const routes = [
         children: [
           {
             path: "", // 空路径，对应父路由的默认子路由
-            redirect: "home", // 跳转到home路由
+            redirect: "/home", // 跳转到home路由
           },
           // chat-home
           {
