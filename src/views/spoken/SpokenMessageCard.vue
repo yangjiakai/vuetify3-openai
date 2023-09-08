@@ -172,7 +172,10 @@ const getDateTime = computed(() => {
                   v-else
                 >
                   <template v-slot:prepend>
-                    <Icon color="primary" icon="svg-spinners:bars-scale-fade" />
+                    <Icon
+                      class="text-primary"
+                      icon="svg-spinners:bars-scale-fade"
+                    />
                   </template>
                 </v-btn>
 
