@@ -11,7 +11,11 @@ import SidebarToggle from "@/components/SidebarToggle.vue";
 import { Icon } from "@iconify/vue";
 import SpokenMessageCard from "./SpokenMessageCard.vue";
 
-import { scrollToBottom, getLanguageName } from "@/utils/common";
+import {
+  scrollToBottom,
+  getLanguageName,
+  getLanguageNameEn,
+} from "@/utils/common";
 import { formatForTTS, countAndCompleteCodeBlocks } from "@/utils/aiUtils";
 
 import { Vue3Lottie } from "vue3-lottie";
@@ -34,7 +38,15 @@ const voiceConfig = ref<Chat.VoiceConfig>({
 const promptMessage = computed(() => {
   return [
     {
-      content: "",
+      content: `I want you to act as a spoken ${getLanguageNameEn(
+        voiceConfig.value.language
+      )} teacher and improver. I will speak to you in ${getLanguageNameEn(
+        voiceConfig.value.language
+      )} and you will reply to me in ${getLanguageNameEn(
+        voiceConfig.value.language
+      )} to practice my spoken ${getLanguageNameEn(
+        voiceConfig.value.language
+      )}. I want you to keep your reply neat, limiting the reply to 100 words. I want you to strictly correct my grammar mistakes, typos, and factual errors. I want you to ask me a question in your reply. Now let's start practicing, you could ask me a question first. Remember, I want you to strictly correct my grammar mistakes, typos, and factual errors.`,
       role: "system",
     },
   ];
@@ -53,11 +65,11 @@ const requestMessages = computed(() => {
     };
   });
 
-  if (pureMessages.length <= 10) {
+  if (pureMessages.length <= 6) {
     return [...promptMessage.value, ...pureMessages];
   } else {
-    // 截取最新的10条信息
-    const slicedMessages = pureMessages.slice(-8);
+    // 截取最新的6条信息
+    const slicedMessages = pureMessages.slice(-4);
     return [...promptMessage.value, ...slicedMessages];
   }
 });
@@ -108,7 +120,8 @@ const createCompletion = async () => {
         body: JSON.stringify({
           messages: requestMessages.value,
           model: "gpt-3.5-turbo-0613",
-          max_tokens: 100,
+          // max_tokens: 100,
+
           // stream: true,
         }),
       }

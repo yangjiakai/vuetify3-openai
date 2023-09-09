@@ -90,3 +90,19 @@ export const getLanguageName = (language: string): string => {
             return "未选定";
     }
 }
+
+// 输入语言表示，输出语言英文
+export const getLanguageNameEn = (language: string): string => {
+    switch (language) {
+        case "zh-CN":
+            return "Chinese";
+        case "en-US":
+            return "English";
+        case "ja-JP":
+            return "Japanese";
+        case "ko-KR":
+            return "Korean";
+        default:
+            return "Not selected";
+    }
+}
