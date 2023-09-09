@@ -139,7 +139,7 @@ const getDateTime = computed(() => {
           <img src="@/assets/images/avatars/avatar_assistant.jpg" alt="alt" />
         </v-avatar>
         <div>
-          <v-card class="rounded-xl rounded-bs-0">
+          <v-card class="rounded-xl rounded-bs-0 mr-15">
             <div>
               <MdPreview :modelValue="props.message.messageBody.content" />
               <div

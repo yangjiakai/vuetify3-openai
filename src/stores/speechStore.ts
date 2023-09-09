@@ -51,6 +51,25 @@ export const useSpeechStore = defineStore({
 
     actions: {
 
+
+        synthesizeSpeech(synthesizer: SpeechSynthesizer, ssml: string) {
+            return new Promise((resolve, reject) => {
+                synthesizer.speakSsmlAsync(
+                    ssml,
+                    speechResult => {
+                        if (speechResult.reason === ResultReason.SynthesizingAudioCompleted) {
+                            resolve(speechResult);
+                        } else {
+                            reject(new Error(`Speech synthesis failed with reason: ${speechResult.reason}`));
+                        }
+                    },
+                    error => {
+                        reject(error);
+                    }
+                );
+            });
+        },
+
         // 语音转文字
         async speechToText(voiceConfig: any): Promise<string> {
             return new Promise((resolve, reject) => {
@@ -125,7 +144,7 @@ export const useSpeechStore = defineStore({
 
             speechConfig.speechSynthesisLanguage = voiceConfig?.language || this.speechSynthesisLanguage;
             speechConfig.speechSynthesisVoiceName = voiceConfig?.voiceName || this.speechSynthesisVoiceName;
-            speechConfig.speechSynthesisOutputFormat = SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3;
+
 
             // 配置监听语音的播放开始和结束
             const player = new SpeakerAudioDestination();
@@ -152,6 +171,9 @@ export const useSpeechStore = defineStore({
             // 构建语音合成的ssml
             const ssml = this.buildSSML(text, voiceConfig);
 
+
+
+
             // 开始语音合成
             try {
                 const result = await this.synthesizeSpeech(this.synthesizer, ssml);
@@ -177,23 +199,6 @@ export const useSpeechStore = defineStore({
         },
 
 
-        synthesizeSpeech(synthesizer: SpeechSynthesizer, ssml: string) {
-            return new Promise((resolve, reject) => {
-                synthesizer.speakSsmlAsync(
-                    ssml,
-                    speechResult => {
-                        if (speechResult.reason === ResultReason.SynthesizingAudioCompleted) {
-                            resolve(speechResult);
-                        } else {
-                            reject(new Error(`Speech synthesis failed with reason: ${speechResult.reason}`));
-                        }
-                    },
-                    error => {
-                        reject(error);
-                    }
-                );
-            });
-        },
 
         async getVoices() {
             const speechConfig = SpeechConfig.fromSubscription(this.subscriptionKey, this.region);

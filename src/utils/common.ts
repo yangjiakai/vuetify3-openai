@@ -106,3 +106,22 @@ export const getLanguageNameEn = (language: string): string => {
             return "Not selected";
     }
 }
+
+const MAX_SENTENCE_LENGTH = 30; // 每个小段文本的最大长度
+export const splitText = (text: string): string[] => {
+    const sentences = text.split(/(?<=[.?!])\s/g); // 将文本按照句子进行分割
+    const result: string[] = [];
+    let currentSentence = '';
+    for (const sentence of sentences) {
+        if (currentSentence.length + sentence.length <= MAX_SENTENCE_LENGTH) {
+            currentSentence += sentence;
+        } else {
+            result.push(currentSentence);
+            currentSentence = sentence;
+        }
+    }
+    if (currentSentence.length > 0) {
+        result.push(currentSentence);
+    }
+    return result;
+}
