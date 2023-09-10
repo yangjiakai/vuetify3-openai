@@ -18,7 +18,7 @@ const sourceArticle = ref(`
 `);
 const targetArticle = ref<string[]>([]);
 const transferArtile = (text: string) => {
-  return text.split(/[。？！：\n]/).filter((item) => item.trim() !== "");
+  return text.split(/[。？！：\n.?!]/).filter((item) => item.trim() !== "");
 };
 
 const speakTest = (text) => {
@@ -167,12 +167,6 @@ const translation = async () => {
             </v-app-bar-nav-icon>
             <v-toolbar-title> 语句分割</v-toolbar-title>
             <v-spacer></v-spacer>
-            <!-- speak button -->
-            <v-btn icon @click="speakTest(targetArticle)">
-              <v-icon> mdi-play-circle-outline </v-icon>
-              <!-- tooltip -->
-              <v-tooltip activator="parent" location="bottom" text="阅读原文" />
-            </v-btn>
           </v-toolbar>
           <perfect-scrollbar class="message-container">
             <MessageCard
