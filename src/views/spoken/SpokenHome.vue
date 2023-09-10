@@ -14,7 +14,7 @@ import { Icon } from "@iconify/vue";
       <div class="d-flex justify-center">
         <Icon
           class="text-primary"
-          width="200"
+          width="100"
           icon="solar:multiple-forward-right-line-duotone"
         />
       </div>

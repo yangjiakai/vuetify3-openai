@@ -136,6 +136,7 @@ const addChat = () => {
               hide-details
               color="primary"
               placeholder="口语练习的角色姓名"
+              focused
             ></v-text-field>
           </v-col>
         </v-row>

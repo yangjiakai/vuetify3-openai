@@ -5,6 +5,7 @@
 -->
 <script setup lang="ts">
 import MainSidebar from "@/components/MainSidebar.vue";
+import Toolbox from "@/components/Toolbox.vue";
 
 import Snackbar from "@/components/Snackbar.vue";
 </script>
@@ -27,6 +28,7 @@ import Snackbar from "@/components/Snackbar.vue";
     <!---Snackbar -->
     <!-- ---------------------------------------------- -->
     <Snackbar />
+    <Toolbox />
   </div>
 </template>
 

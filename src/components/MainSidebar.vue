@@ -29,6 +29,11 @@ const contactUsDialogShow = ref(false);
 
 const menus = [
   {
+    title: "口语交流",
+    icon: "solar:dialog-2-line-duotone",
+    url: "/spoken",
+  },
+  {
     title: "GPT",
     icon: "solar:face-scan-circle-line-duotone",
 
@@ -44,11 +49,7 @@ const menus = [
     icon: "solar:chat-square-check-line-duotone",
     url: "/consultant",
   },
-  {
-    title: "口语交流",
-    icon: "solar:dialog-2-line-duotone",
-    url: "/spoken",
-  },
+
   // {
   //   title: "语句收藏",
   //   icon: "solar:book-bookmark-minimalistic-line-duotone",

@@ -68,12 +68,12 @@ const menu = ref([
         class="font-weight-bold"
       ></v-tooltip>
       <!-- Menu -->
-      <v-menu location="left center" activator="parent">
+      <!-- <v-menu location="left center" activator="parent">
         <v-card class="mr-2" height="600" width="300">
           <perfect-scrollbar style="height: 600" class="pa-2">
           </perfect-scrollbar>
         </v-card>
-      </v-menu>
+      </v-menu> -->
     </v-btn>
   </v-card>
 </template>
