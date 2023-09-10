@@ -5,7 +5,7 @@ export const useArticleStore = defineStore({
     state: () => ({
         voiceConfig: {
             voiceStyle: "",
-            voiceRate: 1.1,
+            voiceRate: 1.0,
             gender: Gender.Woman,
             language: "en-US",
             voiceName: "en-US-AmberNeural",
