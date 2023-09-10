@@ -49,11 +49,11 @@ const menus = [
     icon: "solar:dialog-2-line-duotone",
     url: "/spoken",
   },
-  {
-    title: "语句收藏",
-    icon: "solar:book-bookmark-minimalistic-line-duotone",
-    url: "/collection",
-  },
+  // {
+  //   title: "语句收藏",
+  //   icon: "solar:book-bookmark-minimalistic-line-duotone",
+  //   url: "/collection",
+  // },
   {
     title: "文章分析",
     icon: "solar:infinity-line-duotone",
@@ -65,6 +65,7 @@ const naviagteTo = (url: string) => {
   if (url === "/spoken") {
     const lastPageId = spokenStore.lastPageId;
     let newUrl = "/spoken/home";
+
     if (lastPageId !== 0) {
       newUrl = `/spoken/${lastPageId}`;
     }

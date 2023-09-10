@@ -15,9 +15,7 @@ import { Vue3Lottie } from "vue3-lottie";
         :height="400"
         :width="400"
       />
-      <h1 class="text-center font-weight-black text-grey-darken-1">
-        Ask Me AnyThing
-      </h1>
+      <h1 class="text-center font-weight-black text-grey-darken-1">有问必答</h1>
     </div>
   </div>
 </template>

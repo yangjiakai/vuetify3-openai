@@ -11,7 +11,7 @@ export const useChatHistoryStore = defineStore({
         // 最后离开的页面id
         lastPageId: 0,
         // 咨询顾问最后离开页面
-        lastConsultPageId: 1,
+        lastConsultPageId: 0,
         // 当前激活的聊天菜单id
         activeChatMenuId: 0,
         // 聊天列表

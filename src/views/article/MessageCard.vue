@@ -8,6 +8,7 @@ import { useSnackbarStore } from "@/stores/snackbarStore";
 import { useSpeechStore } from "@/stores/speechStore";
 import { readStream } from "@/utils/aiUtils";
 import { useArticleStore } from "@/stores/articleStore";
+
 const articleStore = useArticleStore();
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();

@@ -5,7 +5,7 @@ import { readStream } from "@/utils/aiUtils";
 export const useSpokenStore = defineStore({
     id: "spoken",
     state: () => ({
-        lastPageId: 1,
+        lastPageId: 0,
         // 是否显示添加聊天菜单对话框
         addCharacterDialog: false,
         // 当前激活的聊天菜单id

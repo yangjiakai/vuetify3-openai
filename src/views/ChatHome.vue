@@ -14,7 +14,7 @@ import { Icon } from "@iconify/vue";
       <div class="d-flex justify-center">
         <Icon
           class="text-primary"
-          width="200"
+          width="100"
           icon="solar:multiple-forward-right-line-duotone"
         />
       </div>
@@ -23,9 +23,9 @@ import { Icon } from "@iconify/vue";
         :height="400"
         :width="400"
       /> -->
-      <h1 class="text-center font-weight-black text-grey-darken-1">
+      <h2 class="text-center font-weight-black text-grey-darken-1">
         开始一个新会话
-      </h1>
+      </h2>
     </div>
   </div>
 </template>

@@ -281,12 +281,28 @@ const stopRecording = () => {
         </template>
       </perfect-scrollbar>
 
-      <div class="no-message-container" v-else>
-        <Vue3Lottie
-          animationLink="https://assets4.lottiefiles.com/packages/lf20_jpxsQh.json"
-          :height="200"
-          :width="200"
-        />
+      <div
+        class="no-message-container d-flex justify-center flex-column"
+        v-else
+      >
+        <div class="mb-15">
+          <div class="d-flex justify-center">
+            <Icon
+              class="text-primary"
+              width="100"
+              icon="solar:emoji-funny-square-bold-duotone"
+            />
+          </div>
+          <h2 class="mt-5 text-center font-weight-black text-grey-darken-1">
+            开始练习口语吧
+          </h2>
+
+          <!-- <Vue3Lottie
+            animationLink="https://assets4.lottiefiles.com/packages/lf20_jpxsQh.json"
+            :height="200"
+            :width="200"
+          /> -->
+        </div>
       </div>
     </div>
 
@@ -303,26 +319,28 @@ const stopRecording = () => {
         /> -->
 
         <div class="animation-box">
-          <v-btn
-            @click="startRecording"
-            v-if="!isRecording"
-            size="67"
-            color="#6746F5"
-            icon
-          >
-            <Icon
-              color="white"
-              icon="solar:microphone-bold-duotone"
-              width="40"
+          <keep-alive>
+            <v-btn
+              @click="startRecording"
+              v-if="!isRecording"
+              size="67"
+              color="#6746F5"
+              icon
+            >
+              <Icon
+                color="white"
+                icon="solar:microphone-bold-duotone"
+                width="40"
+              />
+            </v-btn>
+            <Vue3Lottie
+              @click="stopRecording"
+              v-else
+              animationLink="https://lottie.host/b6030738-0d4e-40f3-b9b0-fa1206503ae5/p2yVzhDDc4.json"
+              :height="150"
+              :width="150"
             />
-          </v-btn>
-          <Vue3Lottie
-            @click="stopRecording"
-            v-else
-            animationLink="https://lottie.host/b6030738-0d4e-40f3-b9b0-fa1206503ae5/p2yVzhDDc4.json"
-            :height="150"
-            :width="150"
-          />
+          </keep-alive>
         </div>
       </v-sheet>
     </div>
