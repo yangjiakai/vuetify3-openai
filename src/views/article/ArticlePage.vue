@@ -7,11 +7,15 @@
 import { useSpeechStore } from "@/stores/speechStore";
 import MessageCard from "./MessageCard.vue";
 import { useSnackbarStore } from "@/stores/snackbarStore";
-import { Gender } from "~/src/enums";
+import { Gender } from "@/enums";
 import { readStream } from "@/utils/aiUtils";
 import { Icon } from "@iconify/vue";
+import ConfigCard from "./ConfigCard.vue";
+import { useArticleStore } from "@/stores/articleStore";
+import { getLanguageName } from "@/utils/common";
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
+const articleStore = useArticleStore();
 const sourceArticle = ref(`
 そのせいで大学落ちて浪人することになったのですが、やっと受かった大学にもほとんど行かず、ずっとプログラミングのバイトをしていました。
 夏休みは思いっきりプログラムを書こうと思って、バイト先に入り浸っていたら、正社員よりも給料が高くなってドン引きされたことが記憶に残っています。
@@ -22,15 +26,7 @@ const transferArtile = (text: string) => {
 };
 
 const speakTest = (text) => {
-  const config = {
-    voiceStyle: "",
-    voiceRate: 1.1,
-    gender: Gender.Woman,
-    language: "ja-JP",
-    voiceName: "ja-JP-NanamiNeural",
-    localName: "七海",
-  };
-
+  const config = articleStore.voiceConfig;
   speechStore.ssmlToSpeech(text, config, "test");
 };
 
@@ -166,7 +162,34 @@ const translation = async () => {
               />
             </v-app-bar-nav-icon>
             <v-toolbar-title> 语句分割</v-toolbar-title>
+            <div class="text-body-1 font-weight-black d-flex align-center">
+              <span>音源:</span> {{ articleStore.voiceConfig.localName }}
+              <v-chip
+                color="white"
+                size="small"
+                label
+                class="ml-1"
+                :prepend-icon="
+                  articleStore.voiceConfig.gender === Gender.Man
+                    ? 'mdi-face-man-shimmer'
+                    : 'mdi-face-woman-shimmer'
+                "
+              >
+                {{ getLanguageName(articleStore.voiceConfig.language) }}</v-chip
+              >
+            </div>
             <v-spacer></v-spacer>
+
+            <!-- speak button -->
+            <v-btn icon @click="articleStore.showConfigDialog = true">
+              <Icon
+                class="mx-auto"
+                width="26"
+                icon="solar:settings-line-duotone"
+              />
+              <!-- tooltip -->
+              <v-tooltip activator="parent" location="bottom" text="设定" />
+            </v-btn>
           </v-toolbar>
           <perfect-scrollbar class="message-container">
             <MessageCard
@@ -178,6 +201,9 @@ const translation = async () => {
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog v-model="articleStore.showConfigDialog">
+      <ConfigCard />
+    </v-dialog>
   </div>
 </template>
 

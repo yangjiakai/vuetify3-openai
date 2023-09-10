@@ -6,8 +6,9 @@
 <script setup lang="ts">
 import { useSnackbarStore } from "@/stores/snackbarStore";
 import { useSpeechStore } from "@/stores/speechStore";
-import { Gender } from "~/src/enums";
 import { readStream } from "@/utils/aiUtils";
+import { useArticleStore } from "@/stores/articleStore";
+const articleStore = useArticleStore();
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
 
@@ -16,15 +17,7 @@ const props = defineProps<{
 }>();
 
 const speakTest = (text) => {
-  const config = {
-    voiceStyle: "",
-    voiceRate: 1.1,
-    gender: Gender.Woman,
-    language: "ja-JP",
-    voiceName: "ja-JP-MayuNeural",
-    localName: "真夕",
-  };
-
+  const config = articleStore.voiceConfig;
   speechStore.ssmlToSpeech(text, config, "test");
 };
 
