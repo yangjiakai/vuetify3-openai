@@ -9,6 +9,7 @@ import MessageCard from "./MessageCard.vue";
 import { useSnackbarStore } from "@/stores/snackbarStore";
 import { Gender } from "~/src/enums";
 import { readStream } from "@/utils/aiUtils";
+import { Icon } from "@iconify/vue";
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
 const sourceArticle = ref(`
@@ -96,58 +97,99 @@ const translation = async () => {
 </script>
 
 <template>
-  <v-container class="fluid">
-    <v-card class="content">
-      <v-card-title class="font-weight-bold text-grey-darken-2">
-        文章分析
-      </v-card-title>
-      <v-divider></v-divider>
-      <v-card-text>
-        <v-row>
-          <v-col cols="12" md="6">
+  <div class="h-100 bg-grey-lighten-5 pa-5 pb-0">
+    <v-row class="h-100" align="stretch">
+      <v-col cols="12" md="6">
+        <v-card class="h-100" rounded="md">
+          <v-toolbar rounded="md" elevation="1" color="primary" class="toolbar">
+            <v-app-bar-nav-icon>
+              <Icon
+                class="mx-auto"
+                width="26"
+                icon="solar:document-add-line-duotone"
+              />
+            </v-app-bar-nav-icon>
+            <v-toolbar-title> 文章分析</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <!-- speak button -->
+            <v-btn icon @click="speakTest(sourceArticle)">
+              <v-icon> mdi-play-circle-outline </v-icon>
+              <!-- tooltip -->
+              <v-tooltip activator="parent" location="bottom" text="阅读原文" />
+            </v-btn>
+
+            <!-- translate -->
+            <v-btn icon @click="translation">
+              <v-icon> mdi-translate </v-icon>
+              <!-- tooltip -->
+              <v-tooltip activator="parent" location="bottom" text="翻译" />
+            </v-btn>
+          </v-toolbar>
+          <perfect-scrollbar class="message-container">
             <v-textarea
               v-model="sourceArticle"
-              label="文章"
-              variant="solo-inverted"
+              class="ma-5 text-grey-darken-2"
+              variant="outlined"
               placeholder="请输入文章"
-              rows="30"
+              rows="20"
+              color="primary"
+              label="原文"
+              hide-details
+              noResize
             >
-              <template #append>
-                <v-icon color="primary" @click="speakTest(sourceArticle)">
-                  mdi-play-circle-outline
-                </v-icon>
-                <!-- translate -->
-                <v-icon color="primary" @click="translation"
-                  >mdi-translate</v-icon
-                >
-              </template>
             </v-textarea>
-            <v-card height="400" class="mt-5">
-              {{ translatedContent }}
-            </v-card>
-          </v-col>
+            <v-textarea
+              v-model="translatedContent"
+              class="ma-5 text-grey-darken-2"
+              variant="outlined"
+              placeholder="请输入文章"
+              rows="20"
+              color="primary"
+              readonly
+              label="译文"
+              hide-details
+              noResize
+            >
+            </v-textarea>
+          </perfect-scrollbar>
+        </v-card>
+      </v-col>
 
-          <v-col cols="12" md="6">
-            <perfect-scrollbar class="message-container">
-              <MessageCard
-                v-for="item in targetArticle"
-                :key="item"
-                :text="item"
+      <v-col cols="12" md="6">
+        <v-card class="h-100">
+          <v-toolbar rounded="md" elevation="1" color="primary" class="toolbar">
+            <v-app-bar-nav-icon>
+              <Icon
+                class="mx-auto"
+                width="26"
+                icon="solar:documents-minimalistic-line-duotone"
               />
-            </perfect-scrollbar>
-          </v-col>
-        </v-row>
-      </v-card-text>
-    </v-card>
-  </v-container>
+            </v-app-bar-nav-icon>
+            <v-toolbar-title> 语句分割</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <!-- speak button -->
+            <v-btn icon @click="speakTest(targetArticle)">
+              <v-icon> mdi-play-circle-outline </v-icon>
+              <!-- tooltip -->
+              <v-tooltip activator="parent" location="bottom" text="阅读原文" />
+            </v-btn>
+          </v-toolbar>
+          <perfect-scrollbar class="message-container">
+            <MessageCard
+              v-for="item in targetArticle"
+              :key="item"
+              :text="item"
+            />
+          </perfect-scrollbar>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.content {
-  height: calc(100vh - 30px);
-}
-
 .message-container {
   height: calc(100vh - 100px);
+  overflow: scroll;
 }
 </style>

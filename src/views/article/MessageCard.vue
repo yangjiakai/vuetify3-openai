@@ -80,7 +80,10 @@ const translation = async () => {
 </script>
 
 <template>
-  <v-card class="ma-5 pa-5 text-blue-grey-darken-4">
+  <v-card
+    class="ma-5 pa-5 text-blue-grey-darken-4"
+    style="border-left: 5px solid #6746f5"
+  >
     <div class="d-flex align-center">
       <div>
         <div>{{ props.text }}</div>
