@@ -16,17 +16,7 @@ import { getLanguageName } from "@/utils/common";
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
 const articleStore = useArticleStore();
-const sourceArticle = ref(`
-UI stands for user interface. It is the point of contact between humans and computers. Any technology you interact with as a user is part of the user interface. For example, screens, sounds, overall style, and responsiveness are all elements of UI. A user interface involves the following four components:
 
-Navigational elements. Navigational elements help users navigate an interface. Examples of navigational elements in UI include slide bars, search fields, and back arrows. 
-
-Input controls. On-page elements that enable users to input information are input controls. Buttons, checkboxes, and text fields are all examples of input controls. 
-
-Informational components. Informational components are used to communicate information to the user. A progress bar beneath a video or tutorial is an example of an informational component. 
-
-Containers. Containers organize content into easily digestible sections. Rather than listing every subheading underneath a tab, a container element like an accordion menu may be used to hide or show content. 
-`);
 const targetArticle = ref<string[]>([]);
 const transferArtile = (text: string) => {
   return text.split(/[。？！：\n.?!]/).filter((item) => item.trim() !== "");
@@ -38,14 +28,14 @@ const speakTest = (text) => {
 };
 
 watch(
-  () => sourceArticle.value,
+  () => articleStore.sourceArticle,
   (newVal) => {
     targetArticle.value = transferArtile(newVal);
   }
 );
 
 onMounted(() => {
-  targetArticle.value = transferArtile(sourceArticle.value);
+  targetArticle.value = transferArtile(articleStore.sourceArticle);
 });
 
 const translatedContent = ref("");
@@ -67,7 +57,7 @@ const translation = async () => {
               content:
                 "你是一名翻译官,将内容翻译成中文,如果源文本就是中文的话,不必翻译",
             },
-            { role: "user", content: sourceArticle.value },
+            { role: "user", content: articleStore.sourceArticle },
           ],
           model: "gpt-3.5-turbo-0613",
           stream: true,
@@ -115,7 +105,7 @@ const translation = async () => {
             <v-toolbar-title> 文章分析</v-toolbar-title>
             <v-spacer></v-spacer>
             <!-- speak button -->
-            <v-btn icon @click="speakTest(sourceArticle)">
+            <v-btn icon @click="speakTest(articleStore.sourceArticle)">
               <v-icon> mdi-play-circle-outline </v-icon>
               <!-- tooltip -->
               <v-tooltip activator="parent" location="bottom" text="阅读原文" />
@@ -130,7 +120,7 @@ const translation = async () => {
           </v-toolbar>
           <perfect-scrollbar class="message-container">
             <v-textarea
-              v-model="sourceArticle"
+              v-model="articleStore.sourceArticle"
               class="ma-5 text-grey-darken-2"
               variant="outlined"
               placeholder="请输入文章"
