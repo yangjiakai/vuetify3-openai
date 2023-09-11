@@ -20,9 +20,33 @@ const { mdAndUp } = useDisplay();
 const characterList = ref<any>(initCharacterList);
 const currentCharacter = ref<any>("");
 
+const scrollToBottom = () => {
+  // 找到 #character-list 和 #character-item .v-list-item--active 元素
+
+  nextTick(() => {
+    const contentArea = document.querySelector("#character-list");
+
+    const activeItem = document.querySelector(
+      "#character-item.v-list-item--active"
+    ) as HTMLElement;
+
+    // 如果元素存在，则滚动到活动元素
+    if (contentArea && activeItem) {
+      setTimeout(() => {
+        contentArea.scrollTo({
+          top: activeItem.offsetTop,
+        });
+      }, 100);
+    }
+  });
+};
+
 onMounted(() => {
   characterList.value = initCharacterList;
-  currentCharacter.value = characterList.value[0];
+  currentCharacter.value = articleStore.voiceConfig;
+  voiceRate.value = articleStore.voiceConfig.voiceRate;
+
+  scrollToBottom();
 });
 
 const speakTest = (voice) => {
@@ -34,7 +58,6 @@ const speakTest = (voice) => {
     voiceName: voice.modelName,
     localName: voice.localName,
   };
-  console.log(config);
 
   const text = getTestText(voice.locale);
 
@@ -67,7 +90,7 @@ const currentStyle = ref("");
 const voiceRate = ref(1);
 
 const currentStyleList = computed(() => {
-  if (currentCharacter.value && currentCharacter.value.styleList.length > 0) {
+  if (currentCharacter.value && currentCharacter.value.styleList?.length > 0) {
     currentStyle.value = currentCharacter.value.styleList[0];
   } else {
     currentStyle.value = "";
@@ -109,13 +132,20 @@ const handleConfirm = () => {
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
-        <v-list height="310" class="pa-1" lines="two" density="compact">
+        <v-list
+          id="character-list"
+          height="310"
+          class="pa-1"
+          lines="two"
+          density="compact"
+        >
           <!-- ---------------------------------------------- -->
           <!-- Profile Area -->
           <!-- ---------------------------------------------- -->
           <v-list-item
             @click="selectCharacter(voice)"
             elevation="1"
+            id="character-item"
             class="my-1"
             :active="voice.localName === currentCharacter.localName"
             v-for="voice in characterList"
