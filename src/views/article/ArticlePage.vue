@@ -145,13 +145,14 @@ const translation = async () => {
               v-model="translatedContent"
               class="ma-5 text-grey-darken-2"
               variant="outlined"
-              placeholder="请输入文章"
+              placeholder="此处不可编辑"
               rows="20"
               color="primary"
               readonly
               label="译文"
               hide-details
               noResize
+              active
             >
             </v-textarea>
           </perfect-scrollbar>
