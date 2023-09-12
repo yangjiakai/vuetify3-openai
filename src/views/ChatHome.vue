@@ -3,12 +3,17 @@
 * @Maintainer: J.K. Yang
 * @Description: 
 -->
+
 <script setup lang="ts">
+import SidebarToggle from "@/components/SidebarToggle.vue";
 // import { Vue3Lottie } from "vue3-lottie";
 import { Icon } from "@iconify/vue";
 </script>
 
 <template>
+  <v-toolbar color="white" class="text-grey-darken-2" border>
+    <SidebarToggle />
+  </v-toolbar>
   <div class="d-flex align-center justify-center h-screen bg-white">
     <div>
       <div class="d-flex justify-center">

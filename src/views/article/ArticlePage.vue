@@ -13,6 +13,8 @@ import { Icon } from "@iconify/vue";
 import ConfigCard from "./ConfigCard.vue";
 import { useArticleStore } from "@/stores/articleStore";
 import { getLanguageName } from "@/utils/common";
+import { useAppStore } from "@/stores/appStore";
+const appStore = useAppStore();
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
 const articleStore = useArticleStore();
@@ -95,7 +97,7 @@ const translation = async () => {
       <v-col cols="12" md="6">
         <v-card class="h-100" rounded="md">
           <v-toolbar rounded="md" elevation="1" color="primary" class="toolbar">
-            <v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click="appStore.toggleMainSidebar()">
               <Icon
                 class="mx-auto"
                 width="26"

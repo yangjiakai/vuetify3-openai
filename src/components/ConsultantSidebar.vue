@@ -34,7 +34,7 @@ const navigateTo = (id) => {
 </script>
 
 <template>
-  <v-navigation-drawer v-model="appStore.mainSidebar" width="240">
+  <v-navigation-drawer permanent v-model="appStore.mainSidebar" width="240">
     <!-- ---------------------------------------------- -->
     <!---Nav List -->
     <!-- ---------------------------------------------- -->

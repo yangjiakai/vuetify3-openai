@@ -5,9 +5,13 @@
 -->
 <script setup lang="ts">
 import { Vue3Lottie } from "vue3-lottie";
+import SidebarToggle from "@/components/SidebarToggle.vue";
 </script>
 
 <template>
+  <v-toolbar color="white" class="text-grey-darken-2" border>
+    <SidebarToggle />
+  </v-toolbar>
   <div class="d-flex align-center justify-center h-screen bg-white">
     <div>
       <Vue3Lottie
