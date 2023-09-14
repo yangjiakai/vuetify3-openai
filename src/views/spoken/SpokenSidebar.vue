@@ -7,8 +7,9 @@
 import { useAppStore } from "@/stores/appStore";
 import { useSpokenStore } from "@/stores/spokenStore";
 import { Gender } from "~/src/enums";
-
+import { useSpeechStore } from "@/stores/speechStore";
 const spokenStore = useSpokenStore();
+const speechStore = useSpeechStore();
 const router = useRouter();
 
 const appStore = useAppStore();
@@ -83,6 +84,11 @@ watch(
     }
   }
 );
+
+const openDialog = async () => {
+  await speechStore.getVoices();
+  spokenStore.switchAddCharacterDialog();
+};
 </script>
 
 <template>
@@ -98,7 +104,7 @@ watch(
           block
           class="mb-3 text-white font-weight-bold"
           rounded="md"
-          @click="spokenStore.switchAddCharacterDialog()"
+          @click="openDialog()"
         >
           <template v-slot:prepend>
             <v-icon>mdi-plus-circle</v-icon>

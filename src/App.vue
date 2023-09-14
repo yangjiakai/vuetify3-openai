@@ -1,11 +1,7 @@
-<script setup lang="ts">
-import { useCustomizeThemeStore } from "@/stores/customizeTheme";
-
-const customizeTheme = useCustomizeThemeStore();
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <v-app id="app" :theme="customizeTheme.darkTheme ? 'dark' : 'light'">
+  <v-app id="app">
     <RouterView />
   </v-app>
 </template>
