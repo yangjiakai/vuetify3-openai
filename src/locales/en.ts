@@ -36,6 +36,8 @@ export default {
     newFriend: "New Friend",
     addFriend: "Add Friend",
     slogan: "Add a friend for Communication.",
+    startSlogan: "Start practicing speaking",
+
   },
   chat: {
     title: "GPT",

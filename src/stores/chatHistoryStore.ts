@@ -39,7 +39,7 @@ export const useChatHistoryStore = defineStore({
                 chatId: chatId,
                 chatType: ChatType.Base,
                 menuConfig: {
-                    menuTitle: title || `新会话`,
+                    menuTitle: title || `new chat`,
                     isMenuEdit: false,
                     isMenuDeleteConfirm: false,
                 },

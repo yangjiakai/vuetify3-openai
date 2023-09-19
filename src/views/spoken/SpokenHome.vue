@@ -21,7 +21,7 @@ import { Icon } from "@iconify/vue";
       <!-- <Vue3Lottie
         animationLink="https://lottie.host/03e08e80-d368-4fef-aa7e-f0910d00ea54/aYgluR3DQ2.json"
         :height="400"
-        :width="400"
+      :width="400"
       /> -->
       <h2 class="text-center font-weight-black text-grey-darken-1">
         {{ $t("spoken.slogan") }}

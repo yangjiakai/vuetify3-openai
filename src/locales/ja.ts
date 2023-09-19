@@ -35,6 +35,7 @@ export default {
     newFriend: "新しい友達",
     addFriend: "友達を追加",
     slogan: "コミュニケーションのための友達を追加。",
+    startSlogan: "スピーキングの練習を始める",
   },
   chat: {
     title: "GPT",
@@ -44,6 +45,7 @@ export default {
     chatConfig: "チャット設定",
     clearHistory: "履歴をクリア",
     slogan: "新しいチャットを始める",
+
 
   },
 

@@ -105,11 +105,7 @@ const addChat = () => {
     gender: currentCharacter.value.gender,
     localName: currentCharacter.value.localName,
   };
-  spokenStore.addChat(
-    id,
-    voiceConfig,
-    chatTitle.value?.trim() || "spoken.newFriend"
-  );
+  spokenStore.addChat(id, voiceConfig, chatTitle.value?.trim() || "new friend");
   spokenStore.switchAddCharacterDialog();
 };
 </script>

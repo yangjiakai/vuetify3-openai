@@ -252,7 +252,7 @@ const stopRecording = () => {
       <SidebarToggle />
       <div>
         <div class="text-body-1 font-weight-black d-flex align-center">
-          <span>音源:</span> {{ voiceConfig.localName }}
+          <span>{{ $t("voice.voiceModel") }}:</span> {{ voiceConfig.localName }}
           <v-chip
             color="primary"
             size="small"
@@ -294,7 +294,7 @@ const stopRecording = () => {
             />
           </div>
           <h2 class="mt-5 text-center font-weight-black text-grey-darken-1">
-            开始练习口语吧
+            {{ $t("spoken.startSlogan") }}
           </h2>
 
           <!-- <Vue3Lottie

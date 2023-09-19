@@ -33,6 +33,7 @@ export default {
     newFriend: "新好友",
     addFriend: "添加好友",
     slogan: "添加一个好友来聊天吧",
+    startSlogan: "开始练习口语吧",
   },
   chat: {
     title: "GPT",
@@ -41,7 +42,8 @@ export default {
     chatConfig: "会话配置",
     addChat: "添加会话",
     clearHistory: "清空历史",
-    slogan: "开始一个新会话"
+    slogan: "开始一个新会话",
+
   },
 
   gptConfig: {
