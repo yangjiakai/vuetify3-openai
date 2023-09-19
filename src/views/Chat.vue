@@ -218,7 +218,8 @@ watch(
       <SidebarToggle />
       <div>
         <div class="text-body-1 font-weight-black d-flex align-center">
-          <span>主题:</span> {{ chatInfo?.menuConfig.menuTitle }}
+          <span>{{ $t("chat.theme") }}:</span>
+          {{ chatInfo?.menuConfig.menuTitle }}
           <v-chip
             color="primary"
             size="small"
@@ -271,7 +272,7 @@ watch(
           <v-tooltip
             activator="parent"
             location="top"
-            text="Chat 配置"
+            :text="$t('chat.chatConfig')"
           ></v-tooltip>
         </v-btn>
         <v-btn
@@ -289,7 +290,7 @@ watch(
           <v-tooltip
             activator="parent"
             location="top"
-            text="清空信息"
+            :text="$t('chat.clearHistory')"
           ></v-tooltip>
         </v-btn>
 

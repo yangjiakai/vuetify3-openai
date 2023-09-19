@@ -9,7 +9,9 @@ import { useSpokenStore } from "@/stores/spokenStore";
 import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 import { useAppStore } from "@/stores/appStore";
 import ContactUsCard from "@/components/ContactUsCard.vue";
+import GlobalConfigCard from "@/components/GlobalConfigCard.vue";
 import { Icon } from "@iconify/vue";
+
 const appStore = useAppStore();
 const authStore = useAuthStore();
 const spokenStore = useSpokenStore();
@@ -26,26 +28,27 @@ const handleContactUsShow = () => {
 };
 
 const contactUsDialogShow = ref(false);
+const globalConfig = ref(false);
 
 const menus = [
   {
-    title: "口语交流",
+    title: "spoken.title",
     icon: "solar:dialog-2-line-duotone",
     url: "/spoken",
   },
   {
-    title: "GPT",
+    title: "gpt.title",
     icon: "solar:face-scan-circle-line-duotone",
 
     url: "/chat",
   },
   {
-    title: "创作中心",
+    title: "Creation",
     icon: "solar:bookmark-opened-line-duotone",
     url: "/creation",
   },
   {
-    title: "咨询顾问",
+    title: "Consultant",
     icon: "solar:chat-square-check-line-duotone",
     url: "/consultant",
   },
@@ -56,7 +59,7 @@ const menus = [
   //   url: "/collection",
   // },
   {
-    title: "文章分析",
+    title: "Article",
     icon: "solar:infinity-line-duotone",
     url: "/article",
   },
@@ -113,17 +116,10 @@ const naviagteTo = (url: string) => {
           <Icon class="mx-auto" width="26" :icon="item.icon" />
         </div>
         <div class="title">
-          {{ item.title }}
+          {{ $t(item.title) }}
         </div>
-
-        <!-- 
-        <v-tooltip
-          activator="parent"
-          location="right"
-          class="text-white"
-          :text="item.title"
-        ></v-tooltip> -->
       </v-list-item>
+      <!-- Spoken -->
     </v-list>
     <template v-slot:append>
       <v-list lines="two">
@@ -141,7 +137,7 @@ const naviagteTo = (url: string) => {
               />
             </div>
 
-            <div class="title">联系我们</div>
+            <div class="title">{{ $t("common.contact") }}</div>
             <!-- <v-tooltip activator="parent" location="right" text="联系我们">
             </v-tooltip> -->
           </div>
@@ -161,7 +157,25 @@ const naviagteTo = (url: string) => {
               />
             </div>
 
-            <div class="title">退出登录</div>
+            <div class="title">{{ $t("common.logout") }}</div>
+          </div>
+        </v-list-item>
+        <!-- Global Config -->
+        <v-list-item
+          @click="globalConfig = true"
+          class="text-grey-darken-1"
+          color="primary"
+        >
+          <div>
+            <div class="text-center">
+              <Icon
+                class="mx-auto"
+                width="26"
+                icon="solar:settings-line-duotone"
+              />
+            </div>
+
+            <div class="title">{{ $t("globalSetting.title") }}</div>
           </div>
         </v-list-item>
       </v-list>
@@ -169,6 +183,9 @@ const naviagteTo = (url: string) => {
   </v-navigation-drawer>
   <v-dialog v-model="contactUsDialogShow">
     <ContactUsCard />
+  </v-dialog>
+  <v-dialog v-model="globalConfig">
+    <GlobalConfigCard />
   </v-dialog>
 </template>
 

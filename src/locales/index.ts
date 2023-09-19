@@ -1,40 +1,68 @@
-import enMessages from "@/locales/en";
-import zhHansMessages from "@/locales/zhHans";
-import jaMessages from "@/locales/ja";
-
 export default {
-  // current locale
-  locale: "en",
-
-  // when translation is not available fallback to that locale
-  fallbackLocale: "en",
-
-  // availabled locales for user selection
-  availableLocales: [
-    {
-      code: "en",
-      flag: "us",
-      label: "English",
-      messages: enMessages,
-    },
-    {
-      code: "zhHans",
-      flag: "cn",
-      label: "中文",
-      messages: zhHansMessages,
-    },
-    {
-      code: "ja",
-      flag: "jp",
-      label: "日本語",
-      messages: jaMessages,
-    },
-  ],
-  messages: {
-    en: enMessages,
-    zhHans: zhHansMessages,
-    ja: jaMessages,
+  common: {
+    subNav: "Sub Nav",
+    applicationBar: "Application Bar",
+    add: "Add",
+    cancel: "Cancel",
+    save: "Save",
+    delete: "Delete",
+    title: "Title",
+    confirm: "Confirm",
+    description: "Description",
+    faq: "FAQ",
+    contact: "Contact Us",
+    tos: "Terms of Service",
+    policy: "Privacy Policy",
   },
+
+  toolbox: {
+    cardTemplate: "Card Template",
+    textFormatting: "Text Formatting",
+    calloutBoxes: "Callout Boxes",
+    layoutOptions: "Layout Options",
+    visualTemplates: "Visual Templates",
+    addImages: "Add Images",
+    EmbedVideos: "Embed Videos",
+    EmbedApps: "Embed Apps",
+    FromsAndButtons: "Froms And Buttons",
+  },
+
+  spoken: {
+    title: "Spoken",
+    newFriend: "New Friend",
+    addFriend: "Add Friend",
+    slogan: "Add a friend for Communication.",
+  },
+  chat: {
+    title: "GPT",
+    newChat: "New Chat",
+  },
+
+  gptConfig: {
+    model: "Model",
+    maxTokens: "Max Tokens",
+    temperature: "Temperature",
+    presencePenalty: "Presence Penalty",
+    frequencyPenalty: "Frequency Penalty",
+    prompt: "Prompt",
+    role: "Role",
+  },
+
+  article: {
+    title: "Article",
+    read: "Read",
+    translate: "Translate",
+    SentenceSegmentation: "Sentence Segmentation",
+  },
+
+  voice: {
+    voiceModel: "Voice Model",
+    audition: "Audition",
+    voiceRate: "Voice Rate",
+    voiceStyle: "Voice Style",
+    voiceConfig: "Voice Config",
+  },
+
   // Vuetify 组件内部翻译
   $vuetify: {
     badge: "徽章",
@@ -42,6 +70,9 @@ export default {
     dataIterator: {
       noResultsText: "未找到匹配的记录",
       loadingText: "正在载入项目...",
+    },
+    input: {
+      clear: "清除",
     },
     dataTable: {
       itemsPerPageText: "每页行数：",
@@ -99,5 +130,14 @@ export default {
         currentPage: "当前页，第{0}页",
       },
     },
+  },
+
+  nav: {
+    qa: "Q&A",
+    grammarCorrection: "Grammar correction",
+    translation: "Translation",
+    explainCode: "Explain Code",
+    sqlTranslate: "Sql Translate",
+    modelList: "ModelList",
   },
 };

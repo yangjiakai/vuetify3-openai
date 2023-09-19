@@ -104,20 +104,28 @@ const translation = async () => {
                 icon="solar:document-add-line-duotone"
               />
             </v-app-bar-nav-icon>
-            <v-toolbar-title> 文章分析</v-toolbar-title>
+            <v-toolbar-title> {{ $t("article.title") }}</v-toolbar-title>
             <v-spacer></v-spacer>
             <!-- speak button -->
             <v-btn icon @click="speakTest(articleStore.sourceArticle)">
               <v-icon> mdi-play-circle-outline </v-icon>
               <!-- tooltip -->
-              <v-tooltip activator="parent" location="bottom" text="阅读原文" />
+              <v-tooltip
+                activator="parent"
+                location="bottom"
+                :text="$t('article.read')"
+              />
             </v-btn>
 
             <!-- translate -->
             <v-btn icon @click="translation">
               <v-icon> mdi-translate </v-icon>
               <!-- tooltip -->
-              <v-tooltip activator="parent" location="bottom" text="翻译" />
+              <v-tooltip
+                activator="parent"
+                location="bottom"
+                :text="$t('article.translate')"
+              />
             </v-btn>
           </v-toolbar>
           <perfect-scrollbar class="message-container">

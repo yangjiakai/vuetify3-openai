@@ -1,54 +1,130 @@
 export default {
+  common: {
+    subNav: "サブナビ",
+    applicationBar: "アプリケーションバー",
+    add: "追加",
+    cancel: "キャンセル",
+    save: "保存",
+    delete: "削除",
+    title: "タイトル",
+    confirm: "確認",
+    description: "説明",
+    faq: "よくある質問",
+    contact: "お問い合わせ",
+    tos: "利用規約",
+    policy: "プライバシーポリシー",
+    logout: "ログアウト",
+  },
+
+
+  toolbox: {
+    cardTemplate: "Card Template",
+    textFormatting: "Text Formatting",
+    calloutBoxes: "Callout Boxes",
+    layoutOptions: "Layout Options",
+    visualTemplates: "Visual Templates",
+    addImages: "Add Images",
+    EmbedVideos: "Embed Videos",
+    EmbedApps: "Embed Apps",
+    FromsAndButtons: "Froms And Buttons",
+  },
+
+  spoken: {
+    title: "スポークン",
+    newFriend: "新しい友達",
+    addFriend: "友達を追加",
+    slogan: "コミュニケーションのための友達を追加。",
+  },
+  chat: {
+    title: "GPT",
+    theme: "テーマ",
+    addChat: "チャットを追加",
+    newChat: "新規チャット",
+    chatConfig: "チャット設定",
+    clearHistory: "履歴をクリア",
+  },
+
+  gptConfig: {
+    model: "モデル",
+    maxTokens: "最大トークン数",
+    temperature: "温度",
+    presencePenalty: "プレゼンスペナルティ",
+    frequencyPenalty: "頻度ペナルティ",
+    prompt: "プロンプト",
+    role: "役割",
+  },
+
+  article: {
+    title: "記事",
+    read: "読む",
+    translate: "翻訳",
+    SentenceSegmentation: "文章の分割",
+  },
+
+  voice: {
+    voiceModel: "音声モデル",
+    audition: "オーディション",
+    voiceRate: "音声レート",
+    voiceStyle: "音声スタイル",
+    voiceConfig: "音声設定",
+  },
+  globalSetting: {
+    title: "グローバル設定",
+    language: "言語",
+  },
+
+
   // Vuetify 组件内部翻译
+  // コンポーネント
   $vuetify: {
-    badge: "徽章",
-    close: "关",
+    badge: "バッジ",
+    close: "閉じる",
     dataIterator: {
-      noResultsText: "未找到匹配的记录",
-      loadingText: "正在载入项目...",
+      noResultsText: "一致するレコードが見つかりません",
+      loadingText: "アイテムを読み込んでいます...",
     },
     dataTable: {
-      itemsPerPageText: "每页行数：",
+      itemsPerPageText: "ページあたりの行数：",
       ariaLabel: {
-        sortDescending: "降序排列。",
-        sortAscending: "升序排列。",
-        sortNone: "未排序。",
-        activateNone: "激活以删除排序。",
-        activateDescending: "激活以降序排列。",
-        activateAscending: "激活以升序排序。",
+        sortDescending: "降順で並べ替え。",
+        sortAscending: "昇順で並べ替え。",
+        sortNone: "ソートされていません。",
+        activateNone: "ソートを解除アクティブ",
+        activateDescending: "降順でソートアクティブ",
+        activateAscending: "昇順でソートアクティブ",
       },
-      sortBy: "排序方式",
+      sortBy: "ソート方法",
     },
     dataFooter: {
-      itemsPerPageText: "每页项目：",
-      itemsPerPageAll: "所有",
-      nextPage: "下一页",
-      prevPage: "上一页",
-      firstPage: "第一页",
-      lastPage: "最后一页",
-      pageText: "{2}中的{0}-{1}",
+      itemsPerPageText: "ページあたりのアイテム数：",
+      itemsPerPageAll: "すべて",
+      nextPage: "次のページ",
+      prevPage: "前のページ",
+      firstPage: "最初のページ",
+      lastPage: "最後のページ",
+      pageText: "{2}中の{0}-{1}",
     },
     datePicker: {
-      itemsSelected: "已选择{0}",
-      nextMonthAriaLabel: "下个月",
-      nextYearAriaLabel: "明年",
-      prevMonthAriaLabel: "上个月",
-      prevYearAriaLabel: "去年",
+      itemsSelected: "{0}個選択されました",
+      nextMonthAriaLabel: "次の月",
+      nextYearAriaLabel: "来年",
+      prevMonthAriaLabel: "前月",
+      prevYearAriaLabel: "前年",
     },
-    noDataText: "无可用数据",
+    noDataText: "データがありません",
     carousel: {
-      prev: "上一张",
-      next: "下一张",
+      prev: "前のビジュアル",
+      next: "次のビジュアル",
       ariaLabel: {
-        delimiter: "{1}的轮播幻灯片{0}",
+        delimiter: "カルーセルスライド {0}/{1}",
       },
     },
     calendar: {
-      moreEvents: "还有{0}个",
+      moreEvents: "さらに{0}件",
     },
     fileInput: {
-      counter: "{0}个文件",
-      counterSize: "{0}个文件（共{1}个）",
+      counter: "{0}ファイル",
+      counterSize: "{1}中、{0}ファイル",
     },
     timePicker: {
       am: "AM",
@@ -56,19 +132,15 @@ export default {
     },
     pagination: {
       ariaLabel: {
-        wrapper: "分页导航",
-        next: "下一页",
-        previous: "上一页",
-        page: "转到页面{0}",
-        currentPage: "当前页，第{0}页",
+        wrapper: "ページネーションナビゲーション",
+        next: "次のページ",
+        previous: "前のページ",
+        page: "{0}ページに移動する",
+        currentPage: "現在のページ、{0}ページ目",
       },
     },
   },
-  common: {
-    add: "追加",
-    subNav: "サブメニュー",
-    applicationBar: "App バー",
-  },
+
   nav: {
     qa: "Q&A",
     grammarCorrection: "文法訂正",

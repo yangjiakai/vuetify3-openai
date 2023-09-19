@@ -1,4 +1,78 @@
 export default {
+
+  common: {
+    subNav: "副菜单",
+    applicationBar: "AppBar",
+    add: "增加",
+    cancel: "取消",
+    save: "保存",
+    delete: "删除",
+    title: "Tit标题le",
+    confirm: "确认",
+    description: "描述",
+    faq: "FAQ",
+    contact: "联络我们",
+    tos: "Terms of Service",
+    policy: "安全条款",
+    logout: "退出登录",
+  },
+  toolbox: {
+    cardTemplate: "Card Template",
+    textFormatting: "Text Formatting",
+    calloutBoxes: "Callout Boxes",
+    layoutOptions: "Layout Options",
+    visualTemplates: "Visual Templates",
+    addImages: "Add Images",
+    EmbedVideos: "Embed Videos",
+    EmbedApps: "Embed Apps",
+    FromsAndButtons: "Froms And Buttons",
+  },
+  spoken: {
+    title: "口语交流",
+    newFriend: "新好友",
+    addFriend: "添加好友",
+    slogan: "添加一个好友来聊天吧",
+  },
+  chat: {
+    title: "GPT",
+    theme: "主题",
+    newChat: "新会话",
+    chatConfig: "会话配置",
+    addChat: "添加会话",
+    clearHistory: "清空历史",
+  },
+
+  gptConfig: {
+    model: "模型",
+    maxTokens: "Max Tokens",
+    temperature: "自由度",
+    presencePenalty: "Presence Penalty",
+    frequencyPenalty: "Frequency Penalty",
+    prompt: "Prompt",
+    role: "角色",
+  },
+
+  article: {
+    title: "文章解析",
+    read: "阅读",
+    translate: "翻译",
+    SentenceSegmentation: "语句片段",
+  },
+
+  voice: {
+    voiceModel: "声音模型",
+    audition: "试听",
+    voiceRate: "语速",
+    voiceStyle: "情感",
+    voiceConfig: "声音设置",
+  },
+  globalSetting: {
+    title: "全局设置",
+    language: "语言",
+  },
+
+
+
   // Vuetify 组件内部翻译
   $vuetify: {
     badge: "徽章",
@@ -64,11 +138,7 @@ export default {
       },
     },
   },
-  common: {
-    add: "新增",
-    subNav: "二级菜单",
-    applicationBar: "工具栏",
-  },
+
   nav: {
     qa: "问答",
     grammarCorrection: "代码纠错",

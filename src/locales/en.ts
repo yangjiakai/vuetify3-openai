@@ -1,4 +1,77 @@
 export default {
+  common: {
+    subNav: "Sub Nav",
+    applicationBar: "Application Bar",
+    add: "Add",
+    cancel: "Cancel",
+    save: "Save",
+    delete: "Delete",
+    title: "Title",
+    confirm: "Confirm",
+    description: "Description",
+    faq: "FAQ",
+    contact: "Contact Us",
+    tos: "Terms of Service",
+    policy: "Privacy Policy",
+    logout: "Logout",
+  },
+
+  toolbox: {
+    cardTemplate: "Card Template",
+    textFormatting: "Text Formatting",
+    calloutBoxes: "Callout Boxes",
+    layoutOptions: "Layout Options",
+    visualTemplates: "Visual Templates",
+    addImages: "Add Images",
+    EmbedVideos: "Embed Videos",
+    EmbedApps: "Embed Apps",
+    FromsAndButtons: "Froms And Buttons",
+  },
+
+  spoken: {
+    title: "Spoken",
+    newFriend: "New Friend",
+    addFriend: "Add Friend",
+    slogan: "Add a friend for Communication.",
+  },
+  chat: {
+    title: "GPT",
+    theme: "Theme",
+    addChat: "Add Chat",
+    newChat: "New Chat",
+    chatConfig: "Chat Config",
+    clearHistory: "Clear History",
+  },
+
+  gptConfig: {
+    model: "Model",
+    maxTokens: "Max Tokens",
+    temperature: "Temperature",
+    presencePenalty: "Presence Penalty",
+    frequencyPenalty: "Frequency Penalty",
+    prompt: "Prompt",
+    role: "Role",
+  },
+
+  article: {
+    title: "Article",
+    read: "Read",
+    translate: "Translate",
+    SentenceSegmentation: "Sentence Segmentation",
+  },
+
+  voice: {
+    voiceModel: "Voice Model",
+    audition: "Audition",
+    voiceRate: "Voice Rate",
+    voiceStyle: "Voice Style",
+    voiceConfig: "Voice Config",
+  },
+
+  globalSetting: {
+    title: "Global Setting",
+    language: "Language",
+  },
   // Vuetify 组件内部翻译
   $vuetify: {
     badge: "徽章",
@@ -67,11 +140,7 @@ export default {
       },
     },
   },
-  common: {
-    add: "Add",
-    subNav: "Sub Nav",
-    applicationBar: "Application Bar",
-  },
+
   nav: {
     qa: "Q&A",
     grammarCorrection: "Grammar correction",

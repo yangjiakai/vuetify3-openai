@@ -65,12 +65,6 @@ const deleteConfirm = (id) => {
   });
 };
 
-const toHome = () => {
-  router.push({
-    name: "chat-home",
-  });
-};
-
 // 取消更新菜单标题
 const deleteCancel = (id) => {
   chatHistoryStore.updateMenuDeleteConfirm(id, false);
@@ -102,7 +96,7 @@ watch(
           <template v-slot:prepend>
             <v-icon>mdi-plus-circle</v-icon>
           </template>
-          添加会话</v-btn
+          {{ $t("chat.addChat") }}</v-btn
         >
         <transition-group name="slide-x" tag="div">
           <v-list-item
@@ -132,7 +126,9 @@ watch(
               />
             </v-list-item-title>
             <v-list-item-title v-else-if="chatMenu.isMenuDeleteConfirm">
-              {{ `删除 "${chatMenu.menuTitle}"?` }}</v-list-item-title
+              {{
+                `${$t("common.delete")} "${chatMenu.menuTitle}"?`
+              }}</v-list-item-title
             >
             <v-list-item-title class="font-weight-black" v-else>
               {{ chatMenu.menuTitle }}</v-list-item-title

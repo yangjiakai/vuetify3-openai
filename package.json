@@ -10,6 +10,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@intlify/unplugin-vue-i18n": "^1.2.0",
     "@mdi/font": "7.2.96",
     "@supabase/supabase-js": "^2.32.0",
     "@tiptap/pm": "^2.0.3",

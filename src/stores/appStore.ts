@@ -5,11 +5,12 @@ export const useAppStore = defineStore({
     state: () => ({
         mainSidebar: true,
         configDialog: false,
+        localCode: "en",
     }),
 
     persist: {
         enabled: true,
-        strategies: [{ storage: localStorage, paths: [] }],
+        strategies: [{ storage: localStorage, paths: ["localCode"] }],
     },
 
     actions: {
@@ -18,8 +19,10 @@ export const useAppStore = defineStore({
         },
         toggleConfigDialog() {
             this.configDialog = !this.configDialog;
-        }
-
+        },
+        setLocalCode(localCode: string) {
+            this.localCode = localCode;
+        },
 
 
     },
