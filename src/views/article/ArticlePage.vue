@@ -133,10 +133,10 @@ const translation = async () => {
               v-model="articleStore.sourceArticle"
               class="ma-5 text-grey-darken-2"
               variant="outlined"
-              placeholder="请输入文章"
+              :placeholder="$t('article.originalPlaceholder')"
               rows="20"
               color="primary"
-              label="原文"
+              :label="$t('article.original')"
               hide-details
               noResize
             >
@@ -145,11 +145,11 @@ const translation = async () => {
               v-model="translatedContent"
               class="ma-5 text-grey-darken-2"
               variant="outlined"
-              placeholder="此处不可编辑"
+              :placeholder="$t('article.translationPlaceholder')"
               rows="20"
               color="primary"
               readonly
-              label="译文"
+              :label="$t('article.translation')"
               hide-details
               noResize
               active
@@ -169,9 +169,12 @@ const translation = async () => {
                 icon="solar:documents-minimalistic-line-duotone"
               />
             </v-app-bar-nav-icon>
-            <v-toolbar-title> 语句分割</v-toolbar-title>
+            <v-toolbar-title>
+              {{ $t("article.sentenceSegmentation") }}</v-toolbar-title
+            >
             <div class="text-body-1 font-weight-black d-flex align-center">
-              <span>音源:</span> {{ articleStore.voiceConfig.localName }}
+              <span>{{ $t("voice.voiceModel") }}:</span>
+              {{ articleStore.voiceConfig.localName }}
               <v-chip
                 color="white"
                 size="small"
@@ -196,7 +199,11 @@ const translation = async () => {
                 icon="solar:settings-line-duotone"
               />
               <!-- tooltip -->
-              <v-tooltip activator="parent" location="bottom" text="设定" />
+              <v-tooltip
+                activator="parent"
+                location="bottom"
+                :text="$t('common.config')"
+              />
             </v-btn>
           </v-toolbar>
           <perfect-scrollbar class="message-container">

@@ -15,6 +15,7 @@ export default {
     tos: "Terms of Service",
     policy: "安全条款",
     logout: "退出登录",
+    config: "配置",
   },
   toolbox: {
     cardTemplate: "Card Template",
@@ -52,11 +53,25 @@ export default {
     role: "角色",
   },
 
+  creation: {
+    title: "创作",
+
+  },
+  consultant: {
+    title: "专业咨询",
+  },
+
   article: {
     title: "文章解析",
     read: "阅读",
     translate: "翻译",
-    SentenceSegmentation: "语句片段",
+    sentenceSegmentation: "语句片段",
+    // 原文
+    original: "原文",
+    // 译文
+    translation: "译文",
+    originalPlaceholder: "请输入原文",
+    translationPlaceholder: "译文不可编辑",
   },
 
   voice: {

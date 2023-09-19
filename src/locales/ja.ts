@@ -14,6 +14,7 @@ export default {
     tos: "利用規約",
     policy: "プライバシーポリシー",
     logout: "ログアウト",
+    config: "設定",
   },
 
 
@@ -53,12 +54,23 @@ export default {
     prompt: "プロンプト",
     role: "役割",
   },
+  creation: {
+    title: "作成",
+  },
+
+  consultant: {
+    title: "コンサルタント",
+  },
 
   article: {
     title: "記事",
     read: "読む",
     translate: "翻訳",
-    SentenceSegmentation: "文章の分割",
+    sentenceSegmentation: "文章の分割",
+    original: "原文",
+    translation: "翻訳",
+    originalPlaceholder: "原文を入力してください",
+    translationPlaceholder: "翻訳は編集できません",
   },
 
   voice: {

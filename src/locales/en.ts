@@ -14,6 +14,9 @@ export default {
     tos: "Terms of Service",
     policy: "Privacy Policy",
     logout: "Logout",
+    config: "Config",
+    originalPlaceholder: "Input Original Text",
+    translationPlaceholder: "Translation Can Be Edited Here",
   },
 
   toolbox: {
@@ -53,11 +56,17 @@ export default {
     role: "Role",
   },
 
+  creation: {
+    title: "Creation",
+  },
+
   article: {
     title: "Article",
     read: "Read",
     translate: "Translate",
-    SentenceSegmentation: "Sentence Segmentation",
+    sentenceSegmentation: "Sentence Segmentation",
+    original: "Original",
+    translation: "Translation",
   },
 
   voice: {

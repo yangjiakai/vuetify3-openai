@@ -37,18 +37,18 @@ const menus = [
     url: "/spoken",
   },
   {
-    title: "gpt.title",
+    title: "chat.title",
     icon: "solar:face-scan-circle-line-duotone",
 
     url: "/chat",
   },
   {
-    title: "Creation",
+    title: "creation.title",
     icon: "solar:bookmark-opened-line-duotone",
     url: "/creation",
   },
   {
-    title: "Consultant",
+    title: "consultant.title",
     icon: "solar:chat-square-check-line-duotone",
     url: "/consultant",
   },
@@ -59,7 +59,7 @@ const menus = [
   //   url: "/collection",
   // },
   {
-    title: "Article",
+    title: "article.title",
     icon: "solar:infinity-line-duotone",
     url: "/article",
   },
