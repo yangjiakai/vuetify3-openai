@@ -8,8 +8,10 @@ import { useSnackbarStore } from "@/stores/snackbarStore";
 import { useCollectionStore } from "@/stores/collectionStore";
 import { readStream } from "@/utils/aiUtils";
 import { useSpeechStore } from "@/stores/speechStore";
+import { useAppStore } from "@/stores/appStore";
 import { Gender } from "@/enums";
 import { getLanguageName } from "@/utils/common";
+const appStore = useAppStore();
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
 const collectionStore = useCollectionStore();
@@ -37,8 +39,7 @@ const translation = async () => {
           messages: [
             {
               role: "system",
-              content:
-                "你是一名翻译官,将内容翻译成中文,如果源文本就是中文的话,不必翻译",
+              content: appStore.localPrompt,
             },
             { role: "user", content: sentence.value.text },
           ],

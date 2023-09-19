@@ -56,8 +56,7 @@ const translation = async () => {
           messages: [
             {
               role: "system",
-              content:
-                "你是一名翻译官,将内容翻译成中文,如果源文本就是中文的话,不必翻译",
+              content: appStore.localPrompt,
             },
             { role: "user", content: articleStore.sourceArticle },
           ],

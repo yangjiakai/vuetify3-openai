@@ -185,7 +185,7 @@ const naviagteTo = (url: string) => {
     <ContactUsCard />
   </v-dialog>
   <v-dialog v-model="globalConfig">
-    <GlobalConfigCard />
+    <GlobalConfigCard @close-dialog="globalConfig = false" />
   </v-dialog>
 </template>
 

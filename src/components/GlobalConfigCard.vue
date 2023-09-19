@@ -5,11 +5,31 @@
 -->
 <script setup lang="ts">
 import LanguageSwitcher from "./LanguageSwitcher.vue";
+import { Icon } from "@iconify/vue";
+const emits = defineEmits(["closeDialog"]);
+const closeDialog = () => {
+  console.log("closeDialog");
+
+  emits("closeDialog");
+};
 </script>
 
 <template>
   <v-card width="600" height="400" class="mx-auto">
-    <v-card-title> {{ $t("globalSetting.title") }} </v-card-title>
+    <v-card-title>
+      {{ $t("globalSetting.title") }} <v-spacer></v-spacer>
+      <v-btn
+        class="mr-3"
+        color="grey-lighten-1"
+        variant="text"
+        size="20"
+        @click="closeDialog"
+      >
+        <template v-slot:prepend>
+          <Icon class="text-primary" icon="solar:close-circle-line-duotone" />
+        </template>
+      </v-btn>
+    </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
       <!-- Rate -->

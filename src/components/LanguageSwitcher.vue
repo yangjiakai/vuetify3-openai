@@ -38,9 +38,7 @@ const availableLocales = [
   },
 ];
 
-onMounted(() => {
-  setLocale(appStore.localCode);
-});
+onMounted(() => {});
 
 const setLocale = (locale: string) => {
   current.value = locale;
