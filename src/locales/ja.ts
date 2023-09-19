@@ -43,11 +43,14 @@ export default {
     newChat: "新規チャット",
     chatConfig: "チャット設定",
     clearHistory: "履歴をクリア",
+    slogan: "新しいチャットを始める",
+
   },
 
   gptConfig: {
     model: "モデル",
-    maxTokens: "最大トークン数",
+    maxTokens: "トークン数",
+    historyNumber: "履歴数",
     temperature: "温度",
     presencePenalty: "プレゼンスペナルティ",
     frequencyPenalty: "頻度ペナルティ",

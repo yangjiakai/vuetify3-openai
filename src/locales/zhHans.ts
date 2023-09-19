@@ -41,11 +41,14 @@ export default {
     chatConfig: "会话配置",
     addChat: "添加会话",
     clearHistory: "清空历史",
+    slogan: "开始一个新会话"
   },
 
   gptConfig: {
     model: "模型",
     maxTokens: "Max Tokens",
+    namePlaceholder: "角色名称",
+    historyNumber: "历史信息数",
     temperature: "自由度",
     presencePenalty: "Presence Penalty",
     frequencyPenalty: "Frequency Penalty",

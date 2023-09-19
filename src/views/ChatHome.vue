@@ -29,7 +29,7 @@ import { Icon } from "@iconify/vue";
         :width="400"
       /> -->
       <h2 class="text-center font-weight-black text-grey-darken-1">
-        开始一个新会话
+        {{ $t("chat.slogan") }}
       </h2>
     </div>
   </div>

@@ -44,11 +44,13 @@ export default {
     newChat: "New Chat",
     chatConfig: "Chat Config",
     clearHistory: "Clear History",
+    slogan: "Start a new chat",
   },
 
   gptConfig: {
     model: "Model",
     maxTokens: "Max Tokens",
+    historyNumber: "History ",
     temperature: "Temperature",
     presencePenalty: "Presence Penalty",
     frequencyPenalty: "Frequency Penalty",

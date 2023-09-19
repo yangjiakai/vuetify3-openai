@@ -52,7 +52,7 @@ const handleSave = () => {
       <hr />
 
       <v-card-title class="font-weight-bold text-grey-darken-2">
-        当前对话设定
+        {{ $t("common.config") }}
       </v-card-title>
 
       <v-divider></v-divider>
@@ -60,9 +60,9 @@ const handleSave = () => {
         <!-- Rate -->
         <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
-            <v-label class="font-weight-bold text-grey-darken-2"
-              >语言模型</v-label
-            >
+            <v-label class="font-weight-bold text-grey-darken-2">{{
+              $t("gptConfig.model")
+            }}</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <div
@@ -93,9 +93,9 @@ const handleSave = () => {
         <!-- Emotion -->
         <v-row class="align-center mb-3">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
-            <v-label class="font-weight-bold text-grey-darken-2"
-              >最大token</v-label
-            >
+            <v-label class="font-weight-bold text-grey-darken-2">{{
+              $t("gptConfig.maxTokens")
+            }}</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-text-field
@@ -112,9 +112,9 @@ const handleSave = () => {
         <!-- 历史消息数 -->
         <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
-            <v-label class="font-weight-bold text-grey-darken-2"
-              >历史消息数</v-label
-            >
+            <v-label class="font-weight-bold text-grey-darken-2 word-break">{{
+              $t("gptConfig.historyNumber")
+            }}</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-slider
@@ -131,9 +131,9 @@ const handleSave = () => {
         <!-- 自由度 -->
         <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
-            <v-label class="font-weight-bold text-grey-darken-2"
-              >自由度</v-label
-            >
+            <v-label class="font-weight-bold text-grey-darken-2">{{
+              $t("gptConfig.temperature")
+            }}</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-slider
@@ -148,11 +148,11 @@ const handleSave = () => {
           </v-col>
         </v-row>
         <!-- 话题新鲜度 -->
-        <v-row class="align-center">
+        <!-- <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
-            <v-label class="font-weight-bold text-grey-darken-2"
-              >话题新鲜度</v-label
-            >
+            <v-label class="font-weight-bold text-grey-darken-2">{{
+              $t("gptConfig.presencePenalty")
+            }}</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-slider
@@ -165,14 +165,14 @@ const handleSave = () => {
               hide-details
             ></v-slider>
           </v-col>
-        </v-row>
+        </v-row> -->
 
         <!-- 频率惩罚度 -->
-        <v-row class="align-center">
+        <!-- <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
-            <v-label class="font-weight-bold text-grey-darken-2"
-              >频率惩罚度</v-label
-            >
+            <v-label class="font-weight-bold text-grey-darken-2">{{
+              $t("gptConfig.frequencyPenalty")
+            }}</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-slider
@@ -185,12 +185,14 @@ const handleSave = () => {
               hide-details
             ></v-slider>
           </v-col>
-        </v-row>
+        </v-row> -->
 
         <!-- 角色 -->
         <v-row class="align-center mb-3">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0 text-right">
-            <v-label class="font-weight-bold text-grey-darken-2">角色</v-label>
+            <v-label class="font-weight-bold text-grey-darken-2">{{
+              $t("common.title")
+            }}</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-select
@@ -208,13 +210,13 @@ const handleSave = () => {
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn color="grey" class="font-weight-bold" @click="handleCancel"
-          >取消修改</v-btn
-        >
+        <v-btn color="grey" class="font-weight-bold" @click="handleCancel">{{
+          $t("common.cancel")
+        }}</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="primary" class="font-weight-bold" @click="handleSave"
-          >保存配置</v-btn
-        >
+        <v-btn color="primary" class="font-weight-bold" @click="handleSave">{{
+          $t("common.save")
+        }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
