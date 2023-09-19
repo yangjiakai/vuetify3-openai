@@ -59,6 +59,10 @@ export default {
   creation: {
     title: "Creation",
   },
+  consultant: {
+    title: "Consultant",
+
+  },
 
   article: {
     title: "Article",
@@ -70,11 +74,18 @@ export default {
   },
 
   voice: {
-    voiceModel: "Voice Model",
+    voiceModel: " Model",
     audition: "Audition",
     voiceRate: "Voice Rate",
     voiceStyle: "Voice Style",
     voiceConfig: "Voice Config",
+  },
+  character: {
+    title: "Character",
+
+    configTitle: "Character Config",
+    name: " Name",
+    namePlaceholder: "Character Name",
   },
 
   globalSetting: {
@@ -86,7 +97,7 @@ export default {
     badge: "徽章",
     close: "关",
     dataIterator: {
-      noResultsText: "未找到匹配的记录",
+      noResltsText: "未找到匹配的记录",
       loadingText: "正在载入项目...",
     },
     input: {

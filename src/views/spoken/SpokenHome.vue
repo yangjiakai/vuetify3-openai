@@ -24,7 +24,7 @@ import { Icon } from "@iconify/vue";
         :width="400"
       /> -->
       <h2 class="text-center font-weight-black text-grey-darken-1">
-        添加一个好友来进行口语交流吧
+        {{ $t("spoken.slogan") }}
       </h2>
     </div>
   </div>

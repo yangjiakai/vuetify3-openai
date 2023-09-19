@@ -79,8 +79,15 @@ export default {
     audition: "试听",
     voiceRate: "语速",
     voiceStyle: "情感",
-    voiceConfig: "声音设置",
+    voiceConfig: "声音设定",
   },
+  character: {
+    title: "角色",
+    configTitle: "角色设定",
+    name: "姓名",
+    namePlaceholder: "角色名称",
+  },
+
   globalSetting: {
     title: "全局设置",
     language: "语言",

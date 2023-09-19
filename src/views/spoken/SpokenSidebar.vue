@@ -109,7 +109,7 @@ const openDialog = async () => {
           <template v-slot:prepend>
             <v-icon>mdi-plus-circle</v-icon>
           </template>
-          添加好友</v-btn
+          {{ $t("spoken.addFriend") }}</v-btn
         >
         <transition-group name="slide-x" tag="div">
           <v-list-item
@@ -139,7 +139,9 @@ const openDialog = async () => {
               />
             </v-list-item-title>
             <v-list-item-title v-else-if="chatMenu.isMenuDeleteConfirm">
-              {{ `删除 "${chatMenu.menuTitle}"?` }}</v-list-item-title
+              {{
+                $t("common.delete") + `${chatMenu.menuTitle}?`
+              }}</v-list-item-title
             >
             <v-list-item-title class="font-weight-black" v-else>
               {{ chatMenu.menuTitle }}</v-list-item-title

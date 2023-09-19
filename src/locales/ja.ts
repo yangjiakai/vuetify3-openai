@@ -74,12 +74,20 @@ export default {
   },
 
   voice: {
-    voiceModel: "音声モデル",
-    audition: "オーディション",
-    voiceRate: "音声レート",
-    voiceStyle: "音声スタイル",
+    voiceModel: "モデル",
+    audition: "試聴",
+    voiceRate: "レート",
+    voiceStyle: "スタイル",
     voiceConfig: "音声設定",
   },
+
+  character: {
+    title: "キャラクター",
+    configTitle: "キャラクター設定",
+    name: "名前",
+    namePlaceholder: "キャラクター名",
+  },
+
   globalSetting: {
     title: "グローバル設定",
     language: "言語",

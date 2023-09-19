@@ -105,7 +105,11 @@ const addChat = () => {
     gender: currentCharacter.value.gender,
     localName: currentCharacter.value.localName,
   };
-  spokenStore.addChat(id, voiceConfig, chatTitle.value?.trim() || "新朋友");
+  spokenStore.addChat(
+    id,
+    voiceConfig,
+    chatTitle.value?.trim() || "spoken.newFriend"
+  );
   spokenStore.switchAddCharacterDialog();
 };
 </script>
@@ -119,14 +123,16 @@ const addChat = () => {
   >
     <v-card>
       <v-card-title class="font-weight-bold text-grey-darken-2">
-        角色设定
+        {{ $t("character.configTitle") }}
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
         <!-- Rate -->
         <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-bold text-grey-darken-2">姓名</v-label>
+            <v-label class="font-weight-bold text-grey-darken-2">{{
+              $t("character.name")
+            }}</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <v-text-field
@@ -135,7 +141,7 @@ const addChat = () => {
               variant="outlined"
               hide-details
               color="primary"
-              placeholder="口语练习的角色姓名"
+              :placeholder="$t('character.namePlaceholder')"
               focused
             ></v-text-field>
           </v-col>
@@ -143,9 +149,9 @@ const addChat = () => {
 
         <v-row>
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-bold text-grey-darken-2"
-              >语言模型</v-label
-            >
+            <v-label class="font-weight-bold text-grey-darken-2">{{
+              $t("voice.voiceModel")
+            }}</v-label>
           </v-col>
           <v-col cols="12" sm="10">
             <p class="mb-1 d-flex align-center">
@@ -195,7 +201,7 @@ const addChat = () => {
                   <span
                     class="text-body-2 text-grey-lighten-1 font-weight-bold"
                   >
-                    试听
+                    {{ $t("voice.audition") }}
                   </span>
 
                   <v-btn
@@ -232,7 +238,7 @@ const addChat = () => {
 
     <v-card min-height="200" class="mt-5">
       <v-card-title class="font-weight-bold text-grey-darken-2">
-        声音设定
+        {{ $t("voice.voiceConfig") }}
       </v-card-title>
 
       <v-divider></v-divider>
@@ -240,7 +246,9 @@ const addChat = () => {
         <!-- Rate -->
         <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-bold text-grey-darken-2">语速</v-label>
+            <v-label class="font-weight-bold text-grey-darken-2">
+              {{ $t("voice.voiceRate") }}</v-label
+            >
           </v-col>
           <v-col cols="12" sm="10">
             <v-slider
@@ -258,7 +266,9 @@ const addChat = () => {
         <!-- Emotion -->
         <v-row class="align-center mb-3">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-bold text-grey-darken-2">风格</v-label>
+            <v-label class="font-weight-bold text-grey-darken-2">
+              {{ $t("voice.voiceStyle") }}</v-label
+            >
           </v-col>
           <v-col cols="12" sm="10">
             <v-select
@@ -280,12 +290,12 @@ const addChat = () => {
         color="grey"
         class="font-weight-bold"
         @click="spokenStore.switchAddCharacterDialog()"
-        >取消添加</v-btn
+        >{{ $t("common.cancel") }}</v-btn
       >
       <v-spacer></v-spacer>
-      <v-btn color="primary" class="font-weight-bold" @click="addChat"
-        >确认添加</v-btn
-      >
+      <v-btn color="primary" class="font-weight-bold" @click="addChat">{{
+        $t("common.confirm")
+      }}</v-btn>
     </v-card-actions>
     <!-- <v-row>
       <v-col cols="4" v-for="voice in voices">
