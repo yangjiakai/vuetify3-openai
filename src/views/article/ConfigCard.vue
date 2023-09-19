@@ -128,7 +128,7 @@ const handleConfirm = () => {
   >
     <v-card>
       <v-card-title class="font-weight-bold text-grey-darken-2">
-        语音设定
+        {{ $t("common.config") }}
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
@@ -168,7 +168,7 @@ const handleConfirm = () => {
 
             <template v-slot:append>
               <span class="text-body-2 text-grey-lighten-1 font-weight-bold">
-                试听
+                {{ $t("voice.audition") }}
               </span>
 
               <v-btn
@@ -201,7 +201,7 @@ const handleConfirm = () => {
 
     <v-card min-height="200" class="mt-5">
       <v-card-title class="font-weight-bold text-grey-darken-2">
-        声音设定
+        {{ $t("voice.voiceConfig") }}
       </v-card-title>
 
       <v-divider></v-divider>
@@ -209,7 +209,9 @@ const handleConfirm = () => {
         <!-- Rate -->
         <v-row class="align-center">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-bold text-grey-darken-2">语速</v-label>
+            <v-label class="font-weight-bold text-grey-darken-2">
+              {{ $t("voice.voiceRate") }}</v-label
+            >
           </v-col>
           <v-col cols="12" sm="10">
             <v-slider
@@ -227,7 +229,9 @@ const handleConfirm = () => {
         <!-- Emotion -->
         <v-row class="align-center mb-3">
           <v-col cols="12" sm="2" class="pb-sm-3 pb-0">
-            <v-label class="font-weight-bold text-grey-darken-2">风格</v-label>
+            <v-label class="font-weight-bold text-grey-darken-2">
+              {{ $t("voice.voiceStyle") }}</v-label
+            >
           </v-col>
           <v-col cols="12" sm="10">
             <v-select
@@ -245,12 +249,12 @@ const handleConfirm = () => {
     </v-card>
 
     <v-card-actions>
-      <v-btn color="grey" class="font-weight-bold" @click="handleCancel"
-        >取消</v-btn
+      <v-btn color="grey" class="font-weight-bold" @click="handleCancel">
+        {{ $t("common.cancel") }}</v-btn
       >
       <v-spacer></v-spacer>
-      <v-btn color="primary" class="font-weight-bold" @click="handleConfirm"
-        >确认</v-btn
+      <v-btn color="primary" class="font-weight-bold" @click="handleConfirm">
+        {{ $t("common.save") }}</v-btn
       >
     </v-card-actions>
   </v-card>

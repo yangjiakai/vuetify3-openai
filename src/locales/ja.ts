@@ -45,8 +45,6 @@ export default {
     chatConfig: "チャット設定",
     clearHistory: "履歴をクリア",
     slogan: "新しいチャットを始める",
-
-
   },
 
   gptConfig: {
