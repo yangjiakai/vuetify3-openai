@@ -110,10 +110,10 @@ const handleCollect = () => {
 
   if (collectionStore.isCollected(sentence.sentenceId)) {
     collectionStore.removeSentence(sentence.sentenceId);
-    snackbarStore.showSuccessMessage("已取消收藏");
+    snackbarStore.showSuccessMessage("Collecte Cancelled");
   } else {
     collectionStore.addSentence(sentence);
-    snackbarStore.showSuccessMessage("已收藏");
+    snackbarStore.showSuccessMessage("Collected");
   }
 };
 
