@@ -77,6 +77,7 @@ export default {
     translation: "Translation",
     originalPlaceholder: "Input Original Text",
     translationPlaceholder: "Translation Can Be Edited Here",
+
   },
 
   voice: {

@@ -60,7 +60,7 @@ const translation = async () => {
             },
             { role: "user", content: articleStore.sourceArticle },
           ],
-          model: "gpt-3.5-turbo-0613",
+          model: "gpt-3.5-turbo-16k-0613",
           stream: true,
         }),
       }
@@ -136,8 +136,10 @@ const translation = async () => {
               rows="20"
               color="primary"
               :label="$t('article.original')"
-              hide-details
+              :counter="5000"
+              persistentCounter
               noResize
+              :maxlength="5000"
             >
             </v-textarea>
             <v-textarea
