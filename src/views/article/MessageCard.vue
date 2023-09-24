@@ -72,6 +72,12 @@ const translation = async () => {
     snackbarStore.showErrorMessage(error.message);
   }
 };
+
+const dialog = ref(false);
+
+const openDialog = () => {
+  dialog.value = true;
+};
 </script>
 
 <template>
@@ -81,7 +87,9 @@ const translation = async () => {
   >
     <div class="d-flex align-center">
       <div>
-        <div>{{ props.text }}</div>
+        <div @mouseup="openDialog">
+          {{ props.text }}
+        </div>
         <div class="mt-2 text-body-2 text-grey">{{ translatedContent }}</div>
       </div>
       <v-spacer></v-spacer>
