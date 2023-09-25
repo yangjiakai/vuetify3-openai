@@ -36,6 +36,10 @@ watch(
   }
 );
 
+const targetArticleLength = computed(() => {
+  return targetArticle.value.length;
+});
+
 onMounted(() => {
   targetArticle.value = transferArtile(articleStore.sourceArticle);
 });
@@ -171,8 +175,10 @@ const translation = async () => {
               />
             </v-app-bar-nav-icon>
             <v-toolbar-title>
-              {{ $t("article.sentenceSegmentation") }}</v-toolbar-title
-            >
+              {{ $t("article.sentenceSegmentation") }}
+
+              <v-chip density="compact">{{ targetArticleLength }}</v-chip>
+            </v-toolbar-title>
             <div class="text-body-1 font-weight-black d-flex align-center">
               <span>{{ $t("voice.voiceModel") }}:</span>
               {{ articleStore.voiceConfig.localName }}
