@@ -9,7 +9,9 @@ import { useSpeechStore } from "@/stores/speechStore";
 import { readStream } from "@/utils/aiUtils";
 import { useArticleStore } from "@/stores/articleStore";
 import { useAppStore } from "@/stores/appStore";
+import { useSelectionStore } from "@/stores/selectionStore";
 const appStore = useAppStore();
+const selectionStore = useSelectionStore();
 
 const articleStore = useArticleStore();
 const speechStore = useSpeechStore();
@@ -73,10 +75,14 @@ const translation = async () => {
   }
 };
 
-const dialog = ref(false);
-
-const openDialog = () => {
-  dialog.value = true;
+const openDialog = (e) => {
+  selectionStore.selectionText = window.getSelection()?.toString() || "";
+  if (selectionStore.selectionText) {
+    selectionStore.position = { x: e.clientX, y: e.clientY };
+    selectionStore.selectionPopupShow = true;
+  } else {
+    selectionStore.selectionPopupShow = false;
+  }
 };
 </script>
 
@@ -87,9 +93,10 @@ const openDialog = () => {
   >
     <div class="d-flex align-center">
       <div>
-        <div @mouseup="openDialog">
+        <div class="position-relative" @mouseup="openDialog">
           {{ props.text }}
         </div>
+
         <div class="mt-2 text-body-2 text-grey">{{ translatedContent }}</div>
       </div>
       <v-spacer></v-spacer>

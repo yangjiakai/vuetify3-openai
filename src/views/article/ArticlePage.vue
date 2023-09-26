@@ -14,6 +14,7 @@ import ConfigCard from "./ConfigCard.vue";
 import { useArticleStore } from "@/stores/articleStore";
 import { getLanguageName } from "@/utils/common";
 import { useAppStore } from "@/stores/appStore";
+import SelectionPopup from "@/components/SelectionPopup.vue";
 const appStore = useAppStore();
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
@@ -226,6 +227,7 @@ const translation = async () => {
     <v-dialog v-model="articleStore.showConfigDialog">
       <ConfigCard />
     </v-dialog>
+    <SelectionPopup />
   </div>
 </template>
 
