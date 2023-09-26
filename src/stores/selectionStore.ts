@@ -5,7 +5,8 @@ export const useSelectionStore = defineStore({
   state: () => ({
     selectionText: "",
     selectionPopupShow: false,
-    position: { x: 0, y: 0 }
+    position: { x: 0, y: 0 },
+    explainedText: "",
   }),
 
   persist: {

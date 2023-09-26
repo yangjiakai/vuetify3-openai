@@ -8,6 +8,7 @@ import MainSidebar from "@/components/MainSidebar.vue";
 import Toolbox from "@/components/Toolbox.vue";
 
 import Snackbar from "@/components/Snackbar.vue";
+import DictionaryDrawer from "@/components/DictionaryDrawer.vue";
 </script>
 
 <template>
@@ -29,6 +30,10 @@ import Snackbar from "@/components/Snackbar.vue";
     <!-- ---------------------------------------------- -->
     <Snackbar />
     <Toolbox />
+
+    <!-- DictionaryDrawer -->
+    <!-- ---------------------------------------------- -->
+    <DictionaryDrawer />
   </div>
 </template>
 

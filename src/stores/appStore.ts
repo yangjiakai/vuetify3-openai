@@ -6,6 +6,7 @@ export const useAppStore = defineStore({
         mainSidebar: true,
         configDialog: false,
         localCode: "en",
+        dictionaryDrawer: false,
     }),
 
     persist: {
