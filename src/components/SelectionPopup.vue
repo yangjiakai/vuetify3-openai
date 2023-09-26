@@ -90,6 +90,7 @@ const translation = async () => {
 <template>
   <v-card
     v-if="selectionStore.selectionPopupShow"
+    v-click-outside="() => (selectionStore.selectionPopupShow = false)"
     class="position-fixed"
     style="z-index: 999"
     :style="{
