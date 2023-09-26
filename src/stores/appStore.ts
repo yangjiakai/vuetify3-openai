@@ -17,13 +17,15 @@ export const useAppStore = defineStore({
         localPrompt: (state) => {
             switch (state.localCode) {
                 case "zhHans":
-                    return "你是一名翻译官,将内容翻译成中文,如果源文本就是中文的话,不必翻译";
+                    return `
+                    return "将我发给你的语言翻译成中文，简洁直白，以 Lexile measure 800 输出";
+                    `
                 case "en":
-                    return "You are a translator, translate the content into English, if the source text is English, no translation is required";
+                    return "将我发给你的语言翻译成英语，简洁直白，以 Lexile measure 800 输出";
                 case "ja":
-                    return "あなたは翻訳者です。コンテンツを日本語に翻訳します。ソーステキストが日本語の場合は、翻訳は必要ありません";
+                    return `将我发给你的语言翻译成日语，简洁直白，以 Lexile measure 800 输出`;
                 default:
-                    return "ou are a translator, translate the content into English, if the source text is English, no translation is required";
+                    return "将我发给你的语言翻译成英语，简洁直白，以 Lexile measure 800 输出";
             }
         }
     },
