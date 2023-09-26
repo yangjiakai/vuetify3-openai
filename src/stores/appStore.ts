@@ -17,9 +17,7 @@ export const useAppStore = defineStore({
         localPrompt: (state) => {
             switch (state.localCode) {
                 case "zhHans":
-                    return `
                     return "将我发给你的语言翻译成中文，简洁直白，以 Lexile measure 800 输出";
-                    `
                 case "en":
                     return "将我发给你的语言翻译成英语，简洁直白，以 Lexile measure 800 输出";
                 case "ja":
