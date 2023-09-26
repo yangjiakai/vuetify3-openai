@@ -80,7 +80,7 @@ const translation = async () => {
           messages: [
             {
               role: "system",
-              content: prompt2,
+              content: appStore.dictionaryPrompt,
             },
             { role: "user", content: selectionStore.selectionText },
           ],
