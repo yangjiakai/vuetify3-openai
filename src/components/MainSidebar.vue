@@ -53,15 +53,21 @@ const menus = [
     url: "/consultant",
   },
 
-  // {
-  //   title: "语句收藏",
-  //   icon: "solar:book-bookmark-minimalistic-line-duotone",
-  //   url: "/collection",
-  // },
   {
     title: "article.title",
     icon: "solar:infinity-line-duotone",
     url: "/article",
+  },
+  {
+    title: "article.title",
+    icon: "solar:infinity-line-duotone",
+    url: "/article",
+  },
+  // realtime
+  {
+    title: "realtime.title",
+    icon: "solar:infinity-line-duotone",
+    url: "/realtime-tts",
   },
 ];
 

@@ -140,6 +140,14 @@ export const routes = [
           ),
         meta: { requiresAuth: true },
       },
+      // realtime speech to text
+      {
+        path: "/realtime",
+        name: "realtime",
+        component: () =>
+          import(/* webpackChunkName: "app-realtime" */ "@/views/Realtime/Index.vue"),
+        meta: { requiresAuth: true },
+      },
 
     ],
     meta: { requiresAuth: true },
