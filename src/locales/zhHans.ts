@@ -66,6 +66,11 @@ export default {
     title: "专业咨询",
   },
 
+  realtime: {
+    title: "Realtime TTS",
+  },
+
+
   article: {
     title: "文章解析",
     read: "阅读",

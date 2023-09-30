@@ -76,6 +76,11 @@ export default {
     translationPlaceholder: "翻訳は編集できません",
   },
 
+  realtime: {
+    title: "Realtime TTS",
+  },
+
+
   voice: {
     voiceModel: "モデル",
     audition: "試聴",

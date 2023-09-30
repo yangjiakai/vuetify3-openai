@@ -80,6 +80,10 @@ export default {
 
   },
 
+  realtime: {
+    title: "Realtime TTS",
+  },
+
   voice: {
     voiceModel: " Model",
     audition: "Audition",
