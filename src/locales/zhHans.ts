@@ -65,6 +65,9 @@ export default {
   consultant: {
     title: "专业咨询",
   },
+  collection: {
+    title: "语句收藏",
+  },
 
   realtime: {
     title: "Realtime TTS",

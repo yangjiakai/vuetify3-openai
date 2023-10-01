@@ -6,10 +6,10 @@
 <script setup lang="ts">
 import { useSpeechStore } from "@/stores/speechStore";
 import { useSnackbarStore } from "@/stores/snackbarStore";
-import { useAppStore } from "@/stores/appStore";
+
+import { Icon } from "@iconify/vue";
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
-const appStore = useAppStore();
 
 const sourceArticle = ref("");
 const targetArticle = ref("");

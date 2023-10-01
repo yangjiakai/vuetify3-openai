@@ -80,6 +80,10 @@ export default {
     title: "Realtime TTS",
   },
 
+  collection: {
+    title: "Collection",
+  },
+
 
   voice: {
     voiceModel: "モデル",

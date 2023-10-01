@@ -80,6 +80,10 @@ export default {
 
   },
 
+  collection: {
+    title: "Collection",
+  },
+
   realtime: {
     title: "Realtime TTS",
   },

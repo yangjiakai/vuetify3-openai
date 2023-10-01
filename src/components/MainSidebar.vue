@@ -52,21 +52,22 @@ const menus = [
     icon: "solar:chat-square-check-line-duotone",
     url: "/consultant",
   },
+  {
+    title: "article.title",
+    icon: "solar:infinity-line-duotone",
+    url: "/article",
+  },
 
   {
-    title: "article.title",
-    icon: "solar:infinity-line-duotone",
-    url: "/article",
+    title: "collection.title",
+    icon: "solar:music-library-bold-duotone",
+    url: "/collection",
   },
-  {
-    title: "article.title",
-    icon: "solar:infinity-line-duotone",
-    url: "/article",
-  },
+
   // realtime
   {
     title: "realtime.title",
-    icon: "solar:infinity-line-duotone",
+    icon: "solar:reel-2-line-duotone",
     url: "/realtime-tts",
   },
 ];

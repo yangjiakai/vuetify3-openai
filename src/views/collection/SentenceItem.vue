@@ -89,11 +89,10 @@ const remove = () => {
 
 <template>
   <v-list-item elevation="1" class="ma-1" color="primary" @click="">
-    <v-list-item-content>
-      <v-list-item-title class="font-weight-bold text-grey-darken-1">{{
-        sentence.text
-      }}</v-list-item-title>
-    </v-list-item-content>
+    <v-list-item-title class="font-weight-bold text-grey-darken-1">{{
+      sentence.text
+    }}</v-list-item-title>
+
     <v-list-item-subtitle v-if="translatedContent" class="py-1">{{
       translatedContent
     }}</v-list-item-subtitle>
