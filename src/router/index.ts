@@ -142,10 +142,10 @@ export const routes = [
       },
       // realtime speech to text
       {
-        path: "/realtime",
+        path: "/realtime-tts",
         name: "realtime",
         component: () =>
-          import(/* webpackChunkName: "app-realtime" */ "@/views/Realtime/Index.vue"),
+          import(/* webpackChunkName: "app-realtime" */ "@/views/realtime/RealtimePage.vue"),
         meta: { requiresAuth: true },
       },
 

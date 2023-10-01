@@ -35,6 +35,7 @@ export const useSpeechStore = defineStore({
         // 语音识别器
         recognizer: null,
         allVoices: [],
+        recordingText: "",
     }),
 
     persist: {
@@ -93,7 +94,9 @@ export const useSpeechStore = defineStore({
                 this.recognizer.recognized = (s, e) => {
                     if (e.result.reason === ResultReason.RecognizedSpeech) {
                         recognizedText += e.result.text;
+                        this.recordingText = recognizedText;
                         console.log(`RECOGNIZED: Text=${e.result.text}`);
+
                     } else if (e.result.reason === ResultReason.NoMatch) {
                         const noMatchDetail = NoMatchDetails.fromResult(e.result);
                         console.log(`NoMatchReason: ${noMatchDetail.reason}`);
