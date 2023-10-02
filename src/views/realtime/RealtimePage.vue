@@ -6,6 +6,7 @@
 <script setup lang="ts">
 import { useSpeechStore } from "@/stores/speechStore";
 import { useSnackbarStore } from "@/stores/snackbarStore";
+import Phrases from "./Phrases.vue";
 
 import { Icon } from "@iconify/vue";
 const speechStore = useSpeechStore();
@@ -148,6 +149,13 @@ const stopRecording = () => {
             >
             </v-textarea>
           </perfect-scrollbar>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-card class="h-100" rounded="md">
+          <v-toolbar rounded="md" elevation="1" color="primary" class="toolbar">
+          </v-toolbar>
+          <Phrases />
         </v-card>
       </v-col>
     </v-row>
