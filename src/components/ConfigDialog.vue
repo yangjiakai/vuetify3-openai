@@ -6,6 +6,7 @@
 <script setup lang="ts">
 import { useAppStore } from "@/stores/appStore";
 import promptsZh from "@/data/prompts-zh.json";
+import promptsJa from "@/data/prompts-ja.json";
 import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 const chatHistoryStore = useChatHistoryStore();
 const appStore = useAppStore();
@@ -32,8 +33,8 @@ const handleCancel = () => {
 };
 
 const getRole = (prompt) => {
-  const role = promptsZh.find((item) => item.prompt === prompt) || {
-    act: "默认",
+  const role = promptsJa.find((item) => item.prompt === prompt) || {
+    act: "default",
     prompt: "",
   };
   return role.act;
@@ -201,7 +202,7 @@ const handleSave = () => {
               v-model="currentConfig.prompt"
               hide-details
               density="compact"
-              :items="promptsZh"
+              :items="promptsJa"
               item-title="act"
               item-value="prompt"
             ></v-select>

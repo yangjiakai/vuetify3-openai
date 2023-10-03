@@ -21,7 +21,7 @@ const appStore = useAppStore();
     location="right"
   >
     <template v-slot:prepend>
-      <v-list-item title="辞典">
+      <v-list-item title="辞書">
         <template v-slot:prepend>
           <v-avatar size="36">
             <Icon

@@ -53,7 +53,7 @@ const handleCollect = (item: Creation.Creation) => {
     <v-toolbar border color="white">
       <SidebarToggle />
       <v-toolbar-title class="text-h6 font-weight-bold text-grey-darken-2">
-        创作中心
+        創作センター
       </v-toolbar-title>
     </v-toolbar>
     <v-container fluid>
@@ -64,7 +64,7 @@ const handleCollect = (item: Creation.Creation) => {
           hide-details
           rounded="xl"
           variant="solo"
-          placeholder="请输入创作功能关键词"
+          placeholder="Keyword"
           class="mx-4"
         >
           <template v-slot:prepend-inner>
