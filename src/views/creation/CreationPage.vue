@@ -6,6 +6,7 @@
 <script setup lang="ts">
 import { creationsData } from "@/data/chatData";
 import SidebarToggle from "@/components/SidebarToggle.vue";
+import router from "~/src/router";
 
 const creationList = ref<Creation.Creation[]>();
 onMounted(() => {
@@ -45,6 +46,11 @@ const displayList = computed(() => {
 
 const handleCollect = (item: Creation.Creation) => {
   item.isCollected = !item.isCollected;
+};
+
+const handleClick = (item: Creation.Creation) => {
+  currentCreationId.value = item.creationId;
+  router.push(`/creation-chat`);
 };
 </script>
 
@@ -103,8 +109,8 @@ const handleCollect = (item: Creation.Creation) => {
                     isHovering ? 'active-card' : 'default-card',
                     item.creationId === currentCreationId ? 'active-card' : '',
                   ]"
-                  height="250"
-                  @click="currentCreationId = item.creationId"
+                  height="220"
+                  @click="handleClick(item)"
                 >
                   <v-card-title class="justify-space-between align-start">
                     <v-btn

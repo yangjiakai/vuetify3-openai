@@ -15,9 +15,9 @@ const sentences = computed((): Collection.Sentence[] => {
 
 <template>
   <div class="h-100 pa-5">
-    <v-card class="h-100 mx-auto" max-width="1200">
+    <v-card class="h-100 mx-auto">
       <v-card-title class="font-weight-bold text-grey-darken-2">
-        句子收藏
+        コレクション
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text>

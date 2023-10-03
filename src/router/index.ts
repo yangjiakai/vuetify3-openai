@@ -51,6 +51,12 @@ export const routes = [
           },
         ],
       },
+      {
+        path: "creation-chat",
+        name: "creation-chat",
+        component: () => import("@/views/creation/CreationChat.vue"),
+        meta: { requiresAuth: true },
+      },
 
       // 咨询顾问
       {

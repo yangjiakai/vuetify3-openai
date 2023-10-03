@@ -84,6 +84,10 @@ const openDialog = (e) => {
     selectionStore.selectionPopupShow = false;
   }
 };
+
+const isCollected = computed(() => {});
+
+const handleCollect = () => {};
 </script>
 
 <template>
@@ -113,6 +117,7 @@ const openDialog = (e) => {
         </template>
       </v-btn>
       <v-btn
+        class="ml-1 mr-2"
         color="grey-lighten-1"
         variant="text"
         @click.stop="speakTest(props.text)"
@@ -120,6 +125,16 @@ const openDialog = (e) => {
       >
         <template v-slot:prepend>
           <v-icon size="20" color="primary">mdi-play-circle-outline</v-icon>
+        </template>
+      </v-btn>
+      <v-btn
+        color="grey-lighten-1"
+        variant="text"
+        @click.stop="handleCollect"
+        size="20"
+      >
+        <template v-slot:prepend>
+          <v-icon size="20" color="primary">mdi-heart-outline</v-icon>
         </template>
       </v-btn>
     </div>
