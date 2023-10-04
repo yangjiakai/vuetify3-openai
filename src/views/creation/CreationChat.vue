@@ -5,11 +5,12 @@
 -->
 <script setup lang="ts">
 import { useSnackbarStore } from "@/stores/snackbarStore";
+import { useCreationStore } from "@/stores/creationStore";
 import { readStream } from "@/utils/aiUtils";
 import { Icon } from "@iconify/vue";
 import { MdPreview } from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
-
+const creationStore = useCreationStore();
 const snackbarStore = useSnackbarStore();
 const sourceText = ref("");
 const targetText = ref("");
@@ -63,7 +64,7 @@ const prompt = ref(`
 - ーザージャーニー[ユーザージャーニー]
 - ユーザーストーリー[ユーザーストーリー]
 - 実装ロジック[実装ロジック]
-- 機能詳細説明[機能詳細説明]
+- 機能詳細説明[機能詳細説明] 
     
 ## Suggestions:
 - 各部分の内容を明確に定義し、開発チームが理解し、実装できるようにします。
@@ -142,7 +143,9 @@ const chat = async () => {
                 icon="solar:document-add-line-duotone"
               />
             </v-app-bar-nav-icon>
-            <v-toolbar-title>Creation Chat</v-toolbar-title>
+            <v-toolbar-title>{{
+              creationStore.currentCreation.title
+            }}</v-toolbar-title>
             <v-spacer></v-spacer>
             <!-- recording button -->
             <v-btn icon @click="chat">

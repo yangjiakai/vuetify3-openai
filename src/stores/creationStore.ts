@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useCreationStore = defineStore({
     id: 'creation',
     state: () => ({
-        currentCreation: "",
+        currentCreation: {},
     }),
 
     persist: {

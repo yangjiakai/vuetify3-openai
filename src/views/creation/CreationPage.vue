@@ -7,7 +7,9 @@
 import { creationsData } from "@/data/chatData";
 import SidebarToggle from "@/components/SidebarToggle.vue";
 import router from "~/src/router";
+import { useCreationStore } from "@/stores/creationStore";
 
+const creationStore = useCreationStore();
 const creationList = ref<Creation.Creation[]>();
 onMounted(() => {
   creationList.value = creationsData;
@@ -50,6 +52,7 @@ const handleCollect = (item: Creation.Creation) => {
 
 const handleClick = (item: Creation.Creation) => {
   currentCreationId.value = item.creationId;
+  creationStore.currentCreation = item;
   router.push(`/creation-chat`);
 };
 </script>
