@@ -58,7 +58,7 @@ export default {
     role: "役割",
   },
   creation: {
-    title: "作成",
+    title: "",
   },
 
   consultant: {
