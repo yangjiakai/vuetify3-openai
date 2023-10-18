@@ -77,11 +77,7 @@ const stopRecording = () => {
         <v-card class="h-100" rounded="md">
           <v-toolbar rounded="md" elevation="1" color="primary" class="toolbar">
             <v-app-bar-nav-icon @click="">
-              <Icon
-                class="mx-auto"
-                width="26"
-                icon="solar:document-add-line-duotone"
-              />
+              <Icon class="mx-auto" width="26" icon="solar:document-add-line-duotone" />
             </v-app-bar-nav-icon>
             <v-toolbar-title>实时听录</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -101,63 +97,35 @@ const stopRecording = () => {
             <v-btn icon @click="">
               <v-icon> mdi-play-circle-outline </v-icon>
               <!-- tooltip -->
-              <v-tooltip
-                activator="parent"
-                location="bottom"
-                :text="$t('article.read')"
-              />
+              <v-tooltip activator="parent" location="bottom" :text="$t('article.read')" />
             </v-btn>
 
             <!-- translate -->
             <v-btn icon @click="">
               <v-icon> mdi-translate </v-icon>
               <!-- tooltip -->
-              <v-tooltip
-                activator="parent"
-                location="bottom"
-                :text="$t('article.translate')"
-              />
+              <v-tooltip activator="parent" location="bottom" :text="$t('article.translate')" />
             </v-btn>
           </v-toolbar>
           <perfect-scrollbar class="message-container">
-            <v-textarea
-              v-model="speechStore.recordingText"
-              class="ma-5 text-grey-darken-2"
-              variant="outlined"
-              :placeholder="$t('article.originalPlaceholder')"
-              rows="20"
-              color="primary"
-              :label="$t('article.original')"
-              :counter="5000"
-              persistentCounter
-              noResize
-              :maxlength="5000"
-            >
+            <v-textarea v-model="speechStore.recordingText" class="ma-5 text-grey-darken-2" variant="outlined"
+              :placeholder="$t('article.originalPlaceholder')" rows="20" color="primary" :label="$t('article.original')"
+              :counter="5000" persistentCounter noResize :maxlength="5000">
             </v-textarea>
-            <v-textarea
-              v-model="targetArticle"
-              class="ma-5 text-grey-darken-2"
-              variant="outlined"
-              :placeholder="$t('article.translationPlaceholder')"
-              rows="20"
-              color="primary"
-              readonly
-              :label="$t('article.translation')"
-              hide-details
-              noResize
-              active
-            >
+            <v-textarea v-model="targetArticle" class="ma-5 text-grey-darken-2" variant="outlined"
+              :placeholder="$t('article.translationPlaceholder')" rows="20" color="primary" readonly
+              :label="$t('article.translation')" hide-details noResize active>
             </v-textarea>
           </perfect-scrollbar>
         </v-card>
       </v-col>
-      <v-col cols="12" md="6">
+      <!-- <v-col cols="12" md="6">
         <v-card class="h-100" rounded="md">
           <v-toolbar rounded="md" elevation="1" color="primary" class="toolbar">
           </v-toolbar>
           <Phrases />
         </v-card>
-      </v-col>
+      </v-col> -->
     </v-row>
   </div>
 </template>
