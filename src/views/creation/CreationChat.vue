@@ -79,7 +79,7 @@ const prompt = ref(`
 const chat = async () => {
   try {
     const completion = await fetch(
-      "https://openai.wndbac.cn/v1/chat/completions",
+      "https://api.openai-proxy.com/v1/chat/completions",
       {
         headers: {
           "Content-Type": "application/json",
@@ -135,7 +135,11 @@ const chat = async () => {
         <v-card class="h-100" rounded="md">
           <v-toolbar rounded="md" elevation="1" color="primary" class="toolbar">
             <v-app-bar-nav-icon @click="">
-              <Icon class="mx-auto" width="26" icon="solar:document-add-line-duotone" />
+              <Icon
+                class="mx-auto"
+                width="26"
+                icon="solar:document-add-line-duotone"
+              />
             </v-app-bar-nav-icon>
             <v-toolbar-title>{{
               creationStore.currentCreation.title
@@ -149,8 +153,18 @@ const chat = async () => {
             </v-btn>
           </v-toolbar>
           <perfect-scrollbar class="message-container">
-            <v-textarea v-model="sourceText" class="ma-5 text-grey-darken-2" variant="outlined" rows="40" color="primary"
-              label="要求" :counter="5000" persistentCounter noResize :maxlength="5000">
+            <v-textarea
+              v-model="sourceText"
+              class="ma-5 text-grey-darken-2"
+              variant="outlined"
+              rows="40"
+              color="primary"
+              label="要求"
+              :counter="5000"
+              persistentCounter
+              noResize
+              :maxlength="5000"
+            >
             </v-textarea>
           </perfect-scrollbar>
         </v-card>

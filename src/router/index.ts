@@ -186,24 +186,24 @@ const router = createRouter({
 });
 
 // 在跳转前进行检查
-router.beforeEach((to, from, next) => {
-  const store = useAuthStore();
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    // 如果没有登录，将用户重定向到登录页面
-    if (!store.token) {
-      next({
-        path: "/login",
-      });
-    } else {
-      saveLastPageId(to, from);
-      // 如果已经登录，正常进行导航
-      next();
-    }
-  } else {
-    // 如果不需要验证，正常进行导航
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   const store = useAuthStore();
+//   if (to.matched.some((record) => record.meta.requiresAuth)) {
+//     // 如果没有登录，将用户重定向到登录页面
+//     if (!store.token) {
+//       next({
+//         path: "/login",
+//       });
+//     } else {
+//       saveLastPageId(to, from);
+//       // 如果已经登录，正常进行导航
+//       next();
+//     }
+//   } else {
+//     // 如果不需要验证，正常进行导航
+//     next();
+//   }
+// });
 
 const saveLastPageId = (to: any, from: any) => {
   const spokenStore = useSpokenStore();

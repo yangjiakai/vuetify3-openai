@@ -41,7 +41,7 @@ export const listModelsApi: any = () => {
 // https://platform.openai.com/docs/api-reference/models/list
 
 // openai.retrieveModel
-// GET https://openai.wndbac.cn/v1/models/{model}
+// GET https://api.openai-proxy.com/v1/models/{model}
 
 function generatePrompt(animal: string) {
   const capitalizedAnimal =

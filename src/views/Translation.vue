@@ -72,7 +72,7 @@ const prompt = computed(() => {
 
 const isLoading = ref(false);
 
-// const completion = await fetch("https://openai.wndbac.cn/v1/chat/completions", {
+// const completion = await fetch("https://api.openai-proxy.com/v1/chat/completions", {
 //   headers: {
 //     "Content-Type": "application/json",
 //     Authorization: `Bearer ${chatStore.apiKey}`,
@@ -97,7 +97,7 @@ const translate = async () => {
   isLoading.value = true;
 
   const completion = await fetch(
-    "https://openai.wndbac.cn/v1/chat/completions",
+    "https://api.openai-proxy.com/v1/chat/completions",
     {
       headers: {
         "Content-Type": "application/json",

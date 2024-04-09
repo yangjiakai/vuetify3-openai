@@ -31,7 +31,7 @@ const translatedContent = ref("");
 const translation = async () => {
   try {
     const completion = await fetch(
-      "https://openai.wndbac.cn/v1/chat/completions",
+      "https://api.openai-proxy.com/v1/chat/completions",
       {
         headers: {
           "Content-Type": "application/json",
