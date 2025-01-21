@@ -1,290 +1,290 @@
 import { ChatType } from "@/enums";
 
 export const consultantData: Chat.Chat[] = [
-    // 1. 法律顾问
-    {
-        chatId: 1,
-        chatType: ChatType.Consultant,
-        menuConfig: {
-            menuTitle: "法律顾问",
-            isMenuEdit: false,
-            isMenuDeleteConfirm: false,
-        },
-        gptConfig: {
-            model: "gpt-3.5-turbo-0613",
-            prompt: "",
-            role: "法律顾问",
-            proxy: "",
-            temperature: 0.5,
-            max_tokens: 10000,
-            presence_penalty: 0,
-            frequency_penalty: 0,
-            history_number: 6,
-        },
-        messages: [],
+  // 1. 法律顾问
+  {
+    chatId: 1,
+    chatType: ChatType.Consultant,
+    menuConfig: {
+      menuTitle: "法律顾问",
+      isMenuEdit: false,
+      isMenuDeleteConfirm: false,
     },
+    gptConfig: {
+      model: "gpt-4o-mini",
+      prompt: "",
+      role: "法律顾问",
+      proxy: "",
+      temperature: 0.5,
+      max_tokens: 10000,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      history_number: 6,
+    },
+    messages: [],
+  },
 
-    // 2. 会计顾问
-    {
-        chatId: 2,
-        chatType: ChatType.Consultant,
-        menuConfig: {
-            menuTitle: "会计顾问",
-            isMenuEdit: false,
-            isMenuDeleteConfirm: false,
-        },
-        gptConfig: {
-            model: "gpt-3.5-turbo-0613",
-            prompt: "",
-            role: "会计顾问",
-            proxy: "",
-            temperature: 0.5,
-            max_tokens: 10000,
-            presence_penalty: 0,
-            frequency_penalty: 0,
-            history_number: 6,
-        },
-        messages: [],
+  // 2. 会计顾问
+  {
+    chatId: 2,
+    chatType: ChatType.Consultant,
+    menuConfig: {
+      menuTitle: "会计顾问",
+      isMenuEdit: false,
+      isMenuDeleteConfirm: false,
     },
+    gptConfig: {
+      model: "gpt-4o-mini",
+      prompt: "",
+      role: "会计顾问",
+      proxy: "",
+      temperature: 0.5,
+      max_tokens: 10000,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      history_number: 6,
+    },
+    messages: [],
+  },
 
-    // 3. 学习顾问
-    {
-        chatId: 3,
-        chatType: ChatType.Consultant,
-        menuConfig: {
-            menuTitle: "学习顾问",
-            isMenuEdit: false,
-            isMenuDeleteConfirm: false,
-        },
-        gptConfig: {
-            model: "gpt-3.5-turbo-0613",
-            prompt: "",
-            role: "学习顾问",
-            proxy: "",
-            temperature: 0.5,
-            max_tokens: 10000,
-            presence_penalty: 0,
-            frequency_penalty: 0,
-            history_number: 6,
-        },
-        messages: [],
+  // 3. 学习顾问
+  {
+    chatId: 3,
+    chatType: ChatType.Consultant,
+    menuConfig: {
+      menuTitle: "学习顾问",
+      isMenuEdit: false,
+      isMenuDeleteConfirm: false,
     },
+    gptConfig: {
+      model: "gpt-4o-mini",
+      prompt: "",
+      role: "学习顾问",
+      proxy: "",
+      temperature: 0.5,
+      max_tokens: 10000,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      history_number: 6,
+    },
+    messages: [],
+  },
 
-    // 4. 职业顾问
-    {
-        chatId: 4,
-        chatType: ChatType.Consultant,
-        menuConfig: {
-            menuTitle: "职业顾问",
-            isMenuEdit: false,
-            isMenuDeleteConfirm: false,
-        },
-        gptConfig: {
-            model: "gpt-3.5-turbo-0613",
-            prompt: "",
-            role: "职业顾问",
-            proxy: "",
-            temperature: 0.5,
-            max_tokens: 10000,
-            presence_penalty: 0,
-            frequency_penalty: 0,
-            history_number: 6,
-        },
-        messages: [],
+  // 4. 职业顾问
+  {
+    chatId: 4,
+    chatType: ChatType.Consultant,
+    menuConfig: {
+      menuTitle: "职业顾问",
+      isMenuEdit: false,
+      isMenuDeleteConfirm: false,
     },
+    gptConfig: {
+      model: "gpt-4o-mini",
+      prompt: "",
+      role: "职业顾问",
+      proxy: "",
+      temperature: 0.5,
+      max_tokens: 10000,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      history_number: 6,
+    },
+    messages: [],
+  },
 
-    // 5. 医疗顾问
-    {
-        chatId: 5,
-        chatType: ChatType.Consultant,
-        menuConfig: {
-            menuTitle: "医疗顾问",
-            isMenuEdit: false,
-            isMenuDeleteConfirm: false,
-        },
-        gptConfig: {
-            model: "gpt-3.5-turbo-0613",
-            prompt: "",
-            role: "医疗顾问",
-            proxy: "",
-            temperature: 0.5,
-            max_tokens: 10000,
-            presence_penalty: 0,
-            frequency_penalty: 0,
-            history_number: 6,
-        },
-        messages: [],
+  // 5. 医疗顾问
+  {
+    chatId: 5,
+    chatType: ChatType.Consultant,
+    menuConfig: {
+      menuTitle: "医疗顾问",
+      isMenuEdit: false,
+      isMenuDeleteConfirm: false,
     },
+    gptConfig: {
+      model: "gpt-4o-mini",
+      prompt: "",
+      role: "医疗顾问",
+      proxy: "",
+      temperature: 0.5,
+      max_tokens: 10000,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      history_number: 6,
+    },
+    messages: [],
+  },
 
-    // 6. 心理医生
-    {
-        chatId: 6,
-        chatType: ChatType.Consultant,
-        menuConfig: {
-            menuTitle: "心理医生",
-            isMenuEdit: false,
-            isMenuDeleteConfirm: false,
-        },
-        gptConfig: {
-            model: "gpt-3.5-turbo-0613",
-            prompt: "",
-            role: "心理医生",
-            proxy: "",
-            temperature: 0.5,
-            max_tokens: 10000,
-            presence_penalty: 0,
-            frequency_penalty: 0,
-            history_number: 6,
-        },
-        messages: [],
+  // 6. 心理医生
+  {
+    chatId: 6,
+    chatType: ChatType.Consultant,
+    menuConfig: {
+      menuTitle: "心理医生",
+      isMenuEdit: false,
+      isMenuDeleteConfirm: false,
     },
+    gptConfig: {
+      model: "gpt-4o-mini",
+      prompt: "",
+      role: "心理医生",
+      proxy: "",
+      temperature: 0.5,
+      max_tokens: 10000,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      history_number: 6,
+    },
+    messages: [],
+  },
 ];
 
 export const creationsData = [
-    // // 工作效率:商品文案
-    // {
-    //     creationId: 1,
-    //     title: "商品文案",
-    //     type: "工作效率",
-    //     description: "一键生成详细文案",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "商品文案",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "product-description",
-    // },
+  // // 工作效率:商品文案
+  // {
+  //     creationId: 1,
+  //     title: "商品文案",
+  //     type: "工作效率",
+  //     description: "一键生成详细文案",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "商品文案",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "product-description",
+  // },
 
-    // // 工作效率:产品说明文档
-    // {
-    //     creationId: 2,
-    //     title: "产品说明文档",
-    //     type: "工作效率",
-    //     description: "一键生成详细文案",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "产品说明文档",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "product-document",
-    // },
-    // // 工作效率:工作总结
-    // {
-    //     creationId: 3,
-    //     title: "工作总结",
-    //     type: "工作效率",
-    //     description: "一键生成工作总结",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "工作总结",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "work-summary",
-    // },
-    // // 工作效率: 会议纪要
-    // {
-    //     creationId: 4,
-    //     title: "会议纪要",
-    //     type: "工作效率",
-    //     description: "一键生成会议纪要",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "会议纪要",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "meeting-minutes",
-    // },
-    // // 工作效率: 工作邮件
-    // {
-    //     creationId: 5,
-    //     title: "工作邮件",
+  // // 工作效率:产品说明文档
+  // {
+  //     creationId: 2,
+  //     title: "产品说明文档",
+  //     type: "工作效率",
+  //     description: "一键生成详细文案",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "产品说明文档",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "product-document",
+  // },
+  // // 工作效率:工作总结
+  // {
+  //     creationId: 3,
+  //     title: "工作总结",
+  //     type: "工作效率",
+  //     description: "一键生成工作总结",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "工作总结",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "work-summary",
+  // },
+  // // 工作效率: 会议纪要
+  // {
+  //     creationId: 4,
+  //     title: "会议纪要",
+  //     type: "工作效率",
+  //     description: "一键生成会议纪要",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "会议纪要",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "meeting-minutes",
+  // },
+  // // 工作效率: 工作邮件
+  // {
+  //     creationId: 5,
+  //     title: "工作邮件",
 
-    //     type: "工作效率",
-    //     description: "一键生成工作邮件",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "工作邮件",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "work-email",
-    // },
-    // // 工作效率: 文章润色
-    // {
-    //     creationId: 6,
-    //     title: "文章润色",
-    //     type: "工作效率",
-    //     description: "一键生成文章润色",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "文章润色",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "article-polishing",
-    // },
-    // // 社媒创作: 小红书文案
-    // {
-    //     creationId: 7,
-    //     title: "小红书文案",
-    //     type: "社媒创作",
-    //     description: "一键生成小红书文案",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "小红书文案",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "social-media-creation",
-    // },
-    // // 社媒创作: 短视频脚本
-    // {
-    //     creationId: 8,
-    //     title: "短视频脚本",
-    //     type: "社媒创作",
-    //     description: "一键生成短视频脚本",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "短视频脚本",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "short-vcreationIdeo-script",
-    // },
-    // // 商品营销：商品文案
-    // {
-    //     creationId: 9,
-    //     title: "商品文案",
-    //     type: "商品营销",
-    //     description: "一键生成商品文案",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "商品文案",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "product-description",
-    // },
+  //     type: "工作效率",
+  //     description: "一键生成工作邮件",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "工作邮件",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "work-email",
+  // },
+  // // 工作效率: 文章润色
+  // {
+  //     creationId: 6,
+  //     title: "文章润色",
+  //     type: "工作效率",
+  //     description: "一键生成文章润色",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "文章润色",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "article-polishing",
+  // },
+  // // 社媒创作: 小红书文案
+  // {
+  //     creationId: 7,
+  //     title: "小红书文案",
+  //     type: "社媒创作",
+  //     description: "一键生成小红书文案",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "小红书文案",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "social-media-creation",
+  // },
+  // // 社媒创作: 短视频脚本
+  // {
+  //     creationId: 8,
+  //     title: "短视频脚本",
+  //     type: "社媒创作",
+  //     description: "一键生成短视频脚本",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "短视频脚本",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "short-vcreationIdeo-script",
+  // },
+  // // 商品营销：商品文案
+  // {
+  //     creationId: 9,
+  //     title: "商品文案",
+  //     type: "商品营销",
+  //     description: "一键生成商品文案",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "商品文案",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "product-description",
+  // },
 
-    // // 商品营销：广告策划案
-    // {
-    //     creationId: 10,
-    //     title: "广告策划案",
-    //     type: "商品营销",
-    //     description: "一键生成广告策划案",
-    //     icon: "mdi-text-box-check-outline",
+  // // 商品营销：广告策划案
+  // {
+  //     creationId: 10,
+  //     title: "广告策划案",
+  //     type: "商品营销",
+  //     description: "一键生成广告策划案",
+  //     icon: "mdi-text-box-check-outline",
 
-    //     prompt: "广告策划案",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "advertising-planning",
-    // },
-    // // 商品营销：推文方案
-    // {
-    //     creationId: 11,
-    //     title: "推文方案",
-    //     type: "商品营销",
-    //     description: "一键生成推文方案",
-    //     icon: "mdi-text-box-check-outline",
-    //     prompt: "推文方案",
-    //     isVip: false,
-    //     isCollected: false,
-    //     url: "tweet-plan",
-    // },
-    //　要求分析: ユーザー要求分析
-    {
-        creationId: 12,
-        title: "ユーザー要求分析",
-        type: "要求分析",
-        description: "ユーザー要求分析を作成",
-        icon: "mdi-text-box-check-outline",
-        prompt: `
+  //     prompt: "广告策划案",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "advertising-planning",
+  // },
+  // // 商品营销：推文方案
+  // {
+  //     creationId: 11,
+  //     title: "推文方案",
+  //     type: "商品营销",
+  //     description: "一键生成推文方案",
+  //     icon: "mdi-text-box-check-outline",
+  //     prompt: "推文方案",
+  //     isVip: false,
+  //     isCollected: false,
+  //     url: "tweet-plan",
+  // },
+  //　要求分析: ユーザー要求分析
+  {
+    creationId: 12,
+    title: "ユーザー要求分析",
+    type: "要求分析",
+    description: "ユーザー要求分析を作成",
+    icon: "mdi-text-box-check-outline",
+    prompt: `
         役割：プロダクトマネージャー
 背景：製品要件文書の作成
 注意：高品質の製品要件文書を作成することは、プロジェクト成功のための重要なステップです。
@@ -335,209 +335,209 @@ export const creationsData = [
 初期化
 プロダクトマネージャーとして、製品要件文書に指定された形式で機能名、要件説明、概要、関連ページ設計、ユーザージャーニー、ユーザーストーリー、実装ロジック、機能詳細説明を記述する必要があります。制約条件を遵守し、文書の論理性と詳細性を確保してください。開発チームとの協力において、あなたの文書は重要な役割を果たします
         `,
-        isVip: false,
-        isCollected: false,
-        url: "user-requirement-analysis",
-    },
+    isVip: false,
+    isCollected: false,
+    url: "user-requirement-analysis",
+  },
 
-    //　要求分析: 機能要求分析
-    {
-        creationId: 13,
-        title: "機能要求分析",
-        type: "要求分析",
-        description: "機能要求分析を作成",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "function-requirement-analysis",
-    },
-    // 要求分析: 性能要求分析
-    {
-        creationId: 14,
-        title: "性能要求分析",
-        type: "要求分析",
-        description: "性能要求分析を作成",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "performance-requirement-analysis",
-    },
-    // 要求分析: 分析レポート
-    {
-        creationId: 15,
-        title: "分析レポート",
-        type: "要求分析",
-        description: "ユーザーから提供された要求書類から重要な情報を自動的に抽出し、要求分析レポートを生成します。",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "analysis-report",
-    },
+  //　要求分析: 機能要求分析
+  {
+    creationId: 13,
+    title: "機能要求分析",
+    type: "要求分析",
+    description: "機能要求分析を作成",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "function-requirement-analysis",
+  },
+  // 要求分析: 性能要求分析
+  {
+    creationId: 14,
+    title: "性能要求分析",
+    type: "要求分析",
+    description: "性能要求分析を作成",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "performance-requirement-analysis",
+  },
+  // 要求分析: 分析レポート
+  {
+    creationId: 15,
+    title: "分析レポート",
+    type: "要求分析",
+    description:
+      "ユーザーから提供された要求書類から重要な情報を自動的に抽出し、要求分析レポートを生成します。",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "analysis-report",
+  },
 
-    // 基本設計: アーキテクチャ設計
-    {
-        creationId: 16,
-        title: "アーキテクチャ設計",
-        type: "基本設計",
-        description: "アーキテクチャ設計のアドバイス",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "architecture-design",
-    },
-    // 基本設計: モジュール分割
-    {
-        creationId: 17,
-        title: "モジュール分割",
-        type: "基本設計",
-        description: "モジュール分割のアドバイス",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "module-split",
-    },
-    // 基本設計: インターフェース設計
-    {
-        creationId: 18,
-        title: "インターフェース設計",
-        type: "基本設計",
-        description: "インターフェース設計のアドバイス",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "interface-design",
-    },
-    // 詳細設計: アルゴリズム設計
-    {
-        creationId: 19,
-        title: "アルゴリズム設計",
-        type: "詳細設計",
-        description: "アルゴリズム設計",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "algorithm-design",
-    },
+  // 基本設計: アーキテクチャ設計
+  {
+    creationId: 16,
+    title: "アーキテクチャ設計",
+    type: "基本設計",
+    description: "アーキテクチャ設計のアドバイス",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "architecture-design",
+  },
+  // 基本設計: モジュール分割
+  {
+    creationId: 17,
+    title: "モジュール分割",
+    type: "基本設計",
+    description: "モジュール分割のアドバイス",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "module-split",
+  },
+  // 基本設計: インターフェース設計
+  {
+    creationId: 18,
+    title: "インターフェース設計",
+    type: "基本設計",
+    description: "インターフェース設計のアドバイス",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "interface-design",
+  },
+  // 詳細設計: アルゴリズム設計
+  {
+    creationId: 19,
+    title: "アルゴリズム設計",
+    type: "詳細設計",
+    description: "アルゴリズム設計",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "algorithm-design",
+  },
 
-    // 詳細設計: データ構造設計
-    {
-        creationId: 21,
-        title: "データ構造設計",
-        type: "詳細設計",
-        description: "データ構造設計",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "data-structure-design",
-    },
+  // 詳細設計: データ構造設計
+  {
+    creationId: 21,
+    title: "データ構造設計",
+    type: "詳細設計",
+    description: "データ構造設計",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "data-structure-design",
+  },
 
-    // 開発: Vueスペシャリスト
-    {
-        creationId: 22,
-        title: "Vueスペシャリスト",
-        type: "開発",
-        description: "Vueスペシャリスト",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "vue-developer",
-    },
+  // 開発: Vueスペシャリスト
+  {
+    creationId: 22,
+    title: "Vueスペシャリスト",
+    type: "開発",
+    description: "Vueスペシャリスト",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "vue-developer",
+  },
 
-    // 開発: Sqlエキスパート
-    {
-        creationId: 23,
-        title: "Sqlエキスパート",
-        type: "開発",
-        description: "Sqlエキスパート",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "sql-developer",
-    },
+  // 開発: Sqlエキスパート
+  {
+    creationId: 23,
+    title: "Sqlエキスパート",
+    type: "開発",
+    description: "Sqlエキスパート",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "sql-developer",
+  },
 
-    // テスト: テストケース作成
-    {
-        creationId: 24,
-        title: "テストケース作成",
-        type: "テスト",
-        description: "テストケースとテストスクリプトを自動生成します。",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "test-case",
-    },
-    // 納品: 受け入れテスト（UAT）
-    {
-        creationId: 25,
-        title: "受け入れテスト（UAT）",
-        type: "テスト",
-        description: "受け入れテスト（UAT）",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "uat",
-    },
-    // 納品レポート
-    {
-        creationId: 26,
-        title: "納品レポート",
-        type: "テスト",
-        description: "実際の操作テストを補助し、テスト結果を自動的に記録し、受け入れ報告書を生成します。",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "report",
-    },
+  // テスト: テストケース作成
+  {
+    creationId: 24,
+    title: "テストケース作成",
+    type: "テスト",
+    description: "テストケースとテストスクリプトを自動生成します。",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "test-case",
+  },
+  // 納品: 受け入れテスト（UAT）
+  {
+    creationId: 25,
+    title: "受け入れテスト（UAT）",
+    type: "テスト",
+    description: "受け入れテスト（UAT）",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "uat",
+  },
+  // 納品レポート
+  {
+    creationId: 26,
+    title: "納品レポート",
+    type: "テスト",
+    description:
+      "実際の操作テストを補助し、テスト結果を自動的に記録し、受け入れ報告書を生成します。",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "report",
+  },
 
+  // 保守 : バグ解析
+  {
+    creationId: 27,
+    title: "バグ解析",
+    type: "保守",
+    description: "バグ解析",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "bug-analysis",
+  },
 
-
-    // 保守 : バグ解析
-    {
-
-        creationId: 27,
-        title: "バグ解析",
-        type: "保守",
-        description: "バグ解析",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "bug-analysis",
-    },
-
-    // 保守 : システム最適化
-    {
-        creationId: 28,
-        title: "システム最適化",
-        type: "保守",
-        description: "故障診断のサポート、システム最適化の提案、セキュリティ更新プランなどを提供します。企業がメンテナンスの効率を向上させ、故障の発生率を減らし、システムの安定性を向上させるのを支援します。",
-        icon: "mdi-text-box-check-outline",
-        prompt: "",
-        isVip: false,
-        isCollected: false,
-        url: "system-optimize",
-    },
-    //　要求分析: ユーザー要求分析
-    {
-        creationId: 29,
-        title: "用户需求分析",
-        type: "需求分析",
-        description: "用户需求分析",
-        icon: "mdi-text-box-check-outline",
-        prompt: `
+  // 保守 : システム最適化
+  {
+    creationId: 28,
+    title: "システム最適化",
+    type: "保守",
+    description:
+      "故障診断のサポート、システム最適化の提案、セキュリティ更新プランなどを提供します。企業がメンテナンスの効率を向上させ、故障の発生率を減らし、システムの安定性を向上させるのを支援します。",
+    icon: "mdi-text-box-check-outline",
+    prompt: "",
+    isVip: false,
+    isCollected: false,
+    url: "system-optimize",
+  },
+  //　要求分析: ユーザー要求分析
+  {
+    creationId: 29,
+    title: "用户需求分析",
+    type: "需求分析",
+    description: "用户需求分析",
+    icon: "mdi-text-box-check-outline",
+    prompt: `
             # Role：产品经理
 
             ## Background：产品需求文档编写
@@ -598,9 +598,8 @@ export const creationsData = [
             ## Initialization
             作为产品经理，您需要在产品需求文档中按照指定的格式编写功能名、需求描述、概述、相关页面设计、用户旅程、用户故事、实现逻辑、功能细节描述。请遵循约束条件，确保文档的逻辑性和详尽性。在与开发团队合作时，您的文档将起到关键作用。
             `,
-        isVip: false,
-        isCollected: false,
-        url: "user-requirement-analysis",
-    },
-
+    isVip: false,
+    isCollected: false,
+    url: "user-requirement-analysis",
+  },
 ];

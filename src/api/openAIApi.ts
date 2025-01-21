@@ -15,7 +15,7 @@ const getOpenAI = () => {
 export const createCompletion: any = (keyword: string) => {
   const openai = getOpenAI();
   return openai.createChatCompletion({
-    model: "gpt-3.5-turbo-0613",
+    model: "gpt-4o-mini",
     messages: [{ role: "user", content: keyword }],
   });
 };
@@ -24,7 +24,7 @@ export const translationApi: any = (content: string, prompt: string) => {
   const openai = getOpenAI();
   return openai.createChatCompletion({
     stream: true,
-    model: "gpt-3.5-turbo-0613",
+    model: "gpt-4o-mini",
     messages: [
       { role: "user", content: prompt },
       { role: "user", content: content },

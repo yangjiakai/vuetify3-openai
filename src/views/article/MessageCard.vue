@@ -46,7 +46,7 @@ const translation = async () => {
             },
             { role: "user", content: props.text },
           ],
-          model: "gpt-3.5-turbo-0613",
+          model: "gpt-4o-mini",
           stream: true,
         }),
       }

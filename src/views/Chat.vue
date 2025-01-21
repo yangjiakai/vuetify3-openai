@@ -25,7 +25,7 @@ const messages = ref<Chat.Message[]>([]);
 const gptConfig = computed(() => {
   return (
     chatInfo.value?.gptConfig || {
-      model: "gpt-3.5-turbo-0613",
+      model: "gpt-4o-mini",
       temperature: 0.5,
       max_tokens: 2000,
       presence_penalty: 0,

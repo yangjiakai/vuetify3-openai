@@ -119,7 +119,7 @@ const createCompletion = async () => {
         method: "POST",
         body: JSON.stringify({
           messages: requestMessages.value,
-          model: "gpt-3.5-turbo-0613",
+          model: "gpt-4o-mini",
           // max_tokens: 100,
 
           // stream: true,

@@ -72,13 +72,11 @@ const handleSave = () => {
             >
               <v-btn
                 :variant="
-                  currentConfig?.model === 'gpt-3.5-turbo-0613'
-                    ? 'flat'
-                    : 'text'
+                  currentConfig?.model === 'gpt-4o-mini' ? 'flat' : 'text'
                 "
                 color="primary"
                 class="flex-fill mr-3"
-                @click="currentConfig.model = 'gpt-3.5-turbo-0613'"
+                @click="currentConfig.model = 'gpt-4o-mini'"
                 >GPT-3.5</v-btn
               >
               <v-btn

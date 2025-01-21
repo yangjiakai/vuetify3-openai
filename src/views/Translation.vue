@@ -84,7 +84,7 @@ const isLoading = ref(false);
 //       { role: "user", content: prompt.value },
 //       { role: "user", content: baseContent.value },
 //     ],
-//     model: "gpt-3.5-turbo-0613",
+//     model: "gpt-4o-mini",
 //     stream: true, // ここで stream を有効にする
 //   }),
 // });
@@ -109,7 +109,7 @@ const translate = async () => {
           { role: "user", content: prompt.value },
           { role: "user", content: baseContent.value },
         ],
-        model: "gpt-3.5-turbo-0613",
+        model: "gpt-4o-mini",
         stream: true,
       }),
     }
