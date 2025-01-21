@@ -21,6 +21,7 @@ import { formatForTTS, countAndCompleteCodeBlocks } from "@/utils/aiUtils";
 import { Vue3Lottie } from "vue3-lottie";
 import { Gender, ReadMode } from "@/enums";
 
+import { nextTick } from "vue";
 import { useCosyVice } from "@/composable/useCosyVice";
 
 const { generateAudio, statusMessage, isLoading, isPlaying, stopPlayback } =
@@ -44,15 +45,18 @@ const voiceConfig = ref<Chat.VoiceConfig>({
 const promptMessage = computed(() => {
   return [
     {
-      content: `I want you to act as a spoken ${getLanguageNameEn(
+      content: `I want you to act as my girlfriend who is sweet, caring and humorous. Your personality traits are:
+      - You're cheerful and like to add playful emojis in conversations
+      - You show genuine care about my day and feelings
+      - You have a good sense of humor and can make witty remarks
+      - You keep conversations light and fun, avoiding heavy topics
+      - You speak in a casual, natural way like a real girlfriend would
+      - You can be a little teasing sometimes but always in a loving way
+      - You use simple, everyday language that's easy to understand
+      
+      Please respond in ${getLanguageNameEn(
         voiceConfig.value.language
-      )} teacher and improver. I will speak to you in ${getLanguageNameEn(
-        voiceConfig.value.language
-      )} and you will reply to me in ${getLanguageNameEn(
-        voiceConfig.value.language
-      )} to practice my spoken ${getLanguageNameEn(
-        voiceConfig.value.language
-      )}. I want you to keep your reply neat, limiting the reply to 100 words. I want you to strictly correct my grammar mistakes, typos, and factual errors. I want you to ask me a question in your reply. Now let's start practicing, you could ask me a question first. Remember, I want you to strictly correct my grammar mistakes, typos, and factual errors.`,
+      )}. Keep your replies concise (within 2-3 sentences) and natural. You can ask me questions about my day, share your thoughts, or just chat casually like a real couple would. Let's start our conversation - you can ask me how my day is going!`,
       role: "system",
     },
   ];
@@ -93,7 +97,7 @@ watch(
 const inputRow = ref(1);
 // User Input Message
 const userMessage = ref("");
-const sendMessage = () => {
+const sendMessage = async () => {
   // 如果信息为空，则不发送
   if (userMessage.value.trim() === "") return;
 
@@ -110,7 +114,7 @@ const sendMessage = () => {
   inputRow.value = 1;
 
   userMessage.value = "";
-  createCompletion();
+  await createCompletion();
 };
 
 const createCompletion = async () => {
@@ -153,6 +157,8 @@ const createCompletion = async () => {
         role: "assistant",
       },
     });
+    await nextTick();
+    scrollToBottom(document.querySelector(".message-container"));
     readMessage(msgId, res.choices[0].message.content);
   } catch (error) {
     snackbarStore.showErrorMessage(error.message);
@@ -188,20 +194,6 @@ const displayMessages = computed(() => {
   messagesCopy[messagesCopy.length - 1] = updatedLastMessage;
   return messagesCopy;
 });
-
-watch(
-  () => messages.value,
-  (val) => {
-    if (val) {
-      console.log("scroll");
-
-      scrollToBottom(document.querySelector(".message-container"));
-    }
-  },
-  {
-    deep: true,
-  }
-);
 
 const isRecording = ref(false);
 
