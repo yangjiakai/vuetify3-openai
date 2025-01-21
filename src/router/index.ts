@@ -121,6 +121,12 @@ export const routes = [
         component: () => import("@/views/article/ArticlePage.vue"),
         meta: { requiresAuth: true },
       },
+      {
+        path: "/cosy",
+        name: "cosy",
+        component: () => import("@/views/Cosy.vue"),
+        meta: { requiresAuth: true },
+      },
 
       // this page is sample page for layout
       {
@@ -151,10 +157,11 @@ export const routes = [
         path: "/realtime-tts",
         name: "realtime",
         component: () =>
-          import(/* webpackChunkName: "app-realtime" */ "@/views/realtime/RealtimePage.vue"),
+          import(
+            /* webpackChunkName: "app-realtime" */ "@/views/realtime/RealtimePage.vue"
+          ),
         meta: { requiresAuth: true },
       },
-
     ],
     meta: { requiresAuth: true },
   },
@@ -220,7 +227,10 @@ const saveLastPageId = (to: any, from: any) => {
     const chatId = from.params.id;
     chatHistoryStore.updateLastPageId(chatId ? chatId : 0);
     // 如果从consultant页面跳转到其他页面，记录最后的consultant页面id
-  } else if (fromPath.startsWith("/consultant/") && !toPath.startsWith("/consultant/")) {
+  } else if (
+    fromPath.startsWith("/consultant/") &&
+    !toPath.startsWith("/consultant/")
+  ) {
     const chatId = from.params.id;
     chatHistoryStore.updateLastConsultPageId(chatId ? chatId : 0);
   } else {

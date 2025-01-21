@@ -70,6 +70,12 @@ const menus = [
     icon: "solar:reel-2-line-duotone",
     url: "/realtime-tts",
   },
+  // cosy
+  {
+    title: "cosy",
+    icon: "solar:reel-2-line-duotone",
+    url: "/cosy",
+  },
 ];
 
 const naviagteTo = (url: string) => {

@@ -5,7 +5,7 @@
 -->
 <script setup lang="ts">
 import { useAppStore } from "@/stores/appStore";
-import promptsZh from "@/data/prompts-zh.json";
+
 import promptsJa from "@/data/prompts-ja.json";
 import { useChatHistoryStore } from "@/stores/chatHistoryStore";
 const chatHistoryStore = useChatHistoryStore();
