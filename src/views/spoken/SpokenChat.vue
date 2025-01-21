@@ -20,6 +20,12 @@ import { formatForTTS, countAndCompleteCodeBlocks } from "@/utils/aiUtils";
 
 import { Vue3Lottie } from "vue3-lottie";
 import { Gender, ReadMode } from "@/enums";
+
+import { useCosyVice } from "@/composable/useCosyVice";
+
+const { generateAudio, statusMessage, isLoading, isPlaying, stopPlayback } =
+  useCosyVice();
+
 const route = useRoute();
 const speechStore = useSpeechStore();
 const snackbarStore = useSnackbarStore();
@@ -153,14 +159,23 @@ const createCompletion = async () => {
   }
 };
 
-const readMessage = (messageId: Chat.Id, text: string) => {
+const readMessage = async (messageId: Chat.Id, text: string) => {
   const config = {
     ...voiceConfig.value,
   };
 
   const formmatedText = formatForTTS(text);
 
-  speechStore.ssmlToSpeech(formmatedText, config, ReadMode.Read, messageId);
+  // speechStore.ssmlToSpeech(formmatedText, config, ReadMode.Read, messageId);
+  const params = {
+    mode: "sft",
+    text: formmatedText,
+    speaker: "中文女",
+    promptText: "",
+    audioFile: null,
+  };
+
+  await generateAudio(params);
 };
 
 const displayMessages = computed(() => {
@@ -178,6 +193,8 @@ watch(
   () => messages.value,
   (val) => {
     if (val) {
+      console.log("scroll");
+
       scrollToBottom(document.querySelector(".message-container"));
     }
   },

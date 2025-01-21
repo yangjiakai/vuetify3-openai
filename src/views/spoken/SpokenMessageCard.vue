@@ -15,6 +15,12 @@ import { readStream } from "@/utils/aiUtils";
 import { ReadMode } from "@/enums";
 import moment from "moment";
 import { useAppStore } from "@/stores/appStore";
+
+import { useCosyVice } from "@/composable/useCosyVice";
+
+const { generateAudio, statusMessage, isLoading, isPlaying, stopPlayback } =
+  useCosyVice();
+
 const appStore = useAppStore();
 
 const collectionStore = useCollectionStore();
@@ -39,12 +45,22 @@ const readMessage = async () => {
 
   const text = formatForTTS(content.value);
 
-  await speechStore.ssmlToSpeech(
-    text,
-    config,
-    ReadMode.Read,
-    props.message.messageId
-  );
+  // await speechStore.ssmlToSpeech(
+  //   text,
+  //   config,
+  //   ReadMode.Read,
+  //   props.message.messageId
+  // );
+
+  const params = {
+    mode: "sft",
+    text: text,
+    speaker: "中文女",
+    promptText: "",
+    audioFile: null,
+  };
+
+  await generateAudio(params);
 };
 
 const translatedContent = ref("");
@@ -149,6 +165,7 @@ const getDateTime = computed(() => {
               >
                 {{ translatedContent }}
               </div>
+
               <div class="toolbox px-5 pb-5">
                 <v-btn
                   class="mr-3"
